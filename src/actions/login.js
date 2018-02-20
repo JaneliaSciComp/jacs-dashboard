@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import cookie from 'react-cookie';
+import Cookies from 'universal-cookie';
 import jwtDecode from 'jwt-decode';
 import settings from '../settings.json';
 import history from '../history';
@@ -146,7 +146,8 @@ export function notAuthorized() {
 }
 
 export function logout() {
-  cookie.remove('userId');
+  const cookies = new Cookies();
+  cookies.remove('userId');
   history.push('/login');
   return {
     type: LOGOUT,

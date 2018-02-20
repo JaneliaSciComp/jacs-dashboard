@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router'
-import { Route, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class Topics extends Component {
   render() {
-    const { match, location, history } = this.props
+    const { location } = this.props;
     return (
       <div>
         <p>You are now at {location.pathname}</p>
@@ -13,5 +14,9 @@ class Topics extends Component {
     );
   }
 }
+
+Topics.propTypes = {
+  location: PropTypes.object.isRequired,
+};
 
 export default withRouter(Topics);
