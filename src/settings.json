@@ -1,0 +1,4 @@
+{
+  "userDataUrl": "http://jacs:8180/rest-v2/data/user/subject",
+  "authApiUrl": "http://localhost:3000/authenticate"
+}

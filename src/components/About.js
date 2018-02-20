@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import { Link } from 'react-router-dom';
+import logo from './logo.svg';
+import Topics from './Topics';
 
 class About extends Component {
   render() {
@@ -14,6 +15,7 @@ class About extends Component {
           About page.
         </p>
         <Link to="/">Home</Link>
+        <Topics/>
       </div>
     );
   }

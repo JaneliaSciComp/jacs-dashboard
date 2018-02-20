@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { withRouter } from 'react-router'
+import { Route, Link } from 'react-router-dom';
 
 class Topics extends Component {
   render() {
+    const { match, location, history } = this.props
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Topics</h1>
-        </header>
-        <p className="App-intro">
-          Topics page.
-        </p>
+      <div>
+        <p>You are now at {location.pathname}</p>
+        <Link to='/bar'>Missing</Link>
       </div>
     );
   }
 }
 
-export default Topics;
+export default withRouter(Topics);
