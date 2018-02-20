@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 export default class LoginView extends React.Component {
@@ -16,6 +17,11 @@ export default class LoginView extends React.Component {
 
   render() {
     const { state } = this.props;
+
+    // if you are already logged in, then redirect to the home page
+    if (state.get('loggedIn')) {
+      return <Redirect to="/" />;
+    }
 
     let button = <button className="btn btn-outline-info btn-sm">Submit</button>;
 
