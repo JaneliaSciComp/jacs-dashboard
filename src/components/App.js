@@ -6,7 +6,7 @@ import './App.css';
 
 class App extends Component {
   render() {
-    const { login } = this.props;
+    const { login, match } = this.props;
     return (
       <div className="App">
         <header className="App-header">

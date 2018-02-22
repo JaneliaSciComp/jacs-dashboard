@@ -8,6 +8,7 @@ class Topics extends Component {
     const { location } = this.props;
     return (
       <div>
+        <h4>Topics</h4>
         <p>You are now at {location.pathname}</p>
         <Link to='/bar'>Missing</Link>
       </div>

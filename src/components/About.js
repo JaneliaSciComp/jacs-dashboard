@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import Topics from './Topics';
 
 class About extends Component {
   render() {
+    const { match } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -15,7 +16,8 @@ class About extends Component {
           About page.
         </p>
         <Link to="/">Home</Link>
-        <Topics/>
+        <Link to={`${match.url}/topics`} >Topics</Link>
+        <Route path={`${match.path}/topics`} component={Topics} />
       </div>
     );
   }
