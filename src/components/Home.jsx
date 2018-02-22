@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import logo from './logo.svg';
 import './Home.css';
 
 class Home extends Component {
@@ -10,8 +9,7 @@ class Home extends Component {
     return (
       <div className="Home">
         <header className="Home-header">
-          <img src={logo} className="Home-logo" alt="logo" />
-          <h1 className="Home-title">Welcome to React</h1>
+          <h1 className="Home-title">Welcome to JACS Dashboard</h1>
           <p>You are logged in as: {login.get('username')}</p>
         </header>
         <p className="Home-intro">
