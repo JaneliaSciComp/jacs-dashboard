@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link, Route } from 'react-router-dom';
 import logo from './logo.svg';
 import Topics from './Topics';
@@ -22,5 +23,9 @@ class About extends Component {
     );
   }
 }
+
+About.propTypes = {
+  match: PropTypes.object.isRequired,
+};
 
 export default About;
