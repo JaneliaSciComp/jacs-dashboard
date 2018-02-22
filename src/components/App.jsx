@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Switch, Link, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import Reboot from 'material-ui/Reboot';
 import Navigation from '../containers/Navigation';
 import Home from '../containers/Home';
 import About from '../components/About';
@@ -10,12 +10,10 @@ import PrivateRoute from '../containers/auth/PrivateRoute';
 
 class App extends Component {
   render() {
-    const { match } = this.props;
     return (
       <div className="App">
+        <Reboot />
         <Navigation />
-        <Link to="/">Home</Link>
-        <Link to="/about/topics" >Topics</Link>
         <Switch>
           <Route exact path="/" component={Home} />
           <PrivateRoute path="/about" component={About} />
@@ -26,9 +24,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  match: PropTypes.object.isRequired,
-};
 
 export default App;
