@@ -98,6 +98,11 @@ export function loginValidate(username, password) {
       }
       return res.json();
     }).then((json) => {
+      // set a cookie for later use, if the page gets a hard reset.
+      const cookies = new Cookies();
+      cookies.set('userId', json.token);
+
+      // Now decode the token and load in the user data.
       const decoded = jwtDecode(json.token);
       loadUserData(decoded.user_name, (userData) => {
         if (userData instanceof Error) {
