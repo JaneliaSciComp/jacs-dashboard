@@ -8,7 +8,7 @@ import Cookies from 'universal-cookie';
 import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import './index.css';
-import App from './containers/App';
+import Home from './containers/Home';
 import Navigation from './containers/Navigation';
 import About from './components/About';
 import NoMatch from './components/NoMatch';
@@ -33,7 +33,7 @@ loadUserData(store.dispatch, jwt).then(() => {
         <div>
           <Navigation />
           <Switch>
-            <Route exact path="/" component={App} />
+            <Route exact path="/" component={Home} />
             <PrivateRoute path="/about" component={About} />
             <Route path="/login" component={Login} />
             <Route component={NoMatch} />
