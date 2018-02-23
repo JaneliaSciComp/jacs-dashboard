@@ -1,31 +1,51 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, Route } from 'react-router-dom';
-import logo from './logo.svg';
-import Topics from './Topics';
+import classNames from 'classnames';
+import Avatar from 'material-ui/Avatar';
+import Typography from 'material-ui/Typography';
+import Zoom from 'material-ui/transitions/Zoom';
+import { withStyles } from 'material-ui/styles';
+
+const clements = require('../assets/clements.jpg');
+
+const styles = theme => ({
+  row: {
+    display: 'flex',
+    justifyContent: 'center',
+    'margin-top': theme.spacing.unit * 10,
+  },
+  avatar: {
+    margin: theme.spacing.unit,
+  },
+  bigAvatar: {
+    width: 100,
+    height: 100,
+  },
+  tagLine: {
+    'margin-top': theme.spacing.unit * 5,
+  },
+});
 
 class About extends Component {
   render() {
-    const { match } = this.props;
+    const { classes } = this.props;
     return (
-      <div className="Home">
-        <header className="Home-header">
-          <img src={logo} className="Home-logo" alt="logo" />
-          <h1 className="Home-title">About</h1>
-        </header>
-        <p className="Home-intro">
-          About page.
-        </p>
-        <Link to="/">Home</Link>
-        <Link to={`${match.url}/topics`} >Topics</Link>
-        <Route path={`${match.path}/topics`} component={Topics} />
-      </div>
+      <Zoom in style={{ transitionDelay: 500 }}>
+        <div className={classes.row}>
+          <Avatar
+            alt="Jody Clements"
+            src={clements}
+            className={classNames(classes.avatar, classes.bigAvatar)}
+          />
+          <Typography align="center" className={classes.tagLine}>Crafted with care by Jody Clements</Typography>
+        </div>
+      </Zoom>
     );
   }
 }
 
 About.propTypes = {
-  match: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default About;
+export default withStyles(styles)(About);

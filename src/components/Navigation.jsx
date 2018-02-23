@@ -7,6 +7,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
+import AccountCircle from 'material-ui-icons/AccountCircle';
 import { withStyles } from 'material-ui/styles';
 
 const styles = {
@@ -25,7 +26,18 @@ const styles = {
 
 class Navigation extends Component {
   render() {
-    const { classes } = this.props;
+    const { classes, login } = this.props;
+
+    let auth = <Button color="inherit">Login</Button>;
+
+    if (login.get('loggedIn')) {
+      auth = (
+        <IconButton color="inherit">
+          <AccountCircle />
+        </IconButton>
+      );
+    }
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -36,13 +48,13 @@ class Navigation extends Component {
             <Typography className={classes.flex} variant="title" color="inherit" >
               JACS v2
             </Typography>
-            <Button color="inherit">Login</Button>
             <Button color="inherit" component={Link} to="/">
               Home
             </Button>
             <Button color="inherit" component={Link} to="/about/topics">
               Topics
             </Button>
+            {auth}
           </Toolbar>
         </AppBar>
       </div>
@@ -52,6 +64,7 @@ class Navigation extends Component {
 
 Navigation.propTypes = {
   classes: PropTypes.object.isRequired,
+  login: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Navigation);
