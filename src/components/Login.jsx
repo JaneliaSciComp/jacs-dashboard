@@ -1,8 +1,27 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+import Grid from 'material-ui/Grid';
+import { withStyles } from 'material-ui/styles';
 
-export default class LoginView extends React.Component {
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    'margin-top': '1em',
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+  },
+  noAccount: {
+    marginTop: theme.spacing.unit * 2,
+  },
+});
+
+class LoginView extends React.Component {
   constructor(...args) {
     super(...args);
     // bind it and make it an instance method instead of prototype method
@@ -16,14 +35,14 @@ export default class LoginView extends React.Component {
   }
 
   render() {
-    const { state } = this.props;
+    const { state, classes } = this.props;
 
     // if you are already logged in, then redirect to the home page
     if (state.get('loggedIn')) {
       return <Redirect to="/" />;
     }
 
-    let button = <button className="btn btn-outline-info btn-sm">Submit</button>;
+    let button = <Button variant="raised" color="primary" type="submit">Submit</Button>;
 
     if (state.get('loading') === 1) {
       button = <p>Loading...</p>;
@@ -36,27 +55,39 @@ export default class LoginView extends React.Component {
     }
 
     return (
-      <div id="login-view" className="row">
-        <div className="col-sm-4 offset-sm-4 ">
-          <h2>Login</h2>
-          <form name="login-form" method="post" action="login" onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Username</label>
-              <input ref={(input) => { this.username = input; }} className="form-control" type="text" name="username" id="username" />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input ref={(input) => { this.password = input; }} className="form-control" type="password" name="password" id="password" />
-            </div>
-            {button}
-          </form>
-          {error}
-          {this.props.children}
-        </div>
-        <div className="col-sm-12 text-center spaced">
-          <p>Don&apos;t have an account? Contact <a href="mailto:workstation-support@janelia.hhmi.org?subject=[JW] Workstation Access Request&body=I'd like to request access to [describe the data set you are requesting] data in the Janelia Workstation.">Scientific Computing</a> and we will create one for you.</p>
-        </div>
-      </div>
+      <Grid id="login-view" container spacing={24} className={classes.root}>
+        <Grid item xs={12}>
+          <Grid container justify="center">
+            <Paper elevation={1} className={classes.paper}>
+              <Typography variant="display2">Login</Typography>
+              <form name="login-form" method="post" action="login" onSubmit={this.handleSubmit}>
+                <TextField
+                  id="username"
+                  label="Username"
+                  inputRef={(input) => { this.username = input; }}
+                  fullWidth
+                />
+
+                <TextField
+                  id="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                  inputRef={(input) => { this.password = input; }}
+                  fullWidth
+                />
+
+
+                {button}
+              </form>
+              {error}
+              {this.props.children}
+              <Typography className={classes.noAccount}>Don&apos;t have an account? Contact <a href="mailto:workstation-support@janelia.hhmi.org?subject=[JW] Workstation Access Request&body=I'd like to request access to [describe the data set you are requesting] data in the Janelia Workstation.">Scientific Computing</a> and we will create one for you.</Typography>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -65,8 +96,11 @@ LoginView.propTypes = {
   actions: PropTypes.object.isRequired,
   state: PropTypes.object.isRequired,
   children: PropTypes.node,
+  classes: PropTypes.object.isRequired,
 };
 
 LoginView.defaultProps = {
   children: null,
 };
+
+export default withStyles(styles)(LoginView);
