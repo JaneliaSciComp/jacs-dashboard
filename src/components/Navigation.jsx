@@ -86,7 +86,7 @@ class Navigation extends Component {
             open={open}
             onClose={this.handleClose}
           >
-            <MenuItem onClick={this.handleProfile} component={Link} to="/profie">Profile</MenuItem>
+            <MenuItem onClick={this.handleProfile} component={Link} to="/profile">Profile</MenuItem>
             <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
           </Menu>
 

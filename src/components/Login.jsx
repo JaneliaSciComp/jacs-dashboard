@@ -11,7 +11,7 @@ import { withStyles } from 'material-ui/styles';
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    'margin-top': '1em',
+    margin: '1rem',
   },
   paper: {
     padding: theme.spacing.unit * 2,

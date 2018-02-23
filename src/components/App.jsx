@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Reboot from 'material-ui/Reboot';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
 import Navigation from '../containers/Navigation';
 import Home from '../containers/Home';
 import About from '../components/About';
 import NoMatch from '../components/NoMatch';
 import Login from '../containers/Login';
+import Profile from '../containers/Profile';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import './App.css';
 
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  content: {
+    padding: '1rem',
+  },
+};
+
 const theme = createMuiTheme({
   palette: {
-    type: 'dark',
+    type: 'light',
     primary: {
       light: '#91f3ff',
       main: '#5bc0de',
@@ -34,21 +45,30 @@ const theme = createMuiTheme({
 
 class App extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="App">
+      <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
           <Reboot />
           <Navigation />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <PrivateRoute path="/about" component={About} />
-            <Route path="/login" component={Login} />
-            <Route component={NoMatch} />
-          </Switch>
+          <div className={classes.content}>
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <PrivateRoute path="/profile" component={Profile} />
+              <Route path="/about" component={About} />
+              <Route path="/login" component={Login} />
+              <Route component={NoMatch} />
+            </Switch>
+          </div>
         </MuiThemeProvider>
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);
