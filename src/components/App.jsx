@@ -10,6 +10,11 @@ import About from '../components/About';
 import NoMatch from '../components/NoMatch';
 import Login from '../containers/Login';
 import Profile from '../containers/Profile';
+import ServiceList from '../containers/ServiceList';
+import Service from './Service';
+import Job from './Job';
+import JobStatusList from './JobStatusList';
+import ScheduledJobs from './ScheduledJobs';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import './App.css';
 
@@ -58,6 +63,11 @@ class App extends Component {
               <PrivateRoute path="/profile" component={Profile} />
               <Route path="/about" component={About} />
               <Route path="/login" component={Login} />
+              <Route path="/services" component={ServiceList} />
+              <Route path="/service/:serviceId" component={Service} />
+              <Route exact path="/jobs" component={JobStatusList} />
+              <Route path="/jobs/scheduled" component={ScheduledJobs} />
+              <Route path="/job/:jobId" component={Job} />
               <Route component={NoMatch} />
             </Switch>
           </div>
