@@ -45,7 +45,7 @@ class LoginView extends React.Component {
     let button = <Button variant="raised" color="primary" type="submit">Submit</Button>;
 
     if (state.get('loading') === 1) {
-      button = <p>Loading...</p>;
+      button = <Typography>Loading...</Typography>;
     }
 
     let error = '';

@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Reboot from 'material-ui/Reboot';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import purple from 'material-ui/colors/purple';
-import green from 'material-ui/colors/green';
 
 import Navigation from '../containers/Navigation';
 import Home from '../containers/Home';
@@ -11,12 +9,23 @@ import About from '../components/About';
 import NoMatch from '../components/NoMatch';
 import Login from '../containers/Login';
 import PrivateRoute from '../containers/auth/PrivateRoute';
+import './App.css';
 
 const theme = createMuiTheme({
   palette: {
     type: 'dark',
-    primary: purple,
-    secondary: green,
+    primary: {
+      light: '#91f3ff',
+      main: '#5bc0de',
+      dark: '#1490ac',
+      contrastText: '#000',
+    },
+    secondary: {
+      light: '#a9ffc4',
+      main: '#76d893',
+      dark: '#43a665',
+      contrastText: '#000',
+    },
   },
   status: {
     danger: 'orange',

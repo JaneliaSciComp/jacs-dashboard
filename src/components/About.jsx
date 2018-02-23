@@ -22,7 +22,7 @@ const styles = theme => ({
     height: 100,
   },
   tagLine: {
-    'margin-top': theme.spacing.unit * 5,
+    'margin-top': theme.spacing.unit * 6,
   },
 });
 
