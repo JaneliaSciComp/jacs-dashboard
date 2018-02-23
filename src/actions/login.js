@@ -13,6 +13,7 @@ export const LOGIN_USER_LOAD = 'LOGIN_USER_LOAD';
 export const LOGIN_SET_REDIRECT_URL = 'LOGIN_SET_REDIRECT_URL';
 export const LOGIN_CLEAR_REDIRECT_URL = 'LOGIN_CLEAR_REDIRECT_URL';
 export const NOT_AUTHORIZED_FAILURE = 'NOT_AUTHORIZED_FAILURE';
+export const LOGIN_ERROR_CLEAR = 'LOGIN_ERROR_CLEAR';
 
 export function setRedirectUrl(url) {
   return {
@@ -98,16 +99,16 @@ export function loginValidate(username, password) {
       }
       return res.json();
     }).then((json) => {
-      // set a cookie for later use, if the page gets a hard reset.
-      const cookies = new Cookies();
-      cookies.set('userId', json.token);
-
       // Now decode the token and load in the user data.
       const decoded = jwtDecode(json.token);
       loadUserData(decoded.user_name, (userData) => {
         if (userData instanceof Error) {
           dispatch(loginValidationError(userData));
         } else {
+          // set a cookie for later use, if the page gets a hard reset.
+          const cookies = new Cookies();
+          cookies.set('userId', json.token);
+
           dispatch(loginUserLoadComplete(userData));
           dispatch(loginValidationComplete(decoded, json.token));
         }
@@ -141,6 +142,12 @@ export function loginRestore(jwt) {
       dispatch(loginUserLoadComplete(json));
       dispatch(loginRestored(jwt));
     }).catch(error => dispatch(loginValidationError(error)));
+  };
+}
+
+export function loginErrorClear() {
+  return {
+    type: LOGIN_ERROR_CLEAR,
   };
 }
 

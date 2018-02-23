@@ -21,7 +21,8 @@ export default function loginReducer(state = initialState, action) {
     case 'LOGIN_VAL_REQUEST':
       return state.set('loading', 1);
     case 'LOGIN_VAL_FAILURE':
-      return state.set('loading', 0);
+      return state.set('loading', 0)
+        .set('error', action.error);
     case 'LOGIN_USER_LOAD':
       return state.set('user', action.json).set('username', action.json.name);
     case 'LOGIN_RESTORE':
@@ -30,6 +31,8 @@ export default function loginReducer(state = initialState, action) {
       return state.set('redirectUrl', action.url);
     case 'LOGIN_CLEAR_REDIRECT_URL':
       return state.set('redirectUrl', null);
+    case 'LOGIN_ERROR_CLEAR':
+      return state.set('error', null);
     case 'LOGOUT':
       return initialState;
     default:

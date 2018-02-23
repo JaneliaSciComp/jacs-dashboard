@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import Grid from 'material-ui/Grid';
+import Snackbar from 'material-ui/Snackbar';
 import { withStyles } from 'material-ui/styles';
 
 const styles = theme => ({
@@ -26,12 +27,18 @@ class LoginView extends React.Component {
     super(...args);
     // bind it and make it an instance method instead of prototype method
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleSubmit(event) {
     event.preventDefault();
     const { loginValidate } = this.props.actions;
     loginValidate(this.username.value, this.password.value);
+  }
+
+  handleClose() {
+    // need to remove the error message from the state.
+    this.props.actions.loginErrorClear();
   }
 
   render() {
@@ -51,8 +58,19 @@ class LoginView extends React.Component {
     let error = '';
 
     if (state.get('error')) {
-      error = <div className="alert alert-danger">{state.get('error')}</div>;
+      error = (
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          open={Boolean(state.get('error'))}
+          onClose={this.handleClose}
+          SnackbarContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={state.get('error').message}
+        />
+      );
     }
+
 
     return (
       <Grid id="login-view" container spacing={24} className={classes.root}>

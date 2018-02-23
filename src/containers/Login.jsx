@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { loginValidate } from '../actions/login';
+import { loginValidate, loginErrorClear } from '../actions/login';
 import Login from '../components/Login';
 
 const mapStateToProps = state => ({
@@ -10,6 +10,9 @@ const mapDispatchToProps = dispatch => ({
   actions: {
     loginValidate: (username, password) => {
       dispatch(loginValidate(username, password));
+    },
+    loginErrorClear: () => {
+      dispatch(loginErrorClear());
     },
   },
 });
