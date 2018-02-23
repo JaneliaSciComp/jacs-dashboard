@@ -30,17 +30,31 @@ class Navigation extends Component {
     super(props);
     this.state = {
       anchorEl: null,
+      mainAnchorEl: null,
     };
+
+    this.handleMainMenu = this.handleMainMenu.bind(this);
+    this.handleMainClose = this.handleMainClose.bind(this);
+
     this.handleMenu = this.handleMenu.bind(this);
-    this.handleProfile = this.handleProfile.bind(this);
+    this.handleClose = this.handleClose.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
+
+  handleMainMenu(e) {
+    this.setState({ mainAnchorEl: e.currentTarget });
+  }
+
+  handleMainClose() {
+    this.setState({ mainAnchorEl: null });
+  }
+
 
   handleMenu(e) {
     this.setState({ anchorEl: e.currentTarget });
   }
 
-  handleProfile() {
+  handleClose() {
     this.setState({ anchorEl: null });
   }
 
@@ -52,8 +66,10 @@ class Navigation extends Component {
 
   render() {
     const { classes, login } = this.props;
-    const { anchorEl } = this.state;
+    const { anchorEl, mainAnchorEl } = this.state;
     const open = Boolean(anchorEl);
+    const mainOpen = Boolean(mainAnchorEl);
+
 
     let auth = <Button color="inherit" component={Link} to="/login">Login</Button>;
 
@@ -68,9 +84,29 @@ class Navigation extends Component {
     return (
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleMainMenu}>
             <MenuIcon />
           </IconButton>
+
+          <Menu
+            id="menu-main"
+            anchorEl={mainAnchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={mainOpen}
+            onClose={this.handleMainClose}
+          >
+            <MenuItem onClick={this.handleClose} component={Link} to="/">Home</MenuItem>
+            <MenuItem onClick={this.handleClose} component={Link} to="/jobs">Jobs</MenuItem>
+            <MenuItem onClick={this.handleClose} component={Link} to="/services">Services</MenuItem>
+          </Menu>
+
 
           <Menu
             id="menu-appbar"
@@ -86,7 +122,7 @@ class Navigation extends Component {
             open={open}
             onClose={this.handleClose}
           >
-            <MenuItem onClick={this.handleProfile} component={Link} to="/profile">Profile</MenuItem>
+            <MenuItem onClick={this.handleClose} component={Link} to="/profile">Profile</MenuItem>
             <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
           </Menu>
 

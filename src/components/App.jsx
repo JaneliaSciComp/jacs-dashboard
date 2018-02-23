@@ -65,9 +65,9 @@ class App extends Component {
               <Route path="/login" component={Login} />
               <Route path="/services" component={ServiceList} />
               <Route path="/service/:serviceId" component={Service} />
-              <Route exact path="/jobs" component={JobStatusList} />
+              <PrivateRoute exact path="/jobs" component={JobStatusList} />
               <Route path="/jobs/scheduled" component={ScheduledJobs} />
-              <Route path="/job/:jobId" component={Job} />
+              <PrivateRoute path="/job/:jobId" component={Job} />
               <Route component={NoMatch} />
             </Switch>
           </div>

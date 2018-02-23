@@ -28,7 +28,7 @@ class Profile extends Component {
     const initials = user.fullName.split(' ').map(name => name.charAt(0)).join('');
 
     return (
-      <div container className={classes.root}>
+      <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={6}>
             <Paper className={classes.paper}>
