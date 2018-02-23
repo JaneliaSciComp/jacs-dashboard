@@ -32,7 +32,7 @@ class Navigation extends Component {
       anchorEl: null,
     };
     this.handleMenu = this.handleMenu.bind(this);
-    this.handleClose = this.handleClose.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -40,7 +40,7 @@ class Navigation extends Component {
     this.setState({ anchorEl: e.currentTarget });
   }
 
-  handleClose() {
+  handleProfile() {
     this.setState({ anchorEl: null });
   }
 
@@ -86,15 +86,17 @@ class Navigation extends Component {
             open={open}
             onClose={this.handleClose}
           >
-            <MenuItem onClick={this.handleClose}>Profile</MenuItem>
+            <MenuItem onClick={this.handleProfile} component={Link} to="/profie">Profile</MenuItem>
             <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
           </Menu>
 
-          <Button className={classes.flex} color="inherit" component={Link} to="/">
-            <Typography variant="title" color="inherit" >
-              JACS v2
-            </Typography>
-          </Button>
+          <div className={classes.flex}>
+            <Button color="inherit" component={Link} to="/">
+              <Typography variant="title" color="inherit" >
+                JACS v2
+              </Typography>
+            </Button>
+          </div>
           {auth}
         </Toolbar>
       </AppBar>
