@@ -39,13 +39,19 @@ class Service extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Typography align="center" variant="display2">Service Information ({name}) </Typography>
+            <Typography variant="display2">({name})</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.main}>
             <Typography variant="title">Parameter List</Typography>
             <ParameterTable data={serviceDetails.serviceArgDescriptors} />
+          </Paper>
+          <Paper className={classes.main}>
+            <Typography variant="title">Meta Information</Typography>
+          </Paper>
+          <Paper className={classes.main}>
+            <Typography variant="title">Output</Typography>
           </Paper>
         </Grid>
       </div>

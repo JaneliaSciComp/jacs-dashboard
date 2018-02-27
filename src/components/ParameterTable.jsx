@@ -12,6 +12,9 @@ const styles = {
   flags: {
     whiteSpace: 'nowrap',
   },
+  required: {
+    textAlign: 'center',
+  },
 };
 
 // This data needs to come from the state, which needs to be loaded
@@ -37,7 +40,7 @@ class ParameterTable extends Component {
                 <TableRow key={n.argName}>
                   <TableCell>{n.argName}</TableCell>
                   <TableCell>{n.description}</TableCell>
-                  <TableCell>{n.required ? <Icon color="primary">check_circle</Icon> : '' }</TableCell>
+                  <TableCell className={classes.required}>{n.required ? <Icon color="primary">check_circle</Icon> : '' }</TableCell>
                   <TableCell className={classes.flags}><code>{n.cmdFlags.join(', ')}</code></TableCell>
                 </TableRow>
               );
