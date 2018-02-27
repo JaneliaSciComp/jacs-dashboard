@@ -1,4 +1,5 @@
 {
   "userDataUrl": "http://jacs:8180/rest-v2/data/user/subject",
-  "authApiUrl": "http://localhost:3000/authenticate"
+  "authApiUrl": "http://localhost:3000/authenticate",
+  "serviceListUrl": "http://jacs2.int.janelia.org:9000/api/rest-v2/services/metadata"
 }

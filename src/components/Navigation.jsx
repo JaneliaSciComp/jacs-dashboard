@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import AccountCircle from 'material-ui-icons/AccountCircle';
+import Avatar from 'material-ui/Avatar';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
 
@@ -22,6 +22,9 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  avatar: {
+    background: '#000',
+  }
 };
 
 
@@ -74,9 +77,10 @@ class Navigation extends Component {
     let auth = <Button color="inherit" component={Link} to="/login">Login</Button>;
 
     if (login.get('loggedIn')) {
+      const initials = login.get('user').fullName.split(' ').map(name => name.charAt(0)).join('');
       auth = (
         <IconButton color="inherit" onClick={this.handleMenu}>
-          <AccountCircle />
+          <Avatar className={classes.avatar}>{initials}</Avatar>
         </IconButton>
       );
     }
