@@ -24,7 +24,7 @@ class ServiceList extends Component {
   }
 
   handleChange(e) {
-    this.props.actions.loadServiceData(e.target.value);
+    this.props.actions.loadServiceData({ filter: e.target.value });
   }
 
   render() {
@@ -32,7 +32,7 @@ class ServiceList extends Component {
 
     let dataGrid = null;
 
-    if (services.get('loaded')) {
+    if (services.get('data')) {
       const data = services.get('data');
       dataGrid = <ServiceTable data={data} />;
     }

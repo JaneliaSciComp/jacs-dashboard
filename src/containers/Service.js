@@ -1,6 +1,6 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import ServiceList from '../components/ServiceList';
+import Service from '../components/Service';
 import { loadServiceData } from '../actions/services';
 
 const mapStateToProps = state => ({
@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    loadServiceData: (args) => {
-      dispatch(loadServiceData(args));
+    loadServiceData: (filter, order) => {
+      dispatch(loadServiceData(filter, order));
     },
   },
 });
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ServiceList));
+)(Service));

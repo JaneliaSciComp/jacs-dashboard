@@ -3,13 +3,13 @@ import settings from '../settings.json';
 
 export const SERVICE_DATA_LOADING = 'SERVICE_DATA_LOADING';
 export const SERVICE_DATA_LOADED = 'SERVICE_DATA_LOADED';
+export const SERVICE_ITEM_DATA_LOADED = 'SERVICE_ITEM_DATA_LOADED';
 export const SERVICE_DATA_LOAD_ERROR = 'SERVICE_DATA_LOAD_ERROR';
 
-export function loadingServiceData(filter, order) {
+export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
-    filter,
-    order,
+    args,
   };
 }
 
@@ -27,11 +27,23 @@ export function loadedServiceData(json) {
   };
 }
 
+export function loadedSingleServiceData(json, name) {
+  return {
+    type: SERVICE_ITEM_DATA_LOADED,
+    json,
+    name,
+  };
+}
 
-export function loadServiceData(filter, order) {
+export function loadServiceData(args = {}) {
   return function loadServiceDataAsync(dispatch) {
-    dispatch(loadingServiceData(filter, order));
-    const { serviceListUrl } = settings;
+    dispatch(loadingServiceData(args));
+
+    let { serviceListUrl } = settings;
+    if (Object.prototype.hasOwnProperty.call(args, 'name')) {
+      serviceListUrl = `${serviceListUrl}/${args.name}`;
+    }
+
     return fetch(serviceListUrl, {
       method: 'GET',
       headers: {
@@ -46,8 +58,10 @@ export function loadServiceData(filter, order) {
       }
       return res.json();
     }).then((json) => {
-      if (filter) {
-        const filtered = json.filter(service => service.serviceName.match(filter));
+      if (Object.prototype.hasOwnProperty.call(args, 'name')) {
+        dispatch(loadedSingleServiceData(json, args.name));
+      } else if (Object.prototype.hasOwnProperty.call(args, 'filter')) {
+        const filtered = json.filter(service => service.serviceName.match(args.filter));
         dispatch(loadedServiceData(filtered));
       } else {
         dispatch(loadedServiceData(json));

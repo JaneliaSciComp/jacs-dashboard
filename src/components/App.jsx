@@ -11,7 +11,7 @@ import NoMatch from '../components/NoMatch';
 import Login from '../containers/Login';
 import Profile from '../containers/Profile';
 import ServiceList from '../containers/ServiceList';
-import Service from './Service';
+import Service from '../containers/Service';
 import Job from './Job';
 import JobStatusList from './JobStatusList';
 import ScheduledJobs from './ScheduledJobs';

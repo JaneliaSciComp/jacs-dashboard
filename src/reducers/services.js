@@ -16,6 +16,8 @@ export default function servicesReducer(state = initialState, action) {
         .set('error', action.error);
     case 'SERVICE_DATA_LOADED':
       return state.set('data', action.json).set('loaded', 1);
+    case 'SERVICE_ITEM_DATA_LOADED':
+      return state.set(action.name, action.json).set('loaded', 1);
     case 'LOGOUT':
       return initialState;
     default:
