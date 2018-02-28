@@ -12,6 +12,7 @@ import Login from '../containers/Login';
 import Profile from '../containers/Profile';
 import ServiceList from '../containers/ServiceList';
 import Service from '../containers/Service';
+import ServiceStart from '../containers/ServiceStart';
 import Job from './Job';
 import JobStatusList from './JobStatusList';
 import ScheduledJobs from './ScheduledJobs';
@@ -64,7 +65,8 @@ class App extends Component {
               <Route path="/about" component={About} />
               <Route path="/login" component={Login} />
               <Route path="/services" component={ServiceList} />
-              <Route path="/service/:serviceId" component={Service} />
+              <PrivateRoute path="/service/:serviceName/start" component={ServiceStart} />
+              <Route path="/service/:serviceName" component={Service} />
               <PrivateRoute exact path="/jobs" component={JobStatusList} />
               <Route path="/jobs/scheduled" component={ScheduledJobs} />
               <PrivateRoute path="/job/:jobId" component={Job} />
