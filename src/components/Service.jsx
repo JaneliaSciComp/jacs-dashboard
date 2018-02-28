@@ -4,6 +4,10 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
+import AddIcon from 'material-ui-icons/Add';
+import { Link } from 'react-router-dom';
+
 import ParameterTable from './ParameterTable';
 
 const styles = {
@@ -19,7 +23,7 @@ const styles = {
 class Service extends Component {
   componentDidMount() {
     const { match, services } = this.props;
-    const name = match.params.serviceId;
+    const name = match.params.serviceName;
     if (!services.get(name)) {
       this.props.actions.loadServiceData({ name });
     }
@@ -27,7 +31,9 @@ class Service extends Component {
 
   render() {
     const { classes, match, services } = this.props;
-    const name = match.params.serviceId;
+    const name = match.params.serviceName;
+
+    const startUrl = `/service/${name}/start`;
 
     if (!services.get(name)) {
       return (<p> Loading </p>);
@@ -39,7 +45,7 @@ class Service extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Typography variant="display2">({name})</Typography>
+            <Typography variant="display2">{name}</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
@@ -54,6 +60,17 @@ class Service extends Component {
             <Typography variant="title">Output</Typography>
           </Paper>
         </Grid>
+        <Button
+          variant="fab"
+          color="primary"
+          aria-label="add"
+          className={classes.button}
+          component={Link}
+          to={startUrl}
+        >
+          <AddIcon />
+        </Button>
+
       </div>
     );
   }
