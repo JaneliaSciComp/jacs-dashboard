@@ -11,6 +11,10 @@ export const SERVICE_DATA_LOAD_ERROR = 'SERVICE_DATA_LOAD_ERROR';
 export const SERVICE_STARTING = 'SERVICE_STARTING';
 export const SERVICE_START_ERROR = 'SERVICE_START_ERROR';
 
+export const JOB_DATA_LOADING = 'JOB_DATA_LOADING';
+export const JOB_DATA_LOADED = 'JOB_DATA_LOADED';
+export const JOB_DATA_LOAD_ERROR = 'JOB_DATA_LOAD_ERROR';
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -119,5 +123,58 @@ export function startService(name, args) {
       const serviceUrl = `/job/${json.serviceId}`;
       history.push(serviceUrl);
     }).catch(error => dispatch(startServiceError(error)));
+  };
+}
+
+function loadingJobData(id) {
+  return {
+    type: JOB_DATA_LOADING,
+    id,
+  };
+}
+
+function loadJobDataError(error) {
+  return {
+    type: JOB_DATA_LOAD_ERROR,
+    error,
+  };
+}
+
+function loadedJobData(json) {
+  return {
+    type: JOB_DATA_LOADED,
+    json,
+  };
+}
+
+
+export function loadJobData(jobId) {
+  return function loadJobDataAsync(dispatch) {
+    dispatch(loadingJobData(jobId));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { jobDataUrl } = settings;
+    const requestUrl = jobDataUrl.replace('<job_id>', jobId);
+    return fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(loadedJobData(json));
+    }).catch(error => dispatch(loadJobDataError(error)));
   };
 }

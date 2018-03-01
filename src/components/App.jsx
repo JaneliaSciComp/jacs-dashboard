@@ -13,7 +13,7 @@ import Profile from '../containers/Profile';
 import ServiceList from '../containers/ServiceList';
 import Service from '../containers/Service';
 import ServiceStart from '../containers/ServiceStart';
-import Job from './Job';
+import Job from '../containers/Job';
 import JobStatusList from './JobStatusList';
 import ScheduledJobs from './ScheduledJobs';
 import PrivateRoute from '../containers/auth/PrivateRoute';
