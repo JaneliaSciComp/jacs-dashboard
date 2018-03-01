@@ -116,7 +116,7 @@ export function startService(name, args) {
     }).then((json) => {
       // TODO: need to check our response.
       // if bad, then need to show an error message explaining what happened
-      const serviceUrl = `/jobs/${json.serviceId}`;
+      const serviceUrl = `/job/${json.serviceId}`;
       history.push(serviceUrl);
     }).catch(error => dispatch(startServiceError(error)));
   };
