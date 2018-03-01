@@ -26,7 +26,12 @@ class Service extends Component {
   }
 
   render() {
-    const { classes, match, services } = this.props;
+    const {
+      actions,
+      classes,
+      match,
+      services,
+    } = this.props;
     const name = match.params.serviceName;
 
     if (!services.get(name)) {
@@ -45,7 +50,7 @@ class Service extends Component {
         <Grid item xs={12}>
           <Paper className={classes.main}>
             <Typography variant="title">Parameter List</Typography>
-            <ParameterForm data={serviceDetails.serviceArgDescriptors} />
+            <ParameterForm data={serviceDetails.serviceArgDescriptors} name={serviceDetails.serviceName} submit={actions.startService} />
           </Paper>
         </Grid>
       </div>

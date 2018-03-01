@@ -1,10 +1,13 @@
 import fetch from 'isomorphic-fetch';
+import Cookies from 'universal-cookie';
 import settings from '../settings.json';
 
 export const SERVICE_DATA_LOADING = 'SERVICE_DATA_LOADING';
 export const SERVICE_DATA_LOADED = 'SERVICE_DATA_LOADED';
 export const SERVICE_ITEM_DATA_LOADED = 'SERVICE_ITEM_DATA_LOADED';
 export const SERVICE_DATA_LOAD_ERROR = 'SERVICE_DATA_LOAD_ERROR';
+
+export const SERVICE_STARTING = 'SERVICE_STARTING';
 
 export function loadingServiceData(args) {
   return {
@@ -67,5 +70,34 @@ export function loadServiceData(args = {}) {
         dispatch(loadedServiceData(json));
       }
     }).catch(error => dispatch(loadServiceError(error)));
+  };
+}
+
+export function startingJob(name) {
+  return {
+    type: SERVICE_STARTING,
+    name,
+  };
+}
+
+
+export function startService(name, args) {
+  return function startServiceAsync(dispatch) {
+    dispatch(startingJob(name));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { asyncServiceUrl } = settings;
+    const requestUrl = asyncServiceUrl.replace('<service_name>', name);
+    return fetch(requestUrl, {
+      method: 'POST',
+      body: JSON.stringify(args),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    });
   };
 }

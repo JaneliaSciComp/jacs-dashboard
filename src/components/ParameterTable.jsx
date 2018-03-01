@@ -30,7 +30,7 @@ class ParameterTable extends Component {
             <TableRow>
               <TableCell>Parameter Name</TableCell>
               <TableCell>Description</TableCell>
-              <TableCell>Required</TableCell>
+              <TableCell className={classes.required}>Required</TableCell>
               <TableCell>Flags</TableCell>
             </TableRow>
           </TableHead>
