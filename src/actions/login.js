@@ -107,7 +107,7 @@ export function loginValidate(username, password) {
         } else {
           // set a cookie for later use, if the page gets a hard reset.
           const cookies = new Cookies();
-          cookies.set('userId', json.token);
+          cookies.set('userId', json.token, { path: '/' });
 
           dispatch(loginUserLoadComplete(userData));
           dispatch(loginValidationComplete(decoded, json.token));
