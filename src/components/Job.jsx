@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import parse from 'date-fns/parse';
+import format from 'date-fns/format';
 
 const styles = {
   row: {
@@ -23,12 +25,15 @@ class Job extends Component {
       return (<div>loading...</div>);
     }
 
-    return (
-      <div className={classes.row}>
+    return [
+      <div className={classes.row} key="1">
         <Typography align="center" variant="display2">Job Information ({data.serviceId}) </Typography>
+      </div>,
+      <div className={classes.row} key="2">
         <p>{data.state}</p>
-      </div>
-    );
+        <p>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</p>
+      </div>,
+    ];
   }
 }
 
