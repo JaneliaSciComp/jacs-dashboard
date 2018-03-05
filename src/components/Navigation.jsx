@@ -10,6 +10,10 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Avatar from 'material-ui/Avatar';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import { withStyles } from 'material-ui/styles';
+import Drawer from 'material-ui/Drawer';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
+import Icon from 'material-ui/Icon';
 
 const styles = {
   root: {
@@ -24,7 +28,7 @@ const styles = {
   },
   avatar: {
     background: '#000',
-  }
+  },
 };
 
 
@@ -33,25 +37,15 @@ class Navigation extends Component {
     super(props);
     this.state = {
       anchorEl: null,
-      mainAnchorEl: null,
+      drawerState: false,
     };
-
-    this.handleMainMenu = this.handleMainMenu.bind(this);
-    this.handleMainClose = this.handleMainClose.bind(this);
 
     this.handleMenu = this.handleMenu.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.handleDrawerClose = this.handleDrawerClose.bind(this);
+    this.handleDrawerOpen = this.handleDrawerOpen.bind(this);
   }
-
-  handleMainMenu(e) {
-    this.setState({ mainAnchorEl: e.currentTarget });
-  }
-
-  handleMainClose() {
-    this.setState({ mainAnchorEl: null });
-  }
-
 
   handleMenu(e) {
     this.setState({ anchorEl: e.currentTarget });
@@ -67,11 +61,18 @@ class Navigation extends Component {
     actions.logout();
   }
 
+  handleDrawerClose() {
+    this.setState({ drawerState: false });
+  }
+
+  handleDrawerOpen() {
+    this.setState({ drawerState: true });
+  }
+
   render() {
     const { classes, login } = this.props;
-    const { anchorEl, mainAnchorEl } = this.state;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-    const mainOpen = Boolean(mainAnchorEl);
 
 
     let auth = <Button color="inherit" component={Link} to="/login">Login</Button>;
@@ -85,32 +86,38 @@ class Navigation extends Component {
       );
     }
 
-    return (
-      <AppBar position="static">
+    const sideList = (
+      <div className={classes.list}>
+        <List>
+          <ListItem button onClick={this.handleClose} component={Link} to="/">
+            <ListItemIcon>
+              <Icon>home</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <Divider />
+          <ListItem button onClick={this.handleClose} component={Link} to="/jobs">
+            <ListItemIcon>
+              <Icon>cake</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Jobs" />
+          </ListItem>
+          <ListItem button onClick={this.handleClose} component={Link} to="/services">
+            <ListItemIcon>
+              <Icon>whatshot</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Services List" />
+          </ListItem>
+        </List>
+      </div>
+    );
+
+    return [
+      <AppBar position="static" key="appbar">
         <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleMainMenu}>
+          <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleDrawerOpen}>
             <MenuIcon />
           </IconButton>
-
-          <Menu
-            id="menu-main"
-            anchorEl={mainAnchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={mainOpen}
-            onClose={this.handleMainClose}
-          >
-            <MenuItem onClick={this.handleClose} component={Link} to="/">Home</MenuItem>
-            <MenuItem onClick={this.handleClose} component={Link} to="/jobs">Jobs</MenuItem>
-            <MenuItem onClick={this.handleClose} component={Link} to="/services">Services</MenuItem>
-          </Menu>
-
 
           <Menu
             id="menu-appbar"
@@ -139,8 +146,18 @@ class Navigation extends Component {
           </div>
           {auth}
         </Toolbar>
-      </AppBar>
-    );
+      </AppBar>,
+      <Drawer open={this.state.drawerState} onClose={this.handleDrawerClose} key="drawer">
+        <div
+          tabIndex={0}
+          role="button"
+          onClick={this.handleDrawerClose}
+          onKeyDown={this.handleDrawerClose}
+        >
+          {sideList}
+        </div>
+      </Drawer>,
+    ];
   }
 }
 
