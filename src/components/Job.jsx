@@ -27,11 +27,16 @@ class Job extends Component {
 
     return [
       <div className={classes.row} key="1">
-        <Typography align="center" variant="display2">Job Information ({data.serviceId}) </Typography>
+        <Typography align="center" variant="display1">Job Information ({data.serviceId}) </Typography>
+      </div>,
+      <div className={classes.row} key="type">
+        <Typography>{data.name}</Typography>
       </div>,
       <div className={classes.row} key="2">
-        <p>{data.state}</p>
-        <p>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</p>
+        <Typography>{data.state}</Typography>
+      </div>,
+      <div className={classes.row} key="3">
+        <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
       </div>,
     ];
   }

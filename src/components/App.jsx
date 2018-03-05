@@ -14,7 +14,7 @@ import ServiceList from '../containers/ServiceList';
 import Service from '../containers/Service';
 import ServiceStart from '../containers/ServiceStart';
 import Job from '../containers/Job';
-import JobStatusList from './JobStatusList';
+import JobStatusList from '../containers/JobStatusList';
 import ScheduledJobs from './ScheduledJobs';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import './App.css';

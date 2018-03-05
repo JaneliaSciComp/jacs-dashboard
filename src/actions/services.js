@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
+import queryString from 'query-string';
+
 import settings from '../settings.json';
 import history from '../history';
 
@@ -14,6 +16,10 @@ export const SERVICE_START_ERROR = 'SERVICE_START_ERROR';
 export const JOB_DATA_LOADING = 'JOB_DATA_LOADING';
 export const JOB_DATA_LOADED = 'JOB_DATA_LOADED';
 export const JOB_DATA_LOAD_ERROR = 'JOB_DATA_LOAD_ERROR';
+
+export const JOB_LIST_LOADING = 'JOB_LIST_LOADING';
+export const JOB_LIST_LOADED = 'JOB_LIST_LOADED';
+export const JOB_LIST_LOAD_ERROR = 'JOB_LIST_LOAD_ERROR';
 
 export function loadingServiceData(args) {
   return {
@@ -176,5 +182,62 @@ export function loadJobData(jobId) {
       // if bad, then need to show an error message explaining what happened
       dispatch(loadedJobData(json));
     }).catch(error => dispatch(loadJobDataError(error)));
+  };
+}
+
+function loadingJobList(id) {
+  return {
+    type: JOB_LIST_LOADING,
+    id,
+  };
+}
+
+function loadJobListError(error) {
+  return {
+    type: JOB_LIST_LOAD_ERROR,
+    error,
+  };
+}
+
+function loadedJobList(json) {
+  return {
+    type: JOB_LIST_LOADED,
+    json,
+  };
+}
+
+
+export function loadJobList(userId, page) {
+  return function loadJobDataAsync(dispatch) {
+    dispatch(loadingJobList());
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { jobListUrl } = settings;
+    const qString = queryString.stringify({
+      'service-owner': userId,
+      page,
+    });
+    const requestUrl = `${jobListUrl}?${qString}`;
+    return fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(loadedJobList(json));
+    }).catch(error => dispatch(loadJobListError(error)));
   };
 }

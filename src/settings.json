@@ -3,5 +3,6 @@
   "authApiUrl": "http://localhost:3000/authenticate",
   "serviceListUrl": "http://jacs-dev.int.janelia.org:9000/api/rest-v2/services/metadata",
   "asyncServiceUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/<service_name>",
-  "jobDataUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services/<job_id>"
+  "jobDataUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services/<job_id>",
+  "jobListUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services"
 }
