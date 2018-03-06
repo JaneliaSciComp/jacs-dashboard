@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Typ from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import './Home.css';
@@ -18,33 +18,59 @@ const styles = theme => ({
 
 
 class Home extends Component {
+  componentDidMount() {
+    const user = this.props.login.get('user');
+    const username = user.key;
+    this.props.actions.loadJobList(username);
+  }
+
+  jobsList() {
+    if (!this.props.jobs.get('list_loaded')) {
+      return (<Typ>Loading</Typ>);
+    }
+    return (
+      <Typ>Showing ({this.props.jobs.get('list').resultList.length}) jobs</Typ>
+    );
+  }
+
+
   render() {
     const { login, classes } = this.props;
 
-    return (
-      <Grid id="login-view" container spacing={24} className={classes.root}>
+    const user = login.get('user');
+
+    return [
+      <Grid key="welcome" container spacing={24} className={classes.root}>
         <Grid item xs={12}>
-          <Grid container justify="center">
-            <Paper elevation={1} className={classes.paper}>
-              <Typ variant="title">
-                Welcome to the JACS Dashboard
-              </Typ>
-              {
-                (login.get('loggedIn'))
-                  ? <Typ align="center">You are logged in as: {login.get('username')}</Typ>
-                  : <Typ align="center">Please login to continue</Typ>
-              }
-            </Paper>
-          </Grid>
+          <Typ variant="title">
+            Welcome to the JACS Dashboard
+          </Typ>
         </Grid>
-      </Grid>
-    );
+        <Grid item xs={12}>
+          {
+            (login.get('loggedIn'))
+              ? <Typ>You are logged in as: {user.fullName} ({login.get('username')})</Typ>
+              : <Typ>Please <Link to="/login">login</Link> to continue</Typ>
+          }
+        </Grid>
+      </Grid>,
+      <Grid key="contents" container spacing={24} className={classes.root}>
+        <Grid item sm={4}>
+          <Typ>Small charts here</Typ>
+        </Grid>
+        <Grid item sm={8}>
+          {this.jobsList()}
+        </Grid>
+      </Grid>,
+    ];
   }
 }
 
 Home.propTypes = {
   login: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  jobs: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Home);
