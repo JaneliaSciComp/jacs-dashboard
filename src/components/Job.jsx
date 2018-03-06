@@ -5,6 +5,7 @@ import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
+import Icon from 'material-ui/Icon';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
@@ -25,6 +26,10 @@ const styles = {
   download: {
     textAlign: 'right',
   },
+  error: {
+    color: '#f00',
+    fontSize: '1em',
+  },
 };
 
 class Job extends Component {
@@ -34,17 +39,21 @@ class Job extends Component {
 
   eventsTable() {
     const { classes } = this.props;
+
+    const { events } = this.props.job.get('data');
+
+
     return (
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
             <TableCell>Event</TableCell>
-            <TableCell>Description</TableCell>
             <TableCell>TimeStamp</TableCell>
+            <TableCell>Description</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.props.job.get('data').events.map((e, i) => (
+          {events && events.map((e, i) => (
             <TableRow key={i}>
               <TableCell>{e.name}</TableCell>
               <TableCell>{format(parse(e.eventTime), 'YYYY/MM/DD, h:mmA')}</TableCell>
@@ -79,6 +88,7 @@ class Job extends Component {
 
   outputTable() {
     const { classes } = this.props;
+
     return (
       <Table className={classes.table}>
         <TableHead>
@@ -112,11 +122,13 @@ class Job extends Component {
 
     const runningTime = new Duration(parse(data.creationDate), parse(data.modificationDate));
 
+    const rerunUrl = `/service/${data.name}/start`;
+
     return (
       <Grid container className={classes.row}>
         <Grid item md={8}>
           <div className={classes.row} key="1">
-            <Typography align="center" variant="display1">Job Status ({data.serviceId}) </Typography>
+            <Typography align="center" variant="display1">{ data.state === "ERROR" && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
           </div>
           <div className={classes.row} key="type">
             <Typography>{data.name}</Typography>
@@ -135,7 +147,7 @@ class Job extends Component {
               <Button variant="raised" size="small">Pause</Button>
               <Button variant="raised" size="small">Restart</Button>
               <Button variant="raised" size="small">Delete</Button>
-              <Button variant="raised" size="small">Run with new Parameters</Button>
+              <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
 

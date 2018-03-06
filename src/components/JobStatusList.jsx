@@ -35,6 +35,7 @@ class JobStatusList extends Component {
           <TableCell>{item.state}</TableCell>
           <TableCell>{format(parse(item.processStartTime), 'YYYY/MM/DD, h:mmA')}</TableCell>
           <TableCell>{format(parse(item.modificationDate), 'YYYY/MM/DD, h:mmA')}</TableCell>
+          <TableCell>{item.ownerKey}</TableCell>
           <TableCell>{item.processingLocation}</TableCell>
         </TableRow>
       );
@@ -54,6 +55,7 @@ class JobStatusList extends Component {
               <TableCell>State</TableCell>
               <TableCell>Start Time</TableCell>
               <TableCell>Last Modified</TableCell>
+              <TableCell>Owner</TableCell>
               <TableCell>Processed @</TableCell>
             </TableRow>
           </TableHead>
