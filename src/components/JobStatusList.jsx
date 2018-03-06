@@ -5,6 +5,8 @@ import format from 'date-fns/format';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { Link } from 'react-router-dom';
+import { isAdminUser } from '../lib/user-utility';
 
 const styles = {
   row: {
@@ -14,7 +16,11 @@ const styles = {
 
 class JobStatusList extends Component {
   componentDidMount() {
-    const username = this.props.login.get('user').key;
+    const user = this.props.login.get('user');
+    let username = user.key;
+    if (isAdminUser(user)) {
+      username = null;
+    }
     this.props.actions.loadJobList(username);
   }
 
@@ -22,9 +28,10 @@ class JobStatusList extends Component {
     const list = this.props.jobs.get('list');
     return list.resultList.map((item) => {
       const { name } = item;
+      const detailsUrl = `/job/${item.serviceId}`;
       return (
         <TableRow key={item.serviceId}>
-          <TableCell>{name}</TableCell>
+          <TableCell><Link to={detailsUrl}>{name}</Link></TableCell>
           <TableCell>{item.state}</TableCell>
           <TableCell>{format(parse(item.processStartTime), 'YYYY/MM/DD, h:mmA')}</TableCell>
           <TableCell>{format(parse(item.modificationDate), 'YYYY/MM/DD, h:mmA')}</TableCell>
