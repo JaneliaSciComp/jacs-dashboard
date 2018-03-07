@@ -98,13 +98,13 @@ class Navigation extends Component {
           <Divider />
           <ListItem button onClick={this.handleClose} component={Link} to="/jobs">
             <ListItemIcon>
-              <Icon>cake</Icon>
+              <Icon>play_circle_filled</Icon>
             </ListItemIcon>
             <ListItemText primary="Jobs" />
           </ListItem>
           <ListItem button onClick={this.handleClose} component={Link} to="/services">
             <ListItemIcon>
-              <Icon>whatshot</Icon>
+              <Icon>folder</Icon>
             </ListItemIcon>
             <ListItemText primary="Services List" />
           </ListItem>

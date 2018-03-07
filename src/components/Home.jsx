@@ -20,8 +20,8 @@ const styles = theme => ({
 class Home extends Component {
   componentDidMount() {
     const user = this.props.login.get('user');
-    const username = user.key;
-    this.props.actions.loadJobList(username);
+    this.props.actions.loadJobList(user.key);
+    this.props.actions.quotaReport(user.name);
   }
 
   jobsList() {
@@ -33,6 +33,21 @@ class Home extends Component {
     );
   }
 
+  storageUsage() {
+    const report = this.props.quota.get('report');
+
+    if (!report) {
+      return (
+        <Typ>Loading</Typ>
+      );
+    }
+
+    const user = this.props.login.get('user');
+    const userReport = report[user.name];
+    return (
+      <Typ>Currently using {userReport.percentUsage} storage</Typ>
+    );
+  }
 
   render() {
     const { login, classes } = this.props;
@@ -56,7 +71,7 @@ class Home extends Component {
       </Grid>,
       <Grid key="contents" container spacing={24} className={classes.root}>
         <Grid item sm={4}>
-          <Typ>Small charts here</Typ>
+          {this.storageUsage()}
         </Grid>
         <Grid item sm={8}>
           {this.jobsList()}
@@ -71,6 +86,7 @@ Home.propTypes = {
   classes: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   jobs: PropTypes.object.isRequired,
+  quota: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Home);

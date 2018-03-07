@@ -4,5 +4,7 @@
   "serviceListUrl": "http://jacs-dev.int.janelia.org:9000/api/rest-v2/services/metadata",
   "asyncServiceUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/<service_name>",
   "jobDataUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services/<job_id>",
-  "jobListUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services"
+  "jobListUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services",
+  "quotaBaseUrl": "https://api.int.janelia.org/SCSW/JaneliaFileServices/v1/api/quota/filestore/report",
+  "apiKey": "ea0c3c4b-85f7-4e9d-b30f-444461eb4bf7"
 }
