@@ -45,8 +45,8 @@ class Job extends Component {
     this.props.actions.loadJobData(this.props.match.params.jobId);
   }
 
-  handleChange(event) {
-    this.props.actions.setShortDate(event.target.checked);
+  handleChange() {
+    this.props.actions.setShortDate(!this.props.shortDate);
   }
 
   eventsTable() {
@@ -72,7 +72,7 @@ class Job extends Component {
           {events && events.map((e, i) => (
             <TableRow key={i}>
               <TableCell>{e.name}</TableCell>
-              <TableCell>{format(parse(e.eventTime), formatTemplate)}</TableCell>
+              <TableCell onClick={this.handleChange}>{format(parse(e.eventTime), formatTemplate)}</TableCell>
               <TableCell>{e.value}</TableCell>
             </TableRow>
           ))}
