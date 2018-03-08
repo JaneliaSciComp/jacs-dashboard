@@ -6,6 +6,7 @@ import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
 import Icon from 'material-ui/Icon';
+import Switch from 'material-ui/Switch';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
@@ -33,15 +34,30 @@ const styles = {
 };
 
 class Job extends Component {
+  constructor(...args) {
+    super(...args);
+    // bind it and make it an instance method instead of prototype method
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+
   componentDidMount() {
     this.props.actions.loadJobData(this.props.match.params.jobId);
   }
 
+  handleChange(event) {
+    this.props.actions.setShortDate(event.target.checked);
+  }
+
   eventsTable() {
-    const { classes } = this.props;
+    const { classes, shortDate } = this.props;
 
     const { events } = this.props.job.get('data');
 
+    // format the string in short form, unless specified otherwise
+    const formatTemplate = (shortDate) ?
+      'YYYY/MM/DD, hh:mm:ssA' :
+      'YYYY/MM/DD, HH:mm:ss.SSS';
 
     return (
       <Table className={classes.table}>
@@ -56,7 +72,7 @@ class Job extends Component {
           {events && events.map((e, i) => (
             <TableRow key={i}>
               <TableCell>{e.name}</TableCell>
-              <TableCell>{format(parse(e.eventTime), 'YYYY/MM/DD, h:mmA')}</TableCell>
+              <TableCell>{format(parse(e.eventTime), formatTemplate)}</TableCell>
               <TableCell>{e.value}</TableCell>
             </TableRow>
           ))}
@@ -166,8 +182,17 @@ class Job extends Component {
 
 
           <Grid container className={classes.row}>
-            <Grid item sm={12}>
+            <Grid item sm={8}>
               <Typography variant="title">Events</Typography>
+            </Grid>
+            <Grid item sm={4} align="right">
+              Human Dates
+              <Switch
+                checked={this.props.shortDate}
+                onChange={this.handleChange}
+                value="dateToggle"
+                color="primary"
+              />
             </Grid>
           </Grid>
           <Grid container className={classes.row}>
@@ -217,6 +242,7 @@ Job.propTypes = {
   classes: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
+  shortDate: PropTypes.bool.isRequired,
 };
 
 export default withStyles(styles)(Job);
