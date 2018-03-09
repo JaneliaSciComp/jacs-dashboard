@@ -14,6 +14,7 @@ import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Icon from 'material-ui/Icon';
+import Chip from 'material-ui/Chip';
 import settings from '../settings.json';
 
 const styles = {
@@ -82,9 +83,12 @@ class Navigation extends Component {
       const avatarSrc = settings.avatarUrl.replace('<username>', login.get('username'));
 
       auth = (
-        <IconButton color="inherit" onClick={this.handleMenu}>
-          <Avatar className={classes.avatar} src={avatarSrc} />
-        </IconButton>
+        <Chip
+          avatar={<Avatar className={classes.avatar} src={avatarSrc} />}
+          label={login.get('user').fullName}
+          onClick={this.handleMenu}
+          className={classes.chip}
+        />
       );
     }
 
