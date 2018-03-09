@@ -14,6 +14,7 @@ import Drawer from 'material-ui/Drawer';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Icon from 'material-ui/Icon';
+import settings from '../settings.json';
 
 const styles = {
   root: {
@@ -78,10 +79,11 @@ class Navigation extends Component {
     let auth = <Button color="inherit" component={Link} to="/login">Login</Button>;
 
     if (login.get('loggedIn')) {
-      const initials = login.get('user').fullName.split(' ').map(name => name.charAt(0)).join('');
+      const avatarSrc = settings.avatarUrl.replace('<username>', login.get('username'));
+
       auth = (
         <IconButton color="inherit" onClick={this.handleMenu}>
-          <Avatar className={classes.avatar}>{initials}</Avatar>
+          <Avatar className={classes.avatar} src={avatarSrc} />
         </IconButton>
       );
     }
