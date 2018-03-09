@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Switch from 'material-ui/Switch';
 import Button from 'material-ui/Button';
+import titleCase from 'title-case';
 
 const styles = {
   root: {
@@ -89,7 +90,7 @@ class ParameterForm extends Component {
       <Grid item xs={12} lg={12} key={data.argName}>
         <Grid container spacing={16} className={classes.root} alignItems="flex-end">
           <Grid item xs={3} >
-            <Typography align="right">{data.argName}</Typography>
+            <Typography align="right">{titleCase(data.argName)}</Typography>
           </Grid>
           <Grid item xs={4}>
             {input}

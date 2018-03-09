@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { PieChart, Pie, Cell, LabelList, ResponsiveContainer } from 'recharts';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Typ from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
+import parse from 'date-fns/parse';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import './Home.css';
 
 const styles = theme => ({
@@ -26,12 +29,44 @@ class Home extends Component {
     this.props.actions.quotaReport(user.name);
   }
 
+  buildTable() {
+    const list = this.props.jobs.get('list');
+    return list.resultList.map((item) => {
+      const { name } = item;
+      const detailsUrl = `/job/${item.serviceId}`;
+      return (
+        <TableRow key={item.serviceId}>
+          <TableCell><Link to={detailsUrl}>{name}</Link></TableCell>
+          <TableCell>{item.state}</TableCell>
+          <TableCell>{distanceInWordsToNow(parse(item.processStartTime))} ago</TableCell>
+          <TableCell>{distanceInWordsToNow(parse(item.modificationDate))} ago</TableCell>
+        </TableRow>
+      );
+    });
+  }
+
   jobsList() {
+    const { classes } = this.props;
     if (!this.props.jobs.get('list_loaded')) {
       return (<Typ>Loading</Typ>);
     }
     return (
-      <Typ>Showing ({this.props.jobs.get('list').resultList.length}) jobs</Typ>
+      <Paper className={classes.paper}>
+        <Typ>You have ({this.props.jobs.get('list').resultList.length}) jobs <Link to="/jobs">See all</Link></Typ>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>State</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>Last Modified</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {this.buildTable()}
+          </TableBody>
+        </Table>
+      </Paper>
     );
   }
 
@@ -63,7 +98,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
-        <Typ>Currently using {percentage}% storage</Typ>
+        <Typ>{percentage}% of alloted storage used.</Typ>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart width={300} height={300}>
             <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150} fill="#5bc0de" isAnimationActive={false}>
@@ -77,25 +112,9 @@ class Home extends Component {
   }
 
   render() {
-    const { login, classes } = this.props;
-
-    const user = login.get('user');
+    const { classes } = this.props;
 
     return [
-      <Grid key="welcome" container spacing={24} className={classes.root}>
-        <Grid item xs={12}>
-          <Typ variant="title">
-            Welcome to the JACS Dashboard
-          </Typ>
-        </Grid>
-        <Grid item xs={12}>
-          {
-            (login.get('loggedIn'))
-              ? <Typ>You are logged in as: {user.fullName} ({login.get('username')})</Typ>
-              : <Typ>Please <Link to="/login">login</Link> to continue</Typ>
-          }
-        </Grid>
-      </Grid>,
       <Grid key="contents" container spacing={24} className={classes.root}>
         <Grid item sm={4}>
           {this.storageUsage()}
