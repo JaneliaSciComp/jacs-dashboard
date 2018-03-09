@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { PieChart, Pie, Cell, LabelList } from 'recharts';
+import { PieChart, Pie, Cell, LabelList, ResponsiveContainer } from 'recharts';
 import Typ from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
 import { withStyles } from 'material-ui/styles';
 import './Home.css';
 
@@ -36,6 +37,7 @@ class Home extends Component {
 
   storageUsage() {
     const report = this.props.quota.get('report');
+    const { classes } = this.props;
 
     if (!report) {
       return (
@@ -59,15 +61,19 @@ class Home extends Component {
 
     const percentage = Math.round(userReport.percentUsage * 100);
 
-    return [
-      <Typ key="1">Currently using {percentage}% storage</Typ>,
-      <PieChart key="2" width={300} height={300}>
-        <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150} fill="#5bc0de" isAnimationActive={false}>
-          <LabelList dataKey="name" position="inside" />
-          <Cell fill="#1490ac" />
-        </Pie>
-      </PieChart>,
-    ];
+    return (
+      <Paper className={classes.paper}>
+        <Typ>Currently using {percentage}% storage</Typ>
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart width={300} height={300}>
+            <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150} fill="#5bc0de" isAnimationActive={false}>
+              <LabelList dataKey="name" position="inside" />
+              <Cell fill="#1490ac" />
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </Paper>
+    );
   }
 
   render() {
