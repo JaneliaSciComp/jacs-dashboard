@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { PieChart, Pie, Cell, LabelList } from 'recharts';
 import Typ from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
@@ -44,9 +45,29 @@ class Home extends Component {
 
     const user = this.props.login.get('user');
     const userReport = report[user.name];
-    return (
-      <Typ>Currently using {userReport.percentUsage} storage</Typ>
-    );
+
+    const data = [
+      {
+        name: `Used (${Math.round(userReport.spaceUsedTB)}TB)`,
+        value: userReport.spaceUsedTB,
+      },
+      {
+        name: `Free (${Math.round(userReport.totalSpaceTB - userReport.spaceUsedTB)}TB)`,
+        value: userReport.totalSpaceTB - userReport.spaceUsedTB,
+      },
+    ];
+
+    const percentage = Math.round(userReport.percentUsage * 100);
+
+    return [
+      <Typ key="1">Currently using {percentage}% storage</Typ>,
+      <PieChart key="2" width={300} height={300}>
+        <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={150} fill="#5bc0de" isAnimationActive={false}>
+          <LabelList dataKey="name" position="inside" />
+          <Cell fill="#1490ac" />
+        </Pie>
+      </PieChart>,
+    ];
   }
 
   render() {
