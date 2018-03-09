@@ -117,10 +117,28 @@ class Home extends Component {
     return [
       <Grid key="contents" container spacing={24} className={classes.root}>
         <Grid item sm={4}>
-          {this.storageUsage()}
+          <Grid container spacing={24}>
+            <Grid item sm={12}>
+              <Paper className={classes.paper}>
+                <Typ>Start button here</Typ>
+              </Paper>
+            </Grid>
+            <Grid item sm={12}>
+              {this.storageUsage()}
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item sm={8}>
-          {this.jobsList()}
+          <Grid container spacing={24}>
+            <Grid item sm={12}>
+              {this.jobsList()}
+            </Grid>
+            <Grid item sm={12}>
+              <Paper className={classes.paper}>
+                <Typ>Scheduled Jobs</Typ>
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>,
     ];
