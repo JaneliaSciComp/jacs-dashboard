@@ -6,7 +6,10 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { Link } from 'react-router-dom';
+import Chip from 'material-ui/Chip';
+import Avatar from 'material-ui/Avatar';
 import { isAdminUser } from '../lib/user-utility';
+import settings from '../settings.json';
 
 const styles = {
   row: {
@@ -29,13 +32,26 @@ class JobStatusList extends Component {
     return list.resultList.map((item) => {
       const { name } = item;
       const detailsUrl = `/job/${item.serviceId}`;
+
+      const username = item.ownerKey.split(':')[1];
+
+      const avatarSrc = settings.avatarUrl.replace('<username>', username);
+
+      const auth = (
+        <Chip
+          avatar={<Avatar src={avatarSrc}/>}
+          label={item.ownerKey}
+          onClick={this.handleMenu}
+        />
+      );
+
       return (
         <TableRow key={item.serviceId}>
           <TableCell><Link to={detailsUrl}>{name}</Link></TableCell>
           <TableCell>{item.state}</TableCell>
           <TableCell>{format(parse(item.processStartTime), 'YYYY/MM/DD, h:mmA')}</TableCell>
           <TableCell>{format(parse(item.modificationDate), 'YYYY/MM/DD, h:mmA')}</TableCell>
-          <TableCell>{item.ownerKey}</TableCell>
+          <TableCell>{auth}</TableCell>
           <TableCell>{item.processingLocation}</TableCell>
         </TableRow>
       );
