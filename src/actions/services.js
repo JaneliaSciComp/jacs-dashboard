@@ -21,6 +21,10 @@ export const JOB_LIST_LOADING = 'JOB_LIST_LOADING';
 export const JOB_LIST_LOADED = 'JOB_LIST_LOADED';
 export const JOB_LIST_LOAD_ERROR = 'JOB_LIST_LOAD_ERROR';
 
+export const SCHEDULED_LIST_LOADING = 'SCHEDULED_LIST_LOADING';
+export const SCHEDULED_LIST_LOADED = 'SCHEDULED_LIST_LOADED';
+export const SCHEDULED_LIST_LOAD_ERROR = 'SCHEDULED_LIST_LOAD_ERROR';
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -239,5 +243,57 @@ export function loadJobList(userId, page) {
       // if bad, then need to show an error message explaining what happened
       dispatch(loadedJobList(json));
     }).catch(error => dispatch(loadJobListError(error)));
+  };
+}
+
+function loadingScheduledList(id) {
+  return {
+    type: SCHEDULED_LIST_LOADING,
+    id,
+  };
+}
+
+function loadScheduledListError(error) {
+  return {
+    type: SCHEDULED_LIST_LOAD_ERROR,
+    error,
+  };
+}
+
+function loadedScheduledList(json) {
+  return {
+    type: SCHEDULED_LIST_LOADED,
+    json,
+  };
+}
+
+
+export function loadScheduledList() {
+  return function loadJobDataAsync(dispatch) {
+    dispatch(loadingScheduledList());
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { scheduledServicesUrl } = settings;
+    return fetch(scheduledServicesUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(loadedScheduledList(json));
+    }).catch(error => dispatch(loadScheduledListError(error)));
   };
 }

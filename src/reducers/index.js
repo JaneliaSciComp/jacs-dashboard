@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import app from './app';
 import login from './login';
 import services from './services';
+import scheduled from './scheduled';
 import jobs from './jobs';
 import quota from './quota';
 
@@ -11,4 +12,5 @@ export default combineReducers({
   services,
   jobs,
   quota,
+  scheduled,
 });

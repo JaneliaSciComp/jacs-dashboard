@@ -114,6 +114,13 @@ class Navigation extends Component {
             </ListItemIcon>
             <ListItemText primary="Services List" />
           </ListItem>
+          <ListItem button onClick={this.handleClose} component={Link} to="/services/scheduled">
+            <ListItemIcon>
+              <Icon>timer</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Scheduled Services" />
+          </ListItem>
+
         </List>
       </div>
     );
