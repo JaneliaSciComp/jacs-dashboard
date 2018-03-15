@@ -8,6 +8,7 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import { Link } from 'react-router-dom';
 import qs from 'qs';
 import Chip from 'material-ui/Chip';
+import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import { isAdminUser } from '../lib/user-utility';
 import settings from '../settings.json';
@@ -24,7 +25,7 @@ function pageNumber(location) {
   if (Object.prototype.hasOwnProperty.call(queryParams, 'p')) {
     page = queryParams.p;
   }
-  return parseInt(page);
+  return parseInt(page, 10);
 }
 
 
@@ -97,10 +98,16 @@ class JobStatusList extends Component {
     if (this.props.jobs.get('list_loaded')) {
       const page = pageNumber(this.props.location);
       const nextPage = `/jobs?p=${1 + page}`;
-      return (
-        <div className={classes.row}>
-          <Link to={nextPage} >Next</Link>
-          <Typography align="center" variant="display2">Jobs List</Typography>
+      return [
+        <Grid container key="title" className={classes.row}>
+          <Grid item xs={8}>
+            <Typography variant="display2">Jobs List</Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Link to={nextPage} >Next</Link>
+          </Grid>
+        </Grid>,
+        <Grid key="table" className={classes.row}>
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
@@ -116,8 +123,8 @@ class JobStatusList extends Component {
               {this.buildTable()}
             </TableBody>
           </Table>
-        </div>
-      );
+        </Grid>
+      ];
     }
 
     return (
