@@ -24,7 +24,7 @@ class ScheduledJobs extends Component {
 
     if (scheduled.get('data')) {
       const data = scheduled.get('data');
-      dataGrid = <ScheduledTable data={data} />;
+      dataGrid = <ScheduledTable data={data.resultList} />;
     }
 
     return (

@@ -67,6 +67,7 @@ class App extends Component {
               <Route path="/services/scheduled" component={ScheduledJobs} />
               <Route path="/services" component={ServiceList} />
               <PrivateRoute path="/service/:serviceName/start" component={ServiceStart} />
+              <Route path="/service/scheduled/:serviceId" component={ScheduledJobs} />
               <Route path="/service/:serviceName" component={Service} />
               <PrivateRoute exact path="/jobs" component={JobStatusList} />
               <PrivateRoute path="/job/:jobId" component={Job} />

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import parse from 'date-fns/parse';
+import format from 'date-fns/format';
 
 const styles = {
   root: {
@@ -25,11 +27,13 @@ class ScheduledTable extends Component {
               <TableCell>Service Name</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Schedule</TableCell>
+              <TableCell>Last Run</TableCell>
+              <TableCell>Next Run</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.resultList.map((n) => {
-              const url = `/service/${n.name}`;
+            {data.map((n) => {
+              const url = `/service/scheduled/${n._id}`;
               return (
                 <TableRow key={n._id}>
                   <TableCell>
@@ -37,6 +41,8 @@ class ScheduledTable extends Component {
                   </TableCell>
                   <TableCell>{n.description}</TableCell>
                   <TableCell>{n.cronScheduleDescriptor}</TableCell>
+                  <TableCell>{(n.lastStartTime) ? format(parse(n.lastStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
+                  <TableCell>{(n.nextStartTime) ? format(parse(n.nextStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
                 </TableRow>
               );
             })
