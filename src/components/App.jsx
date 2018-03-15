@@ -16,6 +16,7 @@ import ServiceStart from '../containers/ServiceStart';
 import Job from '../containers/Job';
 import JobStatusList from '../containers/JobStatusList';
 import ScheduledJobs from '../containers/ScheduledJobs';
+import ScheduledJobDetails from '../containers/ScheduledJobDetails';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import './App.css';
 
@@ -67,7 +68,7 @@ class App extends Component {
               <Route path="/services/scheduled" component={ScheduledJobs} />
               <Route path="/services" component={ServiceList} />
               <PrivateRoute path="/service/:serviceName/start" component={ServiceStart} />
-              <Route path="/service/scheduled/:serviceId" component={ScheduledJobs} />
+              <Route path="/service/scheduled/:id" component={ScheduledJobDetails} />
               <Route path="/service/:serviceName" component={Service} />
               <PrivateRoute exact path="/jobs" component={JobStatusList} />
               <PrivateRoute path="/job/:jobId" component={Job} />

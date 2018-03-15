@@ -25,6 +25,14 @@ export const SCHEDULED_LIST_LOADING = 'SCHEDULED_LIST_LOADING';
 export const SCHEDULED_LIST_LOADED = 'SCHEDULED_LIST_LOADED';
 export const SCHEDULED_LIST_LOAD_ERROR = 'SCHEDULED_LIST_LOAD_ERROR';
 
+export const SCHEDULED_SERVICE_DATA_LOADING = 'SCHEDULED_SERVICE_DATA_LOADING';
+export const SCHEDULED_SERVICE_DATA_LOADED = 'SCHEDULED_SERVICE_DATA_LOADED';
+export const SCHEDULED_SERVICE_DATA_LOAD_ERROR = 'SCHEDULED_SERVICE_DATA_LOAD_ERROR';
+
+export const PAUSE_SERVICE_ERROR = 'PAUSE_SERVICE_ERROR';
+export const PAUSED_SERVICE = 'PAUSED_SERVICE';
+export const PAUSING_SERVICE = 'PAUSING_SERVICE';
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -295,5 +303,118 @@ export function loadScheduledList() {
       // if bad, then need to show an error message explaining what happened
       dispatch(loadedScheduledList(json));
     }).catch(error => dispatch(loadScheduledListError(error)));
+  };
+}
+
+
+function loadingScheduledServiceData(id) {
+  return {
+    type: SCHEDULED_SERVICE_DATA_LOADING,
+    id,
+  };
+}
+
+function loadScheduledServiceDataError(error) {
+  return {
+    type: SCHEDULED_SERVICE_DATA_LOAD_ERROR,
+    error,
+  };
+}
+
+function loadedScheduledServiceData(id, json) {
+  return {
+    type: SCHEDULED_SERVICE_DATA_LOADED,
+    id,
+    json,
+  };
+}
+
+
+export function loadScheduledServiceData(id) {
+  return function loadScheduledServiceDataAsync(dispatch) {
+    dispatch(loadingScheduledServiceData(id));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { scheduledServiceUrl } = settings;
+    const requestUrl = scheduledServiceUrl.replace('<id>', id);
+    return fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(loadedScheduledServiceData(id, json));
+    }).catch(error => dispatch(loadScheduledServiceDataError(error)));
+  };
+}
+
+function pausingScheduled(id) {
+  return {
+    type: PAUSING_SERVICE,
+    id,
+  };
+}
+
+function pauseScheduledError(error) {
+  return {
+    type: PAUSE_SERVICE_ERROR,
+    error,
+  };
+}
+
+function pausedScheduled(id, json) {
+  return {
+    type: PAUSED_SERVICE,
+    id,
+    json,
+  };
+}
+
+
+export function pauseScheduled(id, body) {
+  return function pauseScheduledAsync(dispatch) {
+    dispatch(pausingScheduled(id));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    // change the disabled parameter here
+    body.disabled = true;
+
+    const { scheduledServiceUrl } = settings;
+    const requestUrl = scheduledServiceUrl.replace('<id>', id);
+    return fetch(requestUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+      body: JSON.stringify(body),
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(pausedScheduled(id, json));
+    }).catch(error => dispatch(pauseScheduledError(error)));
   };
 }
