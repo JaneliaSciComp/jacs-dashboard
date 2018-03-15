@@ -5,7 +5,6 @@ import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Button from 'material-ui/Button';
 import Paper from 'material-ui/Paper';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
@@ -54,31 +53,6 @@ class ScheduledJob extends Component {
     this.props.actions.setShortDate(!this.props.shortDate);
   }
 
-  outputTable() {
-    const { classes } = this.props;
-
-    return (
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>File Name</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Path</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          <TableRow>
-            <TableCell>File Name</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Path</TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    );
-  }
-
   render() {
     const { classes, scheduled } = this.props;
 
@@ -95,17 +69,20 @@ class ScheduledJob extends Component {
     return (
       <Grid container className={classes.row}>
         <Grid item md={8}>
-          <div className={classes.row} key="1">
-          </div>
-          <div className={classes.row} key="type">
+          <div className={classes.row}>
             <Typography>{data.name}</Typography>
           </div>
-
-          <div className={classes.row} key="2">
+          <div className={classes.row}>
             <Typography>{data.state}</Typography>
           </div>
-          <div className={classes.row} key="3">
-            <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
+          <div className={classes.row}>
+            <Typography>Last Started: {format(parse(data.lastStartTime), 'YYYY/MM/DD, h:mmA')}</Typography>
+          </div>
+          <div className={classes.row}>
+            <Typography>Next Run: {format(parse(data.nextStartTime), 'YYYY/MM/DD, h:mmA')}</Typography>
+          </div>
+          <div className={classes.row}>
+            <Typography>Status: {(data.disabled) ? 'disabled' : 'active'} </Typography>
           </div>
 
           <Grid container className={classes.row}>
@@ -117,24 +94,6 @@ class ScheduledJob extends Component {
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
-
-          <Grid container className={classes.row}>
-            <Grid item sm={8}>
-              <Typography variant="title">Output</Typography>
-            </Grid>
-            <Grid item sm={4} className={classes.download}>
-              <Button variant="raised" size="small">Download</Button>
-            </Grid>
-          </Grid>
-          <Grid container className={classes.row}>
-            <Grid item sm={12}>
-              <Paper className={classes.tableRoot}>
-                {this.outputTable()}
-              </Paper>
-            </Grid>
-          </Grid>
-
-
         </Grid>
         <Grid item md={4}>
           <Grid container>

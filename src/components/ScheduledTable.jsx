@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import Icon from 'material-ui/Icon';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 
@@ -29,6 +30,7 @@ class ScheduledTable extends Component {
               <TableCell>Schedule</TableCell>
               <TableCell>Last Run</TableCell>
               <TableCell>Next Run</TableCell>
+              <TableCell>Active</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -43,6 +45,7 @@ class ScheduledTable extends Component {
                   <TableCell>{n.cronScheduleDescriptor}</TableCell>
                   <TableCell>{(n.lastStartTime) ? format(parse(n.lastStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
                   <TableCell>{(n.nextStartTime) ? format(parse(n.nextStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
+                  <TableCell>{(n.disabled) ? <Icon>pause_circle_outline</Icon> : <Icon>check</Icon> }</TableCell>
                 </TableRow>
               );
             })
