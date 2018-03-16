@@ -35,6 +35,7 @@ class ScheduledJob extends Component {
     // bind it and make it an instance method instead of prototype method
     this.handleChange = this.handleChange.bind(this);
     this.handlePause = this.handlePause.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 
@@ -53,11 +54,17 @@ class ScheduledJob extends Component {
     this.props.actions.setShortDate(!this.props.shortDate);
   }
 
+  handleDelete() {
+    const { match } = this.props;
+    const { id } = match.params;
+    this.props.actions.deleteScheduled(id);
+  }
+
   render() {
     const { classes, scheduled } = this.props;
 
     const { id } = this.props.match.params;
- 
+
     const data = scheduled.get(id);
 
     if (!data) {
@@ -90,7 +97,7 @@ class ScheduledJob extends Component {
               <Button variant="raised" size="small">Terminate</Button>
               <Button variant="raised" size="small" onClick={this.handlePause}>Pause</Button>
               <Button variant="raised" size="small">Restart</Button>
-              <Button variant="raised" size="small">Delete</Button>
+              <Button variant="raised" size="small" onClick={this.handleDelete}>Delete</Button>
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>

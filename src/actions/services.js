@@ -33,6 +33,10 @@ export const PAUSE_SERVICE_ERROR = 'PAUSE_SERVICE_ERROR';
 export const PAUSED_SERVICE = 'PAUSED_SERVICE';
 export const PAUSING_SERVICE = 'PAUSING_SERVICE';
 
+export const DELETE_SERVICE_ERROR = 'DELETE_SERVICE_ERROR';
+export const DELETED_SERVICE = 'DELETED_SERVICE';
+export const DELETING_SERVICE = 'DELETING_SERVICE';
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -416,5 +420,60 @@ export function pauseScheduled(id, body) {
       // if bad, then need to show an error message explaining what happened
       dispatch(pausedScheduled(id, json));
     }).catch(error => dispatch(pauseScheduledError(error)));
+  };
+}
+
+
+function deletingScheduled(id) {
+  return {
+    type: DELETING_SERVICE,
+    id,
+  };
+}
+
+function deleteScheduledError(error) {
+  return {
+    type: DELETE_SERVICE_ERROR,
+    error,
+  };
+}
+
+function deletedScheduled(id, json) {
+  return {
+    type: DELETED_SERVICE,
+    id,
+    json,
+  };
+}
+
+
+export function deleteScheduled(id) {
+  return function deleteScheduledAsync(dispatch) {
+    dispatch(deletingScheduled(id));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { scheduledServiceUrl } = settings;
+    const requestUrl = scheduledServiceUrl.replace('<id>', id);
+    return fetch(requestUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(deletedScheduled(id, json));
+    }).catch(error => dispatch(deleteScheduledError(error)));
   };
 }
