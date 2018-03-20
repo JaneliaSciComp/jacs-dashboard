@@ -5,7 +5,6 @@ import Grid from 'material-ui/Grid';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Switch from 'material-ui/Switch';
-import Button from 'material-ui/Button';
 import titleCase from 'title-case';
 
 const styles = {
@@ -29,32 +28,13 @@ class ParameterForm extends Component {
     this.props.data.forEach((arg) => {
       this.state[arg.argName] = arg.defaultValue;
     });
-
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
 
   handleChange = name => (event) => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  }
-
-  handleSubmit = () => {
-    // here we should package up the state and submit it to the backend
-    // based on the service we are trying to invoke.
-    const finalArgs = [];
-    this.props.data.forEach((arg) => {
-      finalArgs.push(arg.cmdFlags[0]);
-      finalArgs.push(this.state[arg.argName]);
-    });
-
-    const postBody = {
-      processingLocation: 'LOCAL',
-      args: finalArgs,
-    };
-
-    this.props.submit(this.state.serviceName, postBody);
+    this.props.actions.setParams(
+      name,
+      event.target.value,
+    );
   }
 
   buildFormRow(data, classes) {
@@ -67,7 +47,7 @@ class ParameterForm extends Component {
       fullWidth: true,
       margin: 'normal',
       required: data.required,
-      value: this.state[data.argName] || '',
+      value: this.props.args.get(data.argName) || '',
     };
 
     switch (data.argType) {
@@ -89,7 +69,7 @@ class ParameterForm extends Component {
     return (
       <Grid item xs={12} lg={12} key={data.argName}>
         <Grid container spacing={16} className={classes.root} alignItems="flex-end">
-          <Grid item xs={3} >
+          <Grid item xs={3}>
             <Typography align="right">{titleCase(data.argName)}</Typography>
           </Grid>
           <Grid item xs={4}>
@@ -113,7 +93,6 @@ class ParameterForm extends Component {
     return (
       <Grid container spacing={24}>
         {rows}
-        <Button variant="raised" color="primary" onClick={this.handleSubmit}>Submit</Button>
       </Grid>
     );
   }
@@ -121,9 +100,10 @@ class ParameterForm extends Component {
 
 ParameterForm.propTypes = {
   classes: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
   data: PropTypes.array.isRequired,
   name: PropTypes.string.isRequired,
-  submit: PropTypes.func.isRequired,
+  args: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(ParameterForm);

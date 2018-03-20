@@ -9,5 +9,6 @@
   "env": {
     'commonjs': true,
     'browser': true,
+    'jest': true,
   }
 }
