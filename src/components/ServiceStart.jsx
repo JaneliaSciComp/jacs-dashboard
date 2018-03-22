@@ -56,13 +56,8 @@ class Service extends Component {
   };
 
   handleSubmit = () => {
-    const { actions, services, serviceForm } = this.props;
-    const serviceName = serviceForm.get('serviceName');
-    const defaults = services[serviceName];
-    const args = serviceForm.get('args');
-    const meta = serviceForm.get('meta');
-    // gather all the data from the state and build a json data structure.
-    actions.startService(serviceName, args);
+    const { actions, serviceForm } = this.props;
+    actions.startService(serviceForm);
   };
 
   handleCronToggle = (event) => {
@@ -89,7 +84,24 @@ class Service extends Component {
           <Typography key="title" variant="title">Advanced Paramters</Typography>
         </Grid>
         <Grid item xs={12}>
-          <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">description</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">processingLocation</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="processingLocation" label="processingLocation" value={serviceForm.get('meta').get('processingLocation')} onChange={this.handleAdvanced} />
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     );

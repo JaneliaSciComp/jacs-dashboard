@@ -4,6 +4,7 @@ const initialState = Immutable.Map({
   serviceName: null,
   args: Immutable.Map({}),
   meta: Immutable.Map({
+    processingLocation: 'LOCAL',
   }),
   cron: Immutable.Map({
     enabled: false,

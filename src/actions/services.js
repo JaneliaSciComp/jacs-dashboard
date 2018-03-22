@@ -115,18 +115,52 @@ function startServiceError(error) {
   };
 }
 
-export function startService(name, args) {
+function constructBodyFromForm(formArgs) {
+  // TODO: unpack the form data and convert it into a json structure that can
+  // be submitted to the api.
+
+  // need different data structures if cron enabled.
+  if (formArgs.getIn(['cron', 'enabled'])) {
+    return {};
+  }
+
+  // cron not enabled, so lets return the default data structure.
+  const body = {
+    name: formArgs.get('serviceName'),
+    args: [],
+  };
+
+  // convert command args to an array for POSTING
+  formArgs.get('args').entrySeq().forEach(([k, v]) => {
+    // put a '-' at the beginning of the argument names.
+    body.args.push(`-${k}`);
+    body.args.push(v);
+  });
+
+  // convert meta args to top level input.
+  formArgs.get('meta').entrySeq().forEach(([k, v]) => {
+    body[k] = v;
+  });
+  return body;
+}
+
+export function startService(args) {
   return function startServiceAsync(dispatch) {
-    dispatch(startingJob(name));
+    dispatch(startingJob(args.get('serviceName')));
 
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
+    // TODO: need different urls if cron enabled.
     const { asyncServiceUrl } = settings;
-    const requestUrl = asyncServiceUrl.replace('<service_name>', name);
+    const requestUrl = asyncServiceUrl.replace('<service_name>', args.get('serviceName'));
+
+    const body = constructBodyFromForm(args);
+    // TODO: validation on the client side?
+
     return fetch(requestUrl, {
       method: 'POST',
-      body: JSON.stringify(args),
+      body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${jwt}`,
