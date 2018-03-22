@@ -115,13 +115,39 @@ function startServiceError(error) {
   };
 }
 
+function constructCronBody(formArgs) {
+  const body = {
+    name: formArgs.get('cron').get('name', 'anonymous cron'),
+    serviceName: formArgs.get('serviceName'),
+    runServiceAs: formArgs.get('runServiceAs'),
+    serviceArgs: [],
+  };
+
+  formArgs.get('meta').entrySeq().forEach(([k, v]) => {
+    body[k] = v;
+  });
+
+  formArgs.get('args').entrySeq().forEach(([k, v]) => {
+    // put a '-' at the beginning of the argument names.
+    body.serviceArgs.push(`-${k}`);
+    body.serviceArgs.push(v);
+  });
+
+  // Convert cron input into a cron string:
+  const cronString = '0 */10 * * *';
+  body.cronScheduleDescriptor = cronString;
+
+  return body;
+}
+
+
 function constructBodyFromForm(formArgs) {
   // TODO: unpack the form data and convert it into a json structure that can
   // be submitted to the api.
 
   // need different data structures if cron enabled.
   if (formArgs.getIn(['cron', 'enabled'])) {
-    return {};
+    return constructCronBody(formArgs);
   }
 
   // cron not enabled, so lets return the default data structure.
@@ -152,8 +178,12 @@ export function startService(args) {
     const jwt = cookies.get('userId');
 
     // TODO: need different urls if cron enabled.
-    const { asyncServiceUrl } = settings;
-    const requestUrl = asyncServiceUrl.replace('<service_name>', args.get('serviceName'));
+    const { asyncServiceUrl, scheduledServicesUrl } = settings;
+    let requestUrl = asyncServiceUrl.replace('<service_name>', args.get('serviceName'));
+
+    if (args.getIn(['cron', 'enabled'])) {
+      requestUrl = scheduledServicesUrl;
+    }
 
     const body = constructBodyFromForm(args);
     // TODO: validation on the client side?

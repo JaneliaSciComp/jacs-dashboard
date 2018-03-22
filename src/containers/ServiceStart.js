@@ -2,7 +2,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ServiceStart from '../components/ServiceStart';
 import { loadServiceData, startService } from '../actions/services';
-import { toggleScheduled, resetServiceForm, setServiceName, setMeta } from '../actions/serviceForm';
+import { toggleScheduled, resetServiceForm, setServiceName, setMeta, setCron } from '../actions/serviceForm';
 
 const mapStateToProps = state => ({
   login: state.login,
@@ -29,6 +29,9 @@ const mapDispatchToProps = dispatch => ({
     },
     setMeta: (name, value) => {
       dispatch(setMeta(name, value));
+    },
+    setCron: (name, value) => {
+      dispatch(setCron(name, value));
     },
   },
 });

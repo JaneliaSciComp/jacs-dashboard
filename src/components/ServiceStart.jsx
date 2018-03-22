@@ -33,6 +33,7 @@ class Service extends Component {
     this.handleAdvanced = this.handleAdvanced.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCronToggle = this.handleCronToggle.bind(this);
+    this.handleCronArgs = this.handleCronArgs.bind(this);
   }
 
   componentDidMount() {
@@ -56,13 +57,23 @@ class Service extends Component {
   };
 
   handleSubmit = () => {
-    const { actions, serviceForm } = this.props;
-    actions.startService(serviceForm);
+    const { actions, serviceForm, login } = this.props;
+    // TODO: in order to allow an admin user to run processes as
+    // a different user, we need to check that the logged in user is
+    // admin and then allow them to override this line with input of
+    // their own.
+    const formWithLogin = serviceForm.set('runServiceAs', login.get('user').key);
+    actions.startService(formWithLogin);
   };
 
   handleCronToggle = (event) => {
     const { actions } = this.props;
     actions.toggleScheduled(event.target.checked);
+  };
+
+  handleCronArgs = (event) => {
+    const { actions } = this.props;
+    actions.setCron(event.target.id, event.target.value);
   };
 
   parameters() {
@@ -122,6 +133,26 @@ class Service extends Component {
             color="primary"
           />
         </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">name</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="name" label="name" value={serviceForm.get('cron').get('name', '')} onChange={this.handleCronArgs} />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">description</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+            </Grid>
+          </Grid>
+        </Grid>
       </Grid>
     );
   }
@@ -180,6 +211,7 @@ Service.propTypes = {
   services: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   serviceForm: PropTypes.object.isRequired,
+  login: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Service);

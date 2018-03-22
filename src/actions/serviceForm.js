@@ -19,6 +19,15 @@ export function setMeta(name, value) {
     value,
   };
 }
+
+export function setCron(name, value) {
+  return {
+    type: SERVICE_FORM_UPDATE_CRON,
+    name,
+    value,
+  };
+}
+
 export function toggleScheduled(value) {
   return {
     type: SERVICE_FORM_UPDATE_CRON,
