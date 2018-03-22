@@ -47,9 +47,13 @@ class Home extends Component {
 
   jobsList() {
     const { classes } = this.props;
-    if (!this.props.jobs.get('list_loaded')) {
-      return (<Typ>Loading</Typ>);
+
+    if (this.props.jobs.get('error')) {
+      return (<Paper className={classes.paper}><Typ>Error loading jobs list!!</Typ></Paper>);
+    } else if (!this.props.jobs.get('list_loaded')) {
+      return (<Paper className={classes.paper}><Typ>Loading...</Typ></Paper>);
     }
+
     return (
       <Paper className={classes.paper}>
         <Typ>You have ({this.props.jobs.get('list').resultList.length}) jobs <Link to="/jobs">See all</Link></Typ>

@@ -32,7 +32,9 @@ class ServiceList extends Component {
 
     let dataGrid = null;
 
-    if (services.get('data')) {
+    if (services.get('error')) {
+      dataGrid = (<p>There was a problem contacting the server.</p>);
+    } else if (services.get('data')) {
       const data = services.get('data');
       dataGrid = <ServiceTable data={data} />;
     }

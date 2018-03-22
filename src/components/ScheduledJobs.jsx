@@ -22,7 +22,9 @@ class ScheduledJobs extends Component {
 
     let dataGrid = null;
 
-    if (scheduled.get('data')) {
+    if (scheduled.get('error')) {
+      dataGrid = (<p>There was a problem contacting the server.</p>);
+    } else if (scheduled.get('data')) {
       const data = scheduled.get('data');
       dataGrid = <ScheduledTable data={data.resultList} />;
     }

@@ -95,7 +95,9 @@ class JobStatusList extends Component {
   render() {
     const { classes } = this.props;
 
-    if (this.props.jobs.get('list_loaded')) {
+    if (this.props.jobs.get('error')) {
+      return (<p>There was a problem contacting the server.</p> );
+    } else if (this.props.jobs.get('list_loaded')) {
       const page = pageNumber(this.props.location);
       const nextPage = `/jobs?p=${1 + page}`;
       return [
