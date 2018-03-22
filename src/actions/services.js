@@ -206,7 +206,12 @@ export function startService(args) {
     }).then((json) => {
       // TODO: need to check our response.
       // if bad, then need to show an error message explaining what happened
-      const serviceUrl = `/job/${json.serviceId}`;
+      let serviceUrl = `/job/${json.serviceId}`;
+      // dopey if block to handle the response from creating scheduled services
+      // as they don't contain a serviceId attribute.
+      if (Object.prototype.hasOwnProperty.call(json, '_id')) {
+        serviceUrl = `/service/scheduled/${json._id}`;
+      }
       history.push(serviceUrl);
     }).catch(error => dispatch(startServiceError(error)));
   };
