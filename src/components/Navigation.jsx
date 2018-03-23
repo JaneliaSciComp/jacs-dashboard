@@ -126,7 +126,7 @@ class Navigation extends Component {
     );
 
     return [
-      <AppBar position="static" key="appbar">
+      <AppBar position="sticky" key="appbar">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu" onClick={this.handleDrawerOpen}>
             <MenuIcon />
