@@ -20,6 +20,8 @@ export default function scheduledReducer(state = initialState, action) {
       return state.set('loading', 1).set('loaded', 0);
     case 'SCHEDULED_SERVICE_DATA_LOADED':
       return state.set('loaded', 1).set('loading', 0).set(action.id, action.json);
+    case 'DELETE_SERVICE_ERROR':
+      return state.set('error', action.error);
     case 'LOGOUT':
       return initialState;
     default:

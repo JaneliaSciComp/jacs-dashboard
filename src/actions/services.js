@@ -500,10 +500,11 @@ function deletingScheduled(id) {
   };
 }
 
-function deleteScheduledError(error) {
+function deleteScheduledError(error, id) {
   return {
     type: DELETE_SERVICE_ERROR,
     error,
+    id,
   };
 }
 
@@ -537,12 +538,17 @@ export function deleteScheduled(id) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
         throw new Error('server error');
+      } else if (res.status === 204) {
+        return { deleted: true };
       }
       return res.json();
     }).then((json) => {
       // TODO: need to check our response.
       // if bad, then need to show an error message explaining what happened
       dispatch(deletedScheduled(id, json));
-    }).catch(error => dispatch(deleteScheduledError(error)));
+      history.push('/services/scheduled');
+    }).catch((error) => {
+      dispatch(deleteScheduledError(error, id));
+    });
   };
 }
