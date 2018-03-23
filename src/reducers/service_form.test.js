@@ -15,6 +15,7 @@ const initialState = Immutable.Map({
     months: '*',
     weekday: '*',
   }),
+  modified: false,
 });
 
 
@@ -41,7 +42,7 @@ it('correctly enables cron', () => {
     type: 'SERVICE_FORM_UPDATE_CRON',
     name: 'enabled',
     value: true,
-  })).toEqual(initialState.setIn(['cron', 'enabled'], true));
+  })).toEqual(initialState.setIn(['cron', 'enabled'], true).set('modified', true));
 });
 
 it('correctly adds an argument', () => {
@@ -49,7 +50,7 @@ it('correctly adds an argument', () => {
     type: 'SERVICE_FORM_UPDATE_ARGS',
     name: 'seconds',
     value: 5,
-  })).toEqual(initialState.setIn(['args', 'seconds'], 5));
+  })).toEqual(initialState.setIn(['args', 'seconds'], 5).set('modified', true));
 });
 
 it('correctly sets meta argument', () => {
@@ -57,7 +58,7 @@ it('correctly sets meta argument', () => {
     type: 'SERVICE_FORM_UPDATE_META',
     name: 'description',
     value: 'test description',
-  })).toEqual(initialState.setIn(['meta', 'description'], 'test description'));
+  })).toEqual(initialState.setIn(['meta', 'description'], 'test description').set('modified', true));
 });
 
 

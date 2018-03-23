@@ -14,6 +14,7 @@ const initialState = Immutable.Map({
     months: '*',
     weekday: '*',
   }),
+  modified: false,
 });
 
 export default function serviceFormReducer(state = initialState, action) {
@@ -25,14 +26,18 @@ export default function serviceFormReducer(state = initialState, action) {
         .set('serviceName', action.name);
     }
     case 'SERVICE_FORM_UPDATE_ARGS':
-      return state.setIn(['args', action.name], action.value);
+      return state.setIn(['args', action.name], action.value)
+        .set('modified', true);
     case 'SERVICE_FORM_UPDATE_META':
-      return state.setIn(['meta', action.name], action.value);
+      return state.setIn(['meta', action.name], action.value)
+        .set('modified', true);
     case 'SERVICE_FORM_UPDATE_CRON':
-      return state.setIn(['cron', action.name], action.value);
+      return state.setIn(['cron', action.name], action.value)
+        .set('modified', true);
     case 'SERVICE_FORM_SET_NAME':
       return state.set('serviceName', action.name);
     case 'LOGOUT':
+    case 'SERVICE_STARTED':
     case 'SERVICE_FORM_RESET':
       return initialState;
     default:

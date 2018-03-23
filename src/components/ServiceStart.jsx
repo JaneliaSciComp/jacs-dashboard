@@ -162,6 +162,7 @@ class Service extends Component {
       classes,
       match,
       services,
+      serviceForm,
     } = this.props;
     const name = match.params.serviceName;
     const { value } = this.state;
@@ -199,7 +200,7 @@ class Service extends Component {
             <Button variant="fab" color="secondary" aria-label="submit" onClick={this.handleSubmit}><Icon>play_arrow</Icon></Button>
           </Grid>
         </Grid>
-        <Prompt when message="Leave, really?" />
+        <Prompt when={serviceForm.get('modified')} message="Any changes you have made will be lost. Are you sure you want to leave?" />
       </div>
     );
   }

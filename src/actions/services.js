@@ -11,6 +11,7 @@ export const SERVICE_ITEM_DATA_LOADED = 'SERVICE_ITEM_DATA_LOADED';
 export const SERVICE_DATA_LOAD_ERROR = 'SERVICE_DATA_LOAD_ERROR';
 
 export const SERVICE_STARTING = 'SERVICE_STARTING';
+export const SERVICE_STARTED = 'SERVICE_STARTED';
 export const SERVICE_START_ERROR = 'SERVICE_START_ERROR';
 
 export const JOB_DATA_LOADING = 'JOB_DATA_LOADING';
@@ -108,6 +109,14 @@ export function startingJob(name) {
   };
 }
 
+export function startedJob(id) {
+  return {
+    type: SERVICE_STARTED,
+    id,
+  };
+}
+
+
 function startServiceError(error) {
   return {
     type: SERVICE_START_ERROR,
@@ -197,6 +206,8 @@ export function startService(args) {
       },
       timeout: 4000,
     }).then((res) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
@@ -204,8 +215,7 @@ export function startService(args) {
       }
       return res.json();
     }).then((json) => {
-      // TODO: need to check our response.
-      // if bad, then need to show an error message explaining what happened
+      dispatch(startedJob(json.serviceId));
       let serviceUrl = `/job/${json.serviceId}`;
       // dopey if block to handle the response from creating scheduled services
       // as they don't contain a serviceId attribute.
