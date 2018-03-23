@@ -209,7 +209,7 @@ export function startService(args) {
       let serviceUrl = `/job/${json.serviceId}`;
       // dopey if block to handle the response from creating scheduled services
       // as they don't contain a serviceId attribute.
-      if (Object.prototype.hasOwnProperty.call(json, '_id')) {
+      if (Object.prototype.hasOwnProperty.call(json, 'cronScheduleDescriptor')) {
         serviceUrl = `/service/scheduled/${json._id}`;
       }
       history.push(serviceUrl);
