@@ -22,8 +22,6 @@ export default function scheduledReducer(state = initialState, action) {
       return state.set('loaded', 1).set('loading', 0).set(action.id, Immutable.Map(action.json));
     case 'DELETE_SERVICE_ERROR':
       return state.set('error', action.error);
-    case 'PAUSED_SERVICE':
-      return state.setIn([action.id, 'disabled'], true);
     case 'TOGGLED_SERVICE':
       return state.setIn([action.id, 'disabled'], action.json.disabled);
     case 'LOGOUT':

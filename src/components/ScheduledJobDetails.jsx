@@ -54,7 +54,7 @@ class ScheduledJob extends Component {
     const { match, scheduled } = this.props;
     const { id } = match.params;
     const data = scheduled.get(id);
-    this.props.actions.pauseScheduled(id, data);
+    this.props.actions.toggleScheduled(id, data);
   }
 
   handleRestart() {
@@ -120,7 +120,6 @@ class ScheduledJob extends Component {
 
     const rerunUrl = `/service/${data.get('name')}/start`;
 
-
     return (
       <Grid container className={classes.row}>
         <Grid item md={8}>
@@ -145,8 +144,9 @@ class ScheduledJob extends Component {
           <Grid container className={classes.row}>
             <Grid item xs={12}>
               <Button variant="raised" size="small">Terminate</Button>
-              <Button variant="raised" size="small" onClick={this.handlePause}>Pause</Button>
-              <Button variant="raised" size="small" onClick={this.handleRestart}>Restart</Button>
+              {(data.get('disabled')) ?
+                (<Button variant="raised" size="small" onClick={this.handleRestart}>Restart</Button>) :
+                (<Button variant="raised" size="small" onClick={this.handlePause}>Pause</Button>)}
               <Button variant="raised" size="small" onClick={this.handleDelete}>Delete</Button>
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
