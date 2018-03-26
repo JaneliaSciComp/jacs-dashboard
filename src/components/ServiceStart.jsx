@@ -139,8 +139,7 @@ class Service extends Component {
               />
             </Grid>
           </Grid>
-
-                 </Grid>
+        </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
             <Grid item xs={3}>
