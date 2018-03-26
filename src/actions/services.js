@@ -38,6 +38,10 @@ export const DELETE_SERVICE_ERROR = 'DELETE_SERVICE_ERROR';
 export const DELETED_SERVICE = 'DELETED_SERVICE';
 export const DELETING_SERVICE = 'DELETING_SERVICE';
 
+export const TOGGLE_SERVICE_ERROR = 'TOGGLE_SERVICE_ERROR';
+export const TOGGLED_SERVICE = 'TOGGLED_SERVICE';
+export const TOGGLING_SERVICE = 'TOGGLING_SERVICE';
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -475,7 +479,7 @@ export function pauseScheduled(id, body) {
     const jwt = cookies.get('userId');
 
     // change the disabled parameter here
-    body.disabled = true;
+    const paused = body.set('disabled', true);
 
     const { scheduledServiceUrl } = settings;
     const requestUrl = scheduledServiceUrl.replace('<id>', id);
@@ -486,7 +490,7 @@ export function pauseScheduled(id, body) {
         Authorization: `Bearer ${jwt}`,
       },
       timeout: 4000,
-      body: JSON.stringify(body),
+      body: JSON.stringify(paused.toJS()),
     }).then((res) => {
       if (res.status === 401) {
         throw new Error('bad login');
@@ -499,6 +503,65 @@ export function pauseScheduled(id, body) {
       // if bad, then need to show an error message explaining what happened
       dispatch(pausedScheduled(id, json));
     }).catch(error => dispatch(pauseScheduledError(error)));
+  };
+}
+
+function togglingScheduled(id) {
+  return {
+    type: TOGGLING_SERVICE,
+    id,
+  };
+}
+
+function toggleScheduledError(error) {
+  return {
+    type: TOGGLE_SERVICE_ERROR,
+    error,
+  };
+}
+
+function toggledScheduled(id, json) {
+  return {
+    type: TOGGLED_SERVICE,
+    id,
+    json,
+  };
+}
+
+export function toggleScheduled(id, body) {
+  return function toggleScheduledAsync(dispatch) {
+    dispatch(togglingScheduled(id));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    // change the disabled parameter here
+    const toggled = body.set('disabled', !body.get('disabled'));
+
+    const { scheduledServiceUrl } = settings;
+    const requestUrl = scheduledServiceUrl.replace('<id>', id);
+    return fetch(requestUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000,
+      body: JSON.stringify(toggled.toJS()),
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.json();
+    }).then((json) => {
+      // TODO: need to check our response.
+      // if bad, then need to show an error message explaining what happened
+      dispatch(toggledScheduled(id, json));
+    }).catch((error) => {
+      dispatch(toggleScheduledError(error));
+    });
   };
 }
 

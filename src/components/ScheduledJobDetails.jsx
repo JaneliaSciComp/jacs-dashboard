@@ -40,6 +40,7 @@ class ScheduledJob extends Component {
     // bind it and make it an instance method instead of prototype method
     this.handleChange = this.handleChange.bind(this);
     this.handlePause = this.handlePause.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
@@ -54,6 +55,13 @@ class ScheduledJob extends Component {
     const { id } = match.params;
     const data = scheduled.get(id);
     this.props.actions.pauseScheduled(id, data);
+  }
+
+  handleRestart() {
+    const { match, scheduled } = this.props;
+    const { id } = match.params;
+    const data = scheduled.get(id);
+    this.props.actions.toggleScheduled(id, data);
   }
 
   handleChange() {
@@ -110,7 +118,7 @@ class ScheduledJob extends Component {
       return (<div>loading...</div>);
     }
 
-    const rerunUrl = `/service/${data.name}/start`;
+    const rerunUrl = `/service/${data.get('name')}/start`;
 
 
     return (
@@ -119,26 +127,26 @@ class ScheduledJob extends Component {
           <div className={classes.row}>
             {(scheduled.get('error')) ?
               this.showErrorMessage() : ''}
-            <Typography>{data.name}</Typography>
+            <Typography>{data.get('name')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>{data.state}</Typography>
+            <Typography>{data.get('state')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Last Started: {format(parse(data.lastStartTime), 'YYYY/MM/DD, h:mmA')}</Typography>
+            <Typography>Last Started: {format(parse(data.get('lastStartTime')), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Next Run: {format(parse(data.nextStartTime), 'YYYY/MM/DD, h:mmA')}</Typography>
+            <Typography>Next Run: {format(parse(data.get('nextStartTime')), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Status: {(data.disabled) ? 'disabled' : 'active'} </Typography>
+            <Typography>Status: {(data.get('disabled')) ? 'disabled' : 'active'} </Typography>
           </div>
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
               <Button variant="raised" size="small">Terminate</Button>
               <Button variant="raised" size="small" onClick={this.handlePause}>Pause</Button>
-              <Button variant="raised" size="small">Restart</Button>
+              <Button variant="raised" size="small" onClick={this.handleRestart}>Restart</Button>
               <Button variant="raised" size="small" onClick={this.handleDelete}>Delete</Button>
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>

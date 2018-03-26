@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ScheduledJobDetails from '../components/ScheduledJobDetails';
-import { loadScheduledServiceData, pauseScheduled, deleteScheduled } from '../actions/services';
+import { loadScheduledServiceData, pauseScheduled, toggleScheduled, deleteScheduled } from '../actions/services';
 
 const mapStateToProps = state => ({
   login: state.login,
@@ -16,6 +16,9 @@ const mapDispatchToProps = dispatch => ({
     },
     pauseScheduled: (id, body) => {
       dispatch(pauseScheduled(id, body));
+    },
+    toggleScheduled: (id, body) => {
+      dispatch(toggleScheduled(id, body));
     },
     deleteScheduled: (id) => {
       dispatch(deleteScheduled(id));
