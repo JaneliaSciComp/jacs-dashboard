@@ -126,13 +126,21 @@ class Service extends Component {
           <Typography key="title" variant="title">Scheduled Settings</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Switch
-            checked={serviceForm.get('cron').get('enabled')}
-            onChange={this.handleCronToggle}
-            value="dateToggle"
-            color="primary"
-          />
-        </Grid>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">Enable Scheduled</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <Switch
+                checked={serviceForm.get('cron').get('enabled')}
+                onChange={this.handleCronToggle}
+                value="dateToggle"
+                color="primary"
+              />
+            </Grid>
+          </Grid>
+
+                 </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
             <Grid item xs={3}>
