@@ -45,6 +45,13 @@ class Job extends Component {
     this.props.actions.loadJobData(this.props.match.params.jobId);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.location !== this.props.location) {
+      this.props.actions.loadJobData(this.props.match.params.jobId);
+    }
+  }
+
+
   handleChange() {
     this.props.actions.setShortDate(!this.props.shortDate);
   }
