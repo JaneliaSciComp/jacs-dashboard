@@ -33,6 +33,13 @@ const styles = {
   },
 };
 
+function parentLink(id) {
+  const url = `/job/${id}`;
+  return (
+    <Link to={url}>{id}</Link>
+  );
+}
+
 class Job extends Component {
   constructor(...args) {
     super(...args);
@@ -89,7 +96,8 @@ class Job extends Component {
   }
 
   childrenTable() {
-    const { classes } = this.props;
+    const { classes, job } = this.props;
+    const children = job.get('data').dependenciesIds;
     return (
       <Table className={classes.table}>
         <TableHead>
@@ -98,7 +106,7 @@ class Job extends Component {
           </TableRow>
         </TableHead>
         <TableBody>
-          {this.props.job.get('data').dependenciesIds.map(e => (
+          {children.map(e => (
             <TableRow key={e}>
               <TableCell><Link to={`/job/${e}`}>{e}</Link></TableCell>
             </TableRow>
@@ -147,11 +155,13 @@ class Job extends Component {
 
     const rerunUrl = `/service/${data.name}/start`;
 
+    const children = data.dependenciesIds;
+
     return (
       <Grid container className={classes.row}>
         <Grid item md={8}>
           <div className={classes.row} key="1">
-            <Typography align="center" variant="display1">{ data.state === "ERROR" && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
+            <Typography align="center" variant="display1">{ data.state === 'ERROR' && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
           </div>
           <div className={classes.row} key="type">
             <Typography>{data.name}</Typography>
@@ -164,6 +174,9 @@ class Job extends Component {
             <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
 
+          { (data.rootServiceId) ? parentLink(data.rootServiceId) : ''}
+          { (data.parentServiceId) ? parentLink(data.parentServiceId) : ''}
+
           <Grid container className={classes.row}>
             <Grid item xs={12}>
               <Button variant="raised" size="small">Terminate</Button>
@@ -174,18 +187,20 @@ class Job extends Component {
             </Grid>
           </Grid>
 
-          <Grid container className={classes.row}>
-            <Grid item sm={12}>
-              <Typography variant="title">Children</Typography>
-            </Grid>
-          </Grid>
-          <Grid container className={classes.row}>
-            <Grid item sm={12}>
-              <Paper className={classes.tableRoot}>
-                {this.childrenTable()}
-              </Paper>
-            </Grid>
-          </Grid>
+          { (children.length >= 1) ? [
+            <Grid container key="title" className={classes.row}>
+              <Grid item sm={12}>
+                <Typography variant="title">Children</Typography>
+              </Grid>
+            </Grid>,
+            <Grid container key="content" className={classes.row}>
+              <Grid item sm={12}>
+                <Paper className={classes.tableRoot}>
+                  {this.childrenTable()}
+                </Paper>
+              </Grid>
+            </Grid>] : ''
+          }
 
 
           <Grid container className={classes.row}>
