@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "classnames": "^2.2.5",
+    "cron-converter": "0.0.12",
     "date-fns": "^1.29.0",
     "duration": "^0.2.0",
     "eslint": "^4.17.0",

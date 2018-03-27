@@ -10,6 +10,7 @@ import { withStyles } from 'material-ui/styles';
 import CloseIcon from 'material-ui-icons/Close';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
+import Cron from 'cron-converter';
 
 const styles = {
   row: {
@@ -120,6 +121,10 @@ class ScheduledJob extends Component {
 
     const rerunUrl = `/service/${data.get('name')}/start`;
 
+    const cronInstance = new Cron();
+
+    const schedule = cronInstance.fromString(data.get('cronScheduleDescriptor')).schedule();
+
     return (
       <Grid container className={classes.row}>
         <Grid item md={8}>
@@ -132,10 +137,10 @@ class ScheduledJob extends Component {
             <Typography>{data.get('state')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Last Started: {format(parse(data.get('lastStartTime')), 'YYYY/MM/DD, h:mmA')}</Typography>
+            <Typography>Last Run: {format(parse(data.get('lastStartTime')), 'MMMM Do YYYY, h:mm:ss a')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Next Run: {format(parse(data.get('nextStartTime')), 'YYYY/MM/DD, h:mmA')}</Typography>
+            <Typography>Next Run: {(data.get('disabled')) ? 'Never' : schedule.next().format('MMMM Do YYYY, h:mm:ss a')}</Typography>
           </div>
           <div className={classes.row}>
             <Typography>Status: {(data.get('disabled')) ? 'disabled' : 'active'} </Typography>
