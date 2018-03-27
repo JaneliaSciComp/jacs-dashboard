@@ -5,9 +5,12 @@ import { withStyles } from 'material-ui/styles';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import Icon from 'material-ui/Icon';
+import Tooltip from 'material-ui/Tooltip';
+import Typography from 'material-ui/Typography';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Cron from 'cron-converter';
+import cronstrue from 'cronstrue';
 
 const styles = {
   root: {
@@ -45,7 +48,11 @@ class ScheduledTable extends Component {
                     <Link to={url}>{n.name}</Link>
                   </TableCell>
                   <TableCell>{n.description}</TableCell>
-                  <TableCell>{n.cronScheduleDescriptor}</TableCell>
+                  <TableCell>
+                    <Tooltip title={cronstrue.toString(n.cronScheduleDescriptor)} placement="top">
+                      <Typography>{n.cronScheduleDescriptor}</Typography>
+                    </Tooltip>
+                  </TableCell>
                   <TableCell>{(n.lastStartTime) ? format(parse(n.lastStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
                   <TableCell>{(n.disabled) ? 'disabled' : schedule.next().format('YYYY/MM/DD, hh:mm:ssA')}</TableCell>
                   <TableCell>{(n.disabled) ? <Icon>pause_circle_outline</Icon> : <Icon>check</Icon> }</TableCell>

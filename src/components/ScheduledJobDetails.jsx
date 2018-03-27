@@ -8,9 +8,11 @@ import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
 import { withStyles } from 'material-ui/styles';
 import CloseIcon from 'material-ui-icons/Close';
+import Tooltip from 'material-ui/Tooltip';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Cron from 'cron-converter';
+import cronstrue from 'cronstrue';
 
 const styles = {
   row: {
@@ -141,6 +143,11 @@ class ScheduledJob extends Component {
           </div>
           <div className={classes.row}>
             <Typography>Next Run: {(data.get('disabled')) ? 'Never' : schedule.next().format('MMMM Do YYYY, h:mm:ss a')}</Typography>
+          </div>
+          <div className={classes.row}>
+            <Tooltip title={data.get('cronScheduleDescriptor')} placement="right">
+              <Typography>Cron Schedule: {cronstrue.toString(data.get('cronScheduleDescriptor'))}</Typography>
+            </Tooltip>
           </div>
           <div className={classes.row}>
             <Typography>Status: {(data.get('disabled')) ? 'disabled' : 'active'} </Typography>
