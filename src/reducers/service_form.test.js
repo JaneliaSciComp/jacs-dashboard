@@ -9,11 +9,7 @@ const initialState = Immutable.Map({
   }),
   cron: Immutable.Map({
     enabled: false,
-    minutes: '*',
-    hours: '*',
-    days: '*',
-    months: '*',
-    weekday: '*',
+    cronString: '*/10 * * * *',
   }),
   modified: false,
 });

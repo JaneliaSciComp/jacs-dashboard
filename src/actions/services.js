@@ -143,7 +143,7 @@ function constructCronBody(formArgs) {
   });
 
   // Convert cron input into a cron string:
-  const cronString = '0 */10 * * *';
+  const cronString = formArgs.getIn(['cron', 'cronString']);
   body.cronScheduleDescriptor = cronString;
 
   return body;

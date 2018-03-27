@@ -10,6 +10,7 @@ import Button from 'material-ui/Button';
 import Switch from 'material-ui/Switch';
 import Tabs, { Tab } from 'material-ui/Tabs';
 import TextField from 'material-ui/TextField';
+import cronstrue from 'cronstrue';
 import ParameterForm from '../containers/ParameterForm';
 
 const styles = {
@@ -120,6 +121,15 @@ class Service extends Component {
 
   cronParams() {
     const { serviceForm } = this.props;
+    const cron = serviceForm.get('cron');
+    let humanString = cronstrue.toString('*/10 * * * *');
+    if (cron && cron.get('cronString')) {
+      try {
+        humanString = cronstrue.toString((cron.get('cronString')));
+      } catch (error) {
+        humanString = error;
+      }
+    }
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -132,7 +142,7 @@ class Service extends Component {
             </Grid>
             <Grid item xs={4}>
               <Switch
-                checked={serviceForm.get('cron').get('enabled')}
+                checked={cron.get('enabled')}
                 onChange={this.handleCronToggle}
                 value="dateToggle"
                 color="primary"
@@ -146,7 +156,7 @@ class Service extends Component {
               <Typography align="right">name</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="name" label="name" value={serviceForm.get('cron').get('name', '')} onChange={this.handleCronArgs} />
+              <TextField id="name" label="name" value={cron.get('name', '')} onChange={this.handleCronArgs} />
             </Grid>
           </Grid>
         </Grid>
@@ -157,6 +167,19 @@ class Service extends Component {
             </Grid>
             <Grid item xs={4}>
               <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">cron string</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="cronString" label="cronString" value={cron.get('cronString', '*/10 * * * *')} onChange={this.handleCronArgs} />
+            </Grid>
+            <Grid item xs={4}>
+              <Typography align="left">{humanString}</Typography>
             </Grid>
           </Grid>
         </Grid>
