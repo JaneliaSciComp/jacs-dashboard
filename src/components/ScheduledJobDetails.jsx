@@ -121,7 +121,7 @@ class ScheduledJob extends Component {
       return (<div>loading...</div>);
     }
 
-    const rerunUrl = `/service/${data.get('name')}/start`;
+    const rerunUrl = `/service/${data.get('serviceName')}/start`;
 
     const cronInstance = new Cron();
 
