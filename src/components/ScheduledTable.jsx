@@ -7,6 +7,7 @@ import Paper from 'material-ui/Paper';
 import Icon from 'material-ui/Icon';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
+import Cron from 'cron-converter';
 
 const styles = {
   root: {
@@ -20,6 +21,7 @@ const styles = {
 class ScheduledTable extends Component {
   render() {
     const { classes, data } = this.props;
+    const cronInstance = new Cron();
     return (
       <Paper className={classes.root}>
         <Table className={classes.table}>
@@ -36,6 +38,7 @@ class ScheduledTable extends Component {
           <TableBody>
             {data.map((n) => {
               const url = `/service/scheduled/${n._id}`;
+              const schedule = cronInstance.fromString(n.cronScheduleDescriptor).schedule();
               return (
                 <TableRow key={n._id}>
                   <TableCell>
@@ -44,7 +47,7 @@ class ScheduledTable extends Component {
                   <TableCell>{n.description}</TableCell>
                   <TableCell>{n.cronScheduleDescriptor}</TableCell>
                   <TableCell>{(n.lastStartTime) ? format(parse(n.lastStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
-                  <TableCell>{(n.nextStartTime) ? format(parse(n.nextStartTime), 'YYYY/MM/DD, hh:mm:ssA') : 'None'}</TableCell>
+                  <TableCell>{(n.disabled) ? 'disabled' : schedule.next().format('YYYY/MM/DD, hh:mm:ssA')}</TableCell>
                   <TableCell>{(n.disabled) ? <Icon>pause_circle_outline</Icon> : <Icon>check</Icon> }</TableCell>
                 </TableRow>
               );
