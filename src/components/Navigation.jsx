@@ -15,6 +15,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Icon from 'material-ui/Icon';
 import Chip from 'material-ui/Chip';
+import MessageSnack from './MessageSnack';
 import settings from '../settings.json';
 
 const styles = {
@@ -72,7 +73,7 @@ class Navigation extends Component {
   }
 
   render() {
-    const { classes, login } = this.props;
+    const { classes, login, app } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -159,6 +160,7 @@ class Navigation extends Component {
           </div>
           {auth}
         </Toolbar>
+        {app.get('messages') && <MessageSnack messages={app.get('messages')} /> }
       </AppBar>,
       <Drawer open={this.state.drawerState} onClose={this.handleDrawerClose} key="drawer">
         <div
@@ -178,6 +180,7 @@ Navigation.propTypes = {
   classes: PropTypes.object.isRequired,
   login: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
+  app: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Navigation);

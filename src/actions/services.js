@@ -524,6 +524,7 @@ function deletedScheduled(id, json) {
     type: DELETED_SERVICE,
     id,
     json,
+    message: `Deleted scheduled service ${id}`,
   };
 }
 

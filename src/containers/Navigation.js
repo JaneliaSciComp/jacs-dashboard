@@ -5,6 +5,7 @@ import { logout } from '../actions/login';
 
 const mapStateToProps = state => ({
   login: state.login,
+  app: state.app,
 });
 
 const mapDispatchToProps = dispatch => ({
