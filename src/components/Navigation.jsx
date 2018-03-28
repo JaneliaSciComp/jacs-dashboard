@@ -103,17 +103,18 @@ class Navigation extends Component {
             <ListItemText primary="Home" />
           </ListItem>
           <Divider />
-          <ListItem button onClick={this.handleClose} component={Link} to="/jobs">
+
+          <ListItem button onClick={this.handleClose} component={Link} to="/running">
             <ListItemIcon>
               <Icon>play_circle_filled</Icon>
             </ListItemIcon>
-            <ListItemText primary="Jobs" />
+            <ListItemText primary="Currently Running" />
           </ListItem>
-          <ListItem button onClick={this.handleClose} component={Link} to="/services">
+          <ListItem button onClick={this.handleClose} component={Link} to="/jobs">
             <ListItemIcon>
-              <Icon>folder</Icon>
+              <Icon>history</Icon>
             </ListItemIcon>
-            <ListItemText primary="Services List" />
+            <ListItemText primary="Service History" />
           </ListItem>
           <ListItem button onClick={this.handleClose} component={Link} to="/services/scheduled">
             <ListItemIcon>
@@ -121,7 +122,14 @@ class Navigation extends Component {
             </ListItemIcon>
             <ListItemText primary="Scheduled Services" />
           </ListItem>
+          <Divider />
 
+          <ListItem button onClick={this.handleClose} component={Link} to="/services">
+            <ListItemIcon>
+              <Icon>folder</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Services List" />
+          </ListItem>
         </List>
       </div>
     );

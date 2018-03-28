@@ -103,7 +103,7 @@ class JobStatusList extends Component {
       return [
         <Grid container key="title" className={classes.row}>
           <Grid item xs={8}>
-            <Typography variant="display2">Jobs List</Typography>
+            <Typography variant="display2">Service History</Typography>
           </Grid>
           <Grid item xs={4}>
             <Link to={nextPage} >Next</Link>
@@ -131,7 +131,7 @@ class JobStatusList extends Component {
 
     return (
       <div className={classes.row}>
-        <Typography align="center" variant="display2">Jobs List</Typography>
+        <Typography align="center" variant="display2">Service History</Typography>
       </div>
     );
   }
