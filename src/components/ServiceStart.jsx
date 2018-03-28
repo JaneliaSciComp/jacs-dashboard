@@ -101,7 +101,7 @@ class Service extends Component {
               <Typography align="right">description</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+              <TextField id="description" label="description" fullWidth value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
             </Grid>
           </Grid>
         </Grid>
@@ -111,7 +111,7 @@ class Service extends Component {
               <Typography align="right">processingLocation</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="processingLocation" label="processingLocation" value={serviceForm.get('meta').get('processingLocation')} onChange={this.handleAdvanced} />
+              <TextField id="processingLocation" label="processingLocation" fullWidth value={serviceForm.get('meta').get('processingLocation')} onChange={this.handleAdvanced} />
             </Grid>
           </Grid>
         </Grid>
@@ -156,7 +156,7 @@ class Service extends Component {
               <Typography align="right">name</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="name" label="name" value={cron.get('name', '')} onChange={this.handleCronArgs} />
+              <TextField id="name" label="name" fullWidth value={cron.get('name', '')} onChange={this.handleCronArgs} />
             </Grid>
           </Grid>
         </Grid>
@@ -166,7 +166,7 @@ class Service extends Component {
               <Typography align="right">description</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="description" label="description" value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
+              <TextField id="description" label="description" fullWidth value={serviceForm.get('meta').get('description', '')} onChange={this.handleAdvanced} />
             </Grid>
           </Grid>
         </Grid>
@@ -176,7 +176,7 @@ class Service extends Component {
               <Typography align="right">cron string</Typography>
             </Grid>
             <Grid item xs={4}>
-              <TextField id="cronString" label="cronString" value={cron.get('cronString', '*/10 * * * *')} onChange={this.handleCronArgs} />
+              <TextField id="cronString" label="cronString" fullWidth value={cron.get('cronString', '*/10 * * * *')} onChange={this.handleCronArgs} />
             </Grid>
             <Grid item xs={4}>
               <Typography align="left">{humanString}</Typography>
