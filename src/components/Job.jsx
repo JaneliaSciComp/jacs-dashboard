@@ -118,8 +118,8 @@ class Job extends Component {
 
 
   outputTable() {
-    const { classes } = this.props;
-
+    const { classes, job } = this.props;
+    const { outputPath, errorPath } = job.get('data');
     return (
       <Table className={classes.table}>
         <TableHead>
@@ -132,10 +132,16 @@ class Job extends Component {
         </TableHead>
         <TableBody>
           <TableRow>
-            <TableCell>File Name</TableCell>
+            <TableCell>Output Path</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell>Path</TableCell>
+            <TableCell>{outputPath}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Error Path</TableCell>
+            <TableCell>Created</TableCell>
+            <TableCell>Size</TableCell>
+            <TableCell>{errorPath}</TableCell>
           </TableRow>
         </TableBody>
       </Table>

@@ -103,6 +103,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
+        <Typ variant="title">Lab Storage Usage</Typ>
         <Typ>{percentage}% of alloted storage used.</Typ>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart width={300} height={300}>
