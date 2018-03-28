@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
 import Button from 'material-ui/Button';
-import AddIcon from 'material-ui-icons/Add';
 import { Link } from 'react-router-dom';
 
 import ParameterTable from './ParameterTable';

@@ -28,6 +28,7 @@ class Home extends Component {
     const user = this.props.login.get('user');
     this.props.actions.loadJobList(user.key);
     this.props.actions.quotaReport(user.name);
+    this.props.actions.loadStats(user.key);
   }
 
   buildTable() {
@@ -57,7 +58,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
-        <Typ>You have ({this.props.jobs.get('list').resultList.length}) jobs <Link to="/jobs">See all</Link></Typ>
+        <Typ>You have processed ({this.props.jobs.get('list').resultList.length}) jobs <Link to="/jobs">See all</Link></Typ>
         <Table className={classes.table}>
           <TableHead>
             <TableRow>
@@ -117,6 +118,25 @@ class Home extends Component {
     );
   }
 
+  currentCapcity() {
+    const { stats, classes } = this.props;
+
+    if (!stats.get('cap_loaded')) {
+      return (<Typ>Loading...</Typ>);
+    }
+
+    const capacity = stats.get('capacity');
+
+    return (
+      <Paper className={classes.paper}>
+        <Typ variant="title">Current capacity</Typ>
+        <Typ>Available Slots: {capacity.availableSlots - capacity.runningServices.length}</Typ>
+        <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
+        <Typ>Running Services: {capacity.runningServices.length}</Typ>
+      </Paper>
+    );
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -126,6 +146,9 @@ class Home extends Component {
           <Grid container spacing={24}>
             <Grid item sm={12}>
               <Button variant="raised" color="secondary" component={Link} to="/services">Start A Service</Button>
+            </Grid>
+            <Grid item sm={12}>
+              {this.currentCapcity()}
             </Grid>
             <Grid item sm={12}>
               {this.storageUsage()}
@@ -155,6 +178,7 @@ Home.propTypes = {
   actions: PropTypes.object.isRequired,
   jobs: PropTypes.object.isRequired,
   quota: PropTypes.object.isRequired,
+  stats: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Home);

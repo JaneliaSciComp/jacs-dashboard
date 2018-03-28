@@ -1,0 +1,21 @@
+import Immutable from 'immutable';
+
+const initialState = Immutable.Map({
+  capacity: {},
+  cap_loading: false,
+  cap_loaded: false,
+  error: null,
+});
+
+export default function statsReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'LOADING_CAPACITY_STATS':
+      return state.set('cap_loading', true);
+    case 'LOADED_CAPACITY_STATS':
+      return state.set('capacity', action.json).set('cap_loading', false).set('cap_loaded', true);
+    case 'LOAD_CAPACITY_STATS_ERROR':
+      return state.set('error', action.error);
+    default:
+      return state;
+  }
+}
