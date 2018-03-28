@@ -47,7 +47,7 @@ class ScheduledTable extends Component {
                   <TableCell>
                     <Link to={url}>{n.name}</Link>
                   </TableCell>
-                  <TableCell>{n.description}</TableCell>
+                  <TableCell>{n.description ? n.description : '-'}</TableCell>
                   <TableCell>
                     <Tooltip title={cronstrue.toString(n.cronScheduleDescriptor)} placement="top">
                       <Typography>{n.cronScheduleDescriptor}</Typography>
