@@ -6,6 +6,7 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import Typ from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 import Paper from 'material-ui/Paper';
+import Button from 'material-ui/Button';
 import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
@@ -123,9 +124,7 @@ class Home extends Component {
         <Grid item sm={4}>
           <Grid container spacing={24}>
             <Grid item sm={12}>
-              <Paper className={classes.paper}>
-                <Typ>Start button here</Typ>
-              </Paper>
+              <Button variant="raised" color="secondary" component={Link} to="/services">Start A Service</Button>
             </Grid>
             <Grid item sm={12}>
               {this.storageUsage()}
