@@ -180,8 +180,8 @@ class Job extends Component {
             <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
 
-          { (data.rootServiceId) ? parentLink(data.rootServiceId) : ''}
-          { (data.parentServiceId) ? parentLink(data.parentServiceId) : ''}
+          { (data.rootServiceId) && (<Typography>Root: {parentLink(data.rootServiceId)}</Typography>)}
+          { (data.parentServiceId) && (<Typography>Parent: {parentLink(data.parentServiceId)}</Typography>)}
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
