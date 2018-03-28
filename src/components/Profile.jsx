@@ -20,6 +20,9 @@ const styles = theme => ({
   avatar: {
     margin: 10,
   },
+  icon: {
+    color: '#aed581',
+  },
 });
 
 
@@ -37,7 +40,7 @@ class Profile extends Component {
               <Avatar className={classes.avatar}>{initials}</Avatar>
               <Typ>Name: {user.fullName}</Typ>
               <Typ>Email: {user.email}</Typ>
-              <Typ>Admin: {isAdminUser(user) ? <Icon>check_circle</Icon> : '' }</Typ>
+              <Typ>Admin: {isAdminUser(user) ? <Icon className={classes.icon}>check_circle</Icon> : '' }</Typ>
             </Paper>
           </Grid>
         </Grid>

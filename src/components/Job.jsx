@@ -165,6 +165,7 @@ class Job extends Component {
 
     return (
       <Grid container className={classes.row}>
+
         <Grid item md={8}>
           <div className={classes.row} key="1">
             <Typography align="center" variant="display1">{ data.state === 'ERROR' && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
@@ -192,62 +193,6 @@ class Job extends Component {
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
-
-          { (children.length >= 1) ? [
-            <Grid container key="title" className={classes.row}>
-              <Grid item sm={12}>
-                <Typography variant="title">Children</Typography>
-              </Grid>
-            </Grid>,
-            <Grid container key="content" className={classes.row}>
-              <Grid item sm={12}>
-                <Paper className={classes.tableRoot}>
-                  {this.childrenTable()}
-                </Paper>
-              </Grid>
-            </Grid>] : ''
-          }
-
-
-          <Grid container className={classes.row}>
-            <Grid item sm={8}>
-              <Typography variant="title">Events</Typography>
-            </Grid>
-            <Grid item sm={4} align="right">
-              Human Dates
-              <Switch
-                checked={this.props.shortDate}
-                onChange={this.handleChange}
-                value="dateToggle"
-                color="primary"
-              />
-            </Grid>
-          </Grid>
-          <Grid container className={classes.row}>
-            <Grid item sm={12}>
-              <Paper className={classes.tableRoot}>
-                {this.eventsTable()}
-              </Paper>
-            </Grid>
-          </Grid>
-
-          <Grid container className={classes.row}>
-            <Grid item sm={8}>
-              <Typography variant="title">Output</Typography>
-            </Grid>
-            <Grid item sm={4} className={classes.download}>
-              <Button variant="raised" size="small">Download</Button>
-            </Grid>
-          </Grid>
-          <Grid container className={classes.row}>
-            <Grid item sm={12}>
-              <Paper className={classes.tableRoot}>
-                {this.outputTable()}
-              </Paper>
-            </Grid>
-          </Grid>
-
-
         </Grid>
         <Grid item md={4}>
           <Grid container>
@@ -258,6 +203,53 @@ class Job extends Component {
           </Grid>
           <Grid container>
             <Typography>Est. Running Time: </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid container className={classes.row}>
+          <Grid item xs={12}>
+            { (children.length >= 1) ? [
+              <Grid container key="title" className={classes.row}>
+                <Grid item sm={12}>
+                  <Typography variant="title">Children</Typography>
+                </Grid>
+              </Grid>,
+              <Grid container key="content" className={classes.row}>
+                <Grid item sm={12}>
+                  <Paper className={classes.tableRoot}>
+                    {this.childrenTable()}
+                  </Paper>
+                </Grid>
+              </Grid>] : ''
+            }
+          </Grid>
+          <Grid item sm={8}>
+            <Typography variant="title">Events</Typography>
+          </Grid>
+          <Grid item sm={4} align="right">
+            Human Dates
+            <Switch
+              checked={this.props.shortDate}
+              onChange={this.handleChange}
+              value="dateToggle"
+              color="primary"
+            />
+          </Grid>
+          <Grid item sm={12}>
+            <Paper className={classes.tableRoot}>
+              {this.eventsTable()}
+            </Paper>
+          </Grid>
+          <Grid item sm={8}>
+            <Typography variant="title">Output</Typography>
+          </Grid>
+          <Grid item sm={4} className={classes.download}>
+            <Button variant="raised" size="small">Download</Button>
+          </Grid>
+          <Grid item sm={12}>
+            <Paper className={classes.tableRoot}>
+              {this.outputTable()}
+            </Paper>
           </Grid>
         </Grid>
       </Grid>

@@ -44,33 +44,36 @@ class Service extends Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={8}>
-          <Grid item xs={12}>
+          <Grid item xs={10}>
             <Typography variant="display2">{name}</Typography>
           </Grid>
+          <Grid item xs={2}>
+            <Button
+              variant="raised"
+              color="primary"
+              aria-label="add"
+              className={classes.button}
+              component={Link}
+              to={startUrl}
+            >
+              Start
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper className={classes.main}>
+              <Typography variant="title">Parameter List</Typography>
+              <ParameterTable data={serviceDetails.serviceArgDescriptors} />
+            </Paper>
+            <Paper className={classes.main}>
+              <Typography variant="title">Meta Information</Typography>
+              <Typography>File sizes, Run Time, version numbers, dependencies?</Typography>
+            </Paper>
+            <Paper className={classes.main}>
+              <Typography variant="title">Output</Typography>
+              <Typography>Typical result files, error files, processing artifacts.</Typography>
+            </Paper>
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Paper className={classes.main}>
-            <Typography variant="title">Parameter List</Typography>
-            <ParameterTable data={serviceDetails.serviceArgDescriptors} />
-          </Paper>
-          <Paper className={classes.main}>
-            <Typography variant="title">Meta Information</Typography>
-          </Paper>
-          <Paper className={classes.main}>
-            <Typography variant="title">Output</Typography>
-          </Paper>
-        </Grid>
-        <Button
-          variant="fab"
-          color="primary"
-          aria-label="add"
-          className={classes.button}
-          component={Link}
-          to={startUrl}
-        >
-          <AddIcon />
-        </Button>
-
       </div>
     );
   }
