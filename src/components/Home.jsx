@@ -132,7 +132,7 @@ class Home extends Component {
         <Typ variant="title">Current capacity</Typ>
         <Typ>Available Slots: {capacity.availableSlots - capacity.runningServices.length}</Typ>
         <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
-        <Typ>Running Services: {capacity.runningServices.length}</Typ>
+        <Typ><Link to="/running">Running Services</Link>: {capacity.runningServices.length}</Typ>
       </Paper>
     );
   }
