@@ -13,13 +13,9 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Duration from 'duration';
 
-const styles = {
+const styles = theme => ({
   row: {
     display: 'flex',
-  },
-  tableRoot: {
-    width: '100%',
-    overflowX: 'auto',
   },
   table: {
     minWidth: 700,
@@ -31,7 +27,12 @@ const styles = {
     color: '#f00',
     fontSize: '1em',
   },
-};
+  paper: {
+    padding: theme.spacing.unit * 2,
+    width: '100%',
+    overflowX: 'auto',
+  },
+});
 
 function parentLink(id) {
   const url = `/job/${id}`;
@@ -67,6 +68,10 @@ class Job extends Component {
     const { classes, shortDate } = this.props;
 
     const { events } = this.props.job.get('data');
+
+    if (!events) {
+      return 'None found';
+    }
 
     // format the string in short form, unless specified otherwise
     const formatTemplate = (shortDate) ?
@@ -180,6 +185,9 @@ class Job extends Component {
           <div className={classes.row} key="3">
             <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
+          <div className={classes.row}>
+            <Typography>Owner: {data.ownerKey}</Typography>
+          </div>
 
           { (data.rootServiceId) && (<Typography>Root: {parentLink(data.rootServiceId)}</Typography>)}
           { (data.parentServiceId) && (<Typography>Parent: {parentLink(data.parentServiceId)}</Typography>)}
@@ -189,7 +197,6 @@ class Job extends Component {
               <Button variant="raised" size="small">Terminate</Button>
               <Button variant="raised" size="small">Pause</Button>
               <Button variant="raised" size="small">Restart</Button>
-              <Button variant="raised" size="small">Delete</Button>
               <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
@@ -236,7 +243,7 @@ class Job extends Component {
             />
           </Grid>
           <Grid item sm={12}>
-            <Paper className={classes.tableRoot}>
+            <Paper className={classes.paper}>
               {this.eventsTable()}
             </Paper>
           </Grid>
@@ -247,7 +254,7 @@ class Job extends Component {
             <Button variant="raised" size="small">Download</Button>
           </Grid>
           <Grid item sm={12}>
-            <Paper className={classes.tableRoot}>
+            <Paper className={classes.paper}>
               {this.outputTable()}
             </Paper>
           </Grid>
