@@ -270,6 +270,7 @@ Job.propTypes = {
   match: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired,
   shortDate: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(Job);

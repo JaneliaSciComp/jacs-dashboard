@@ -4,12 +4,13 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
 import Chip from 'material-ui/Chip';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
+import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
 import settings from '../settings.json';
 
@@ -55,6 +56,11 @@ class JobStatusList extends Component {
     }
   }
 
+  handleChangePage = (event, page) => {
+    const nextPage = `/jobs?p=${page}`;
+    this.props.history.push(nextPage);
+  }
+
   buildTable() {
     const list = this.props.jobs.get('list');
     return list.resultList.map((item) => {
@@ -63,9 +69,9 @@ class JobStatusList extends Component {
 
       let username = 'unknown';
       if (Object.prototype.hasOwnProperty.call(item, 'ownerKey') && item.ownerKey) {
-        username = item.ownerKey.split(':')[1];
+        [, username] = item.ownerKey.split(':');
       } else if (Object.prototype.hasOwnProperty.call(item, 'authKey') && item.authKey) {
-        username = item.authKey.split(':')[1];
+        [, username] = item.authKey.split(':');
       }
 
       const avatarSrc = settings.avatarUrl.replace('<username>', username);
@@ -94,19 +100,17 @@ class JobStatusList extends Component {
 
   render() {
     const { classes } = this.props;
+    const list = this.props.jobs.get('list');
+    const { pageSize, totalCount } = list;
 
     if (this.props.jobs.get('error')) {
-      return (<p>There was a problem contacting the server.</p> );
+      return (<p>There was a problem contacting the server.</p>);
     } else if (this.props.jobs.get('list_loaded')) {
       const page = pageNumber(this.props.location);
-      const nextPage = `/jobs?p=${1 + page}`;
       return [
         <Grid container key="title" className={classes.row}>
           <Grid item xs={8}>
             <Typography variant="display2">Service History</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <Link to={nextPage} >Next</Link>
           </Grid>
         </Grid>,
         <Grid key="table" className={classes.row}>
@@ -124,8 +128,22 @@ class JobStatusList extends Component {
             <TableBody>
               {this.buildTable()}
             </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  colSpan={6}
+                  count={totalCount}
+                  rowsPerPage={pageSize}
+                  rowsPerPageOptions={[100]}
+                  page={page}
+                  onChangePage={this.handleChangePage}
+                  onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                  Actions={TablePaginationActions}
+                />
+              </TableRow>
+            </TableFooter>
           </Table>
-        </Grid>
+        </Grid>,
       ];
     }
 
@@ -143,6 +161,7 @@ JobStatusList.propTypes = {
   login: PropTypes.object.isRequired,
   jobs: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(JobStatusList);
