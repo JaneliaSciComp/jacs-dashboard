@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import Avatar from 'material-ui/Avatar';
 import Typography from 'material-ui/Typography';
 import Zoom from 'material-ui/transitions/Zoom';
+import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 
 const clements = require('../assets/clements.jpg');
@@ -31,14 +32,18 @@ class About extends Component {
     const { classes } = this.props;
     return (
       <Zoom in style={{ transitionDelay: 500 }}>
-        <div className={classes.row}>
-          <Avatar
-            alt="Jody Clements"
-            src={clements}
-            className={classNames(classes.avatar, classes.bigAvatar)}
-          />
-          <Typography align="center" className={classes.tagLine}>Crafted with care by Jody Clements</Typography>
-        </div>
+        <Grid container>
+          <Grid item sm={12} className={classes.row}>
+            <Avatar
+              alt="Jody Clements"
+              src={clements}
+              className={classNames(classes.avatar, classes.bigAvatar)}
+            />
+          </Grid>
+          <Grid item sm={12}>
+            <Typography align="center" className={classes.tagLine}>Crafted with care by Jody Clements</Typography>
+          </Grid>
+        </Grid>
       </Zoom>
     );
   }
