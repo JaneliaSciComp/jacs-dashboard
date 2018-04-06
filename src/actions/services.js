@@ -313,6 +313,7 @@ export function loadJobList(userId, page) {
     const qString = queryString.stringify({
       'service-owner': userId,
       page,
+      'sort-by': 'creationDate desc',
     });
     const requestUrl = `${jobListUrl}?${qString}`;
     return fetch(requestUrl, {
