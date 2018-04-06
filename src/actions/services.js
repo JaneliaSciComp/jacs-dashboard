@@ -302,7 +302,7 @@ function loadedJobList(json) {
 }
 
 
-export function loadJobList(userId, page) {
+export function loadJobList(userId, page, sortBy="creationDate desc") {
   return function loadJobDataAsync(dispatch) {
     dispatch(loadingJobList());
 
@@ -313,7 +313,7 @@ export function loadJobList(userId, page) {
     const qString = queryString.stringify({
       'service-owner': userId,
       page,
-      'sort-by': 'creationDate desc',
+      'sort-by': sortBy,
     });
     const requestUrl = `${jobListUrl}?${qString}`;
     return fetch(requestUrl, {

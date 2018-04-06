@@ -12,6 +12,7 @@ import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
+import SortableTableHeader from '../containers/SortableTableHeader';
 import settings from '../settings.json';
 
 const styles = {
@@ -29,30 +30,44 @@ function pageNumber(location) {
   return parseInt(page, 10);
 }
 
+function getSort(location) {
+  const queryParams = qs.parse(location.search, { ignoreQueryPrefix: true });
+  let sort = '';
+
+  if (Object.prototype.hasOwnProperty.call(queryParams, 'sort-by')) {
+    sort = queryParams['sort-by'];
+  }
+  return sort;
+}
+
 
 class JobStatusList extends Component {
   componentDidMount() {
     const user = this.props.login.get('user');
     const page = pageNumber(this.props.location);
+    const sortBy = getSort(this.props.location);
 
     let username = user.key;
     if (isAdminUser(user)) {
       username = null;
     }
-    this.props.actions.loadJobList(username, page);
+    this.props.actions.loadJobList(username, page, sortBy);
   }
 
   componentWillReceiveProps(nextProps) {
     const nextPage = pageNumber(nextProps.location);
     const currentPage = pageNumber(this.props.location);
-    if (nextPage !== currentPage) {
+    const nextSortBy = getSort(nextProps.location);
+    const currentSortBy = getSort(this.props.location);
+
+    if (nextPage !== currentPage || nextSortBy !== currentSortBy) {
       const user = this.props.login.get('user');
       let username = user.key;
       if (isAdminUser(user)) {
         username = null;
       }
 
-      this.props.actions.loadJobList(username, nextPage);
+      this.props.actions.loadJobList(username, nextPage, nextSortBy);
     }
   }
 
@@ -107,6 +122,16 @@ class JobStatusList extends Component {
       return (<p>There was a problem contacting the server.</p>);
     } else if (this.props.jobs.get('list_loaded')) {
       const page = pageNumber(this.props.location);
+
+      const columns = [
+        { label: 'Name', id: 'name' },
+        { label: 'State', id: 'state' },
+        { label: 'Start Time', id: 'processStartTime' },
+        { label: 'Last Modified', id: 'modificationDate' },
+        { label: 'Owner', id: 'ownerKey' },
+        { label: 'Processed @', id: 'processingLocation' },
+      ];
+
       return [
         <Grid container key="title" className={classes.row}>
           <Grid item xs={8}>
@@ -115,16 +140,7 @@ class JobStatusList extends Component {
         </Grid>,
         <Grid key="table" className={classes.row}>
           <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>State</TableCell>
-                <TableCell>Start Time</TableCell>
-                <TableCell>Last Modified</TableCell>
-                <TableCell>Owner</TableCell>
-                <TableCell>Processed @</TableCell>
-              </TableRow>
-            </TableHead>
+            <SortableTableHeader columns={columns} sortBy={getSort(this.props.location)} />
             <TableBody>
               {this.buildTable()}
             </TableBody>

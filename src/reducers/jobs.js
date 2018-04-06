@@ -1,7 +1,14 @@
 import Immutable from 'immutable';
 
 const initialState = Immutable.Map({
-  list: [],
+  list: {
+    sortCriteria: [
+      {
+        field: 'creationDate',
+        direction: 'DESC',
+      },
+    ],
+  },
   list_loading: 0,
   list_loaded: 0,
   data: null,

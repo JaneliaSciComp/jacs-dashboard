@@ -10,8 +10,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    loadJobList: (userId, page) => {
-      dispatch(loadJobList(userId, page));
+    loadJobList: (userId, page, sortBy) => {
+      dispatch(loadJobList(userId, page, sortBy));
     },
   },
 });
