@@ -5,9 +5,10 @@ import Typography from 'material-ui/Typography';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
-import Icon from 'material-ui/Icon';
+import Chip from 'material-ui/Chip';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
+import settings from '../settings.json';
 
 const styles = theme => ({
   root: {
@@ -42,6 +43,7 @@ class RunningServices extends Component {
 
     const services = stats.get('capacity').runningServices;
 
+
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -60,12 +62,25 @@ class RunningServices extends Component {
               <TableBody>
                 {services.map((n) => {
                   const url = `/job/${n.serviceId}`;
+
+
+                  const [, username] = n.ownerKey.split(':');
+                  const avatarSrc = settings.avatarUrl.replace('<username>', username);
+
+                  const auth = (
+                    <Chip
+                      avatar={<Avatar src={avatarSrc} />}
+                      label={username}
+                    />
+                  );
+
+
                   return (
                     <TableRow key={n.serviceId}>
                       <TableCell>
                         <Link to={url}>{n.name}</Link>
                       </TableCell>
-                      <TableCell>{n.ownerKey}</TableCell>
+                      <TableCell>{auth}</TableCell>
                       <TableCell>{n.processStartTime}</TableCell>
                     </TableRow>
                   );

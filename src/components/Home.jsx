@@ -129,7 +129,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
-        <Typ variant="title">Current capacity</Typ>
+        <Typ variant="title">Current Service Capacity</Typ>
         <Typ>Available Slots: {capacity.availableSlots - capacity.runningServices.length}</Typ>
         <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
         <Typ><Link to="/running">Running Services</Link>: {capacity.runningServices.length}</Typ>
