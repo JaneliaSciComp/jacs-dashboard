@@ -12,6 +12,7 @@ import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Duration from 'duration';
+import JobChildren from '../components/JobChildren';
 
 const styles = theme => ({
   row: {
@@ -100,28 +101,6 @@ class Job extends Component {
     );
   }
 
-  childrenTable() {
-    const { classes, job } = this.props;
-    const children = job.get('data').dependenciesIds;
-    return (
-      <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {children.map(e => (
-            <TableRow key={e}>
-              <TableCell><Link to={`/job/${e}`}>{e}</Link></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    );
-  }
-
-
   outputTable() {
     const { classes, job } = this.props;
     const { outputPath, errorPath } = job.get('data');
@@ -166,10 +145,8 @@ class Job extends Component {
 
     const rerunUrl = `/service/${data.name}/start`;
 
-    const children = data.dependenciesIds;
-
     return (
-      <Grid container className={classes.row}>
+      <Grid container className={classes.row} spacing={8}>
 
         <Grid item md={8}>
           <div className={classes.row} key="1">
@@ -215,20 +192,18 @@ class Job extends Component {
 
         <Grid container className={classes.row}>
           <Grid item xs={12}>
-            { (children.length >= 1) ? [
-              <Grid container key="title" className={classes.row}>
-                <Grid item sm={12}>
-                  <Typography variant="title">Children</Typography>
-                </Grid>
-              </Grid>,
-              <Grid container key="content" className={classes.row}>
-                <Grid item sm={12}>
-                  <Paper className={classes.tableRoot}>
-                    {this.childrenTable()}
-                  </Paper>
-                </Grid>
-              </Grid>] : ''
-            }
+            <Grid container key="title" className={classes.row}>
+              <Grid item sm={12}>
+                <Typography variant="title">Children</Typography>
+              </Grid>
+            </Grid>
+            <Grid container key="content" className={classes.row}>
+              <Grid item sm={12}>
+                <Paper className={classes.paper}>
+                  <JobChildren parentId={data.serviceId} />
+                </Paper>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item sm={8}>
             <Typography variant="title">Events</Typography>
