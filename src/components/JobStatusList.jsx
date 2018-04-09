@@ -4,12 +4,13 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
+import Table, { TableBody, TableCell, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
 import Chip from 'material-ui/Chip';
 import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
+import queryString from 'query-string';
 import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
 import SortableTableHeader from '../containers/SortableTableHeader';
@@ -72,8 +73,14 @@ class JobStatusList extends Component {
   }
 
   handleChangePage = (event, page) => {
-    const nextPage = `/jobs?p=${page}`;
-    this.props.history.push(nextPage);
+    // update the page number, but preserve the other query
+    // string parameters.
+    const { location, history } = this.props;
+    const parsedQuery = queryString.parse(location.search);
+    parsedQuery.p = page;
+    const updatedQuery = queryString.stringify(parsedQuery);
+    const updatedUrl = `${location.pathname}?${updatedQuery}`;
+    history.push(updatedUrl);
   }
 
   buildTable() {
