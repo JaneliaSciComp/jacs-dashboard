@@ -8,10 +8,7 @@ import { CircularProgress } from 'material-ui/Progress';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import queryString from 'query-string';
-
 import settings from '../settings.json';
-import history from '../history';
 
 
 const styles = {

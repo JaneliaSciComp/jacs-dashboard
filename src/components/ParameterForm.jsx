@@ -18,16 +18,14 @@ const styles = {
 
 
 class ParameterForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      serviceName: this.props.name,
-    };
+  componentDidMount() {
     // now we need to loop over the parameters and set the initial state.
+    const updatedState = {};
+
     this.props.data.forEach((arg) => {
-      this.state[arg.argName] = arg.defaultValue;
+      updatedState[arg.argName] = arg.defaultValue;
     });
+    this.setState(updatedState);
   }
 
   handleChange = name => (event) => {

@@ -10,7 +10,7 @@ class SortableTableHeader extends React.Component {
     const { history, location } = this.props;
 
     // TODO: need to invert the order
-    const invertedOrder = (order == 'desc') ? 'asc' : 'desc';
+    const invertedOrder = (order === 'desc') ? 'asc' : 'desc';
 
     const sortBy = `${columnId} ${invertedOrder}`;
 
