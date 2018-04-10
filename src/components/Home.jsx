@@ -19,6 +19,12 @@ const styles = theme => ({
   },
   paper: {
     padding: theme.spacing.unit * 2,
+    position: 'relative',
+  },
+  fixed: {
+    position: 'absolute',
+    top: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   },
 });
 
@@ -132,7 +138,8 @@ class Home extends Component {
         <Typ variant="title">Current Service Capacity</Typ>
         <Typ>Available Slots: {capacity.availableSlots - capacity.runningServices.length}</Typ>
         <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
-        <Typ><Link to="/running">Running Services</Link>: {capacity.runningServices.length}</Typ>
+        <Typ><Link href="/running" to="/running">Running Services</Link>: {capacity.runningServices.length}</Typ>
+        <Typ className={classes.fixed}><Link href="/admin" to="/admin">Edit</Link></Typ>
       </Paper>
     );
   }

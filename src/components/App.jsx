@@ -19,6 +19,7 @@ import ScheduledJobs from '../containers/ScheduledJobs';
 import ScheduledJobDetails from '../containers/ScheduledJobDetails';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import RunningServices from '../containers/RunningServices';
+import Admin from './Admin';
 import './App.css';
 
 const styles = {
@@ -69,6 +70,7 @@ class App extends Component {
               <Route path="/services/scheduled" component={ScheduledJobs} />
               <Route path="/services" component={ServiceList} />
               <Route path="/running" component={RunningServices} />
+              <Route path="/admin" component={Admin} />
               <PrivateRoute path="/service/:serviceName/start" component={ServiceStart} />
               <Route path="/service/scheduled/:id" component={ScheduledJobDetails} />
               <Route path="/service/:serviceName" component={Service} />
