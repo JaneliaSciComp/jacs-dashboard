@@ -1,11 +1,11 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import RunningServices from '../components/RunningServices';
+import Admin from '../components/Admin';
 import { loadCapacity } from '../actions/admin';
 
 const mapStateToProps = state => ({
+  cacapity: state.capacity,
   login: state.login,
-  stats: state.admin,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,4 +19,4 @@ const mapDispatchToProps = dispatch => ({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(RunningServices));
+)(Admin));

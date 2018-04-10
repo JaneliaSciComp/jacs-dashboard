@@ -34,7 +34,7 @@ class Home extends Component {
     const user = this.props.login.get('user');
     this.props.actions.loadJobList(user.key);
     this.props.actions.quotaReport(user.name);
-    this.props.actions.loadStats(user.key);
+    this.props.actions.loadCapacity(user.key);
   }
 
   buildTable() {

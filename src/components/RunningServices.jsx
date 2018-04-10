@@ -30,7 +30,7 @@ const styles = theme => ({
 class RunningServices extends Component {
   componentDidMount() {
     const { actions } = this.props;
-    actions.loadStats();
+    actions.loadCapacity();
   }
 
 

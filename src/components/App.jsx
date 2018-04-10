@@ -19,7 +19,7 @@ import ScheduledJobs from '../containers/ScheduledJobs';
 import ScheduledJobDetails from '../containers/ScheduledJobDetails';
 import PrivateRoute from '../containers/auth/PrivateRoute';
 import RunningServices from '../containers/RunningServices';
-import Admin from './Admin';
+import Admin from '../containers/Admin';
 import './App.css';
 
 const styles = {

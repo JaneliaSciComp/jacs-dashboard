@@ -7,7 +7,7 @@ const initialState = Immutable.Map({
   error: null,
 });
 
-export default function statsReducer(state = initialState, action) {
+export default function adminReducer(state = initialState, action) {
   switch (action.type) {
     case 'LOADING_CAPACITY_STATS':
       return state.set('cap_loading', true);

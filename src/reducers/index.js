@@ -6,15 +6,15 @@ import serviceForm from './service_form';
 import scheduled from './scheduled';
 import jobs from './jobs';
 import quota from './quota';
-import stats from './stats';
+import admin from './admin';
 
 export default combineReducers({
   app,
-  login,
-  services,
-  serviceForm,
+  admin,
   jobs,
+  login,
   quota,
   scheduled,
-  stats,
+  services,
+  serviceForm,
 });

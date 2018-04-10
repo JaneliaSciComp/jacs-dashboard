@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import Home from '../components/Home';
 import { loadJobList } from '../actions/services';
 import { quotaReport } from '../actions/quota';
-import { loadStats } from '../actions/stats';
+import { loadCapacity } from '../actions/admin';
 
 const mapStateToProps = state => ({
   login: state.login,
   jobs: state.jobs,
   quota: state.quota,
-  stats: state.stats,
+  stats: state.admin,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -20,8 +20,8 @@ const mapDispatchToProps = dispatch => ({
     quotaReport: (username) => {
       dispatch(quotaReport(username));
     },
-    loadStats: (username) => {
-      dispatch(loadStats(username));
+    loadCapacity: (username) => {
+      dispatch(loadCapacity(username));
     },
   },
 });
