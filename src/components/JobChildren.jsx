@@ -4,6 +4,7 @@ import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Ta
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
@@ -81,12 +82,16 @@ class JobChildren extends React.Component {
         <TableHead>
           <TableRow>
             <TableCell>Id</TableCell>
+            <TableCell>Name</TableCell>
+            <TableCell>Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {children.map(e => (
             <TableRow key={e.serviceId}>
-              <TableCell><Link to={`/job/${e.serviceId}`}>{e.name}</Link></TableCell>
+              <TableCell><Link to={`/job/${e.serviceId}`}>{e.serviceId}</Link></TableCell>
+              <TableCell>{e.name}</TableCell>
+              <TableCell>{e.state}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -97,7 +102,7 @@ class JobChildren extends React.Component {
   render() {
     const { children, loading, error } = this.state;
     if (loading) {
-      return <Typography>Loading</Typography>;
+      return <CircularProgress />;
     } else if (error) {
       return <Typography>{error}</Typography>;
     } else if (children && children.length > 0) {

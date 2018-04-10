@@ -43,13 +43,6 @@ function parentLink(id) {
 }
 
 class Job extends Component {
-  constructor(...args) {
-    super(...args);
-    // bind it and make it an instance method instead of prototype method
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-
   componentDidMount() {
     this.props.actions.loadJobData(this.props.match.params.jobId);
   }
@@ -61,7 +54,7 @@ class Job extends Component {
   }
 
 
-  handleChange() {
+  handleChange = () => {
     this.props.actions.setShortDate(!this.props.shortDate);
   }
 
