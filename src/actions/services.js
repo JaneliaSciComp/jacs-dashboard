@@ -302,7 +302,7 @@ function loadedJobList(json) {
 }
 
 
-export function loadJobList(userId, page, sortBy="creationDate desc") {
+export function loadJobList(userId, page, sortBy = 'creationDate desc') {
   return function loadJobDataAsync(dispatch) {
     dispatch(loadingJobList());
 

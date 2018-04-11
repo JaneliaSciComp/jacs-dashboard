@@ -32,9 +32,11 @@ const styles = theme => ({
 class Home extends Component {
   componentDidMount() {
     const user = this.props.login.get('user');
-    this.props.actions.loadJobList(user.key);
-    this.props.actions.quotaReport(user.name);
-    this.props.actions.loadCapacity(user.key);
+    if (user) {
+      this.props.actions.loadJobList(user.key);
+      this.props.actions.quotaReport(user.name);
+      this.props.actions.loadCapacity(user.key);
+    }
   }
 
   buildTable() {
@@ -146,6 +148,14 @@ class Home extends Component {
 
   render() {
     const { classes } = this.props;
+    const user = this.props.login.get('user');
+
+    if (!user) {
+      // TODO: Add the new user content.
+      return (
+        <Typ>Not Logged in. Show a greeting message & some general service stats here. Are the servers running, etc.</Typ>
+      );
+    }
 
     return [
       <Grid key="contents" container spacing={24} className={classes.root}>
