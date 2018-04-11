@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
+import MessageSnack from './MessageSnack';
 import settings from '../settings.json';
 
 const styles = theme => ({
@@ -36,6 +37,10 @@ class RunningServices extends Component {
 
   render() {
     const { classes, stats } = this.props;
+
+    if (stats.get('error')) {
+      return <MessageSnack messages="There was a problem contacting the server." />;
+    }
 
     if (!stats.get('cap_loaded')) {
       return (<Typography>Loading...</Typography>);
