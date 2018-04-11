@@ -10,5 +10,7 @@
   "jobListUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services",
   "quotaBaseUrl": "https://api.int.janelia.org/SCSW/JaneliaFileServices/v1/api/quota/filestore/report",
   "apiKey": "ea0c3c4b-85f7-4e9d-b30f-444461eb4bf7",
-  "avatarUrl": "http://wiki.int.janelia.org/wiki/plugins/servlet/ldappicture?name=<username>&width=100&height=100"
+  "avatarUrl": "http://wiki.int.janelia.org/wiki/plugins/servlet/ldappicture?name=<username>&width=100&height=100",
+  "processingSlotsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/processing-slots-count/<newCount>",
+  "waitingSlotsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/waiting-slots-count/<newCount>"
 }

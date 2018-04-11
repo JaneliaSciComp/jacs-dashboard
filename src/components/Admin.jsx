@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
+import CapacityForm from './CapacityForm';
+import MessageSnack from './MessageSnack';
 
 class Admin extends React.Component {
   componentDidMount() {
@@ -12,6 +14,13 @@ class Admin extends React.Component {
   }
 
   render() {
+    const { admin } = this.props;
+    if (!admin.get('cap_loaded')) {
+      return <Typography>Loading...</Typography>;
+    }
+
+    const capacity = admin.get('capacity');
+
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
@@ -20,7 +29,13 @@ class Admin extends React.Component {
         <Grid item xs={12}>
           <Paper>
             <Typography>Admin Page</Typography>
+            <CapacityForm
+              currentMaxWaiting={capacity.waitingCapacity}
+              currentMaxAvailable={capacity.availableSlots}
+              updateCapacity={this.props.actions.updateCapacity}
+            />
           </Paper>
+          {admin.get('error') && <MessageSnack messages={admin.get('error').message} /> }
         </Grid>
       </Grid>
     );
@@ -30,6 +45,7 @@ class Admin extends React.Component {
 Admin.propTypes = {
   actions: PropTypes.object.isRequired,
   login: PropTypes.object.isRequired,
+  admin: PropTypes.object.isRequired,
 };
 
 export default Admin;
