@@ -110,6 +110,13 @@ class Navigation extends Component {
             </ListItemIcon>
             <ListItemText primary="Currently Running" />
           </ListItem>
+          <ListItem button onClick={this.handleClose} component={Link} to="/queued">
+            <ListItemIcon>
+              <Icon>playlist_play</Icon>
+            </ListItemIcon>
+            <ListItemText primary="Currently Queued" />
+          </ListItem>
+
           <ListItem button onClick={this.handleClose} component={Link} to="/jobs">
             <ListItemIcon>
               <Icon>history</Icon>
