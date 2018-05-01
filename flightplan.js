@@ -7,7 +7,7 @@ var config = {
 
 plan.target(
   'development', {
-    host: '', // jacs-dev
+    host: '10.36.13.17', // jacs-dev
     username: 'jacs',
     agent: process.env.SSH_AUTH_SOCK,
   },
@@ -18,7 +18,7 @@ plan.target(
 
 plan.target(
   'production', {
-    host: '', // jacs2
+    host: '10.36.13.2', // jacs2
     username: 'jacs',
     agent: process.env.SSH_AUTH_SOCK,
   },
