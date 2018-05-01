@@ -125,10 +125,7 @@ class RunningServices extends Component {
 }
 
 RunningServices.propTypes = {
-  login: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  stats: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(RunningServices);
