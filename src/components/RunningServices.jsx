@@ -8,6 +8,7 @@ import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import { withStyles } from 'material-ui/styles';
+import Cookies from 'universal-cookie';
 import MessageSnack from './MessageSnack';
 import settings from '../settings.json';
 
@@ -29,25 +30,48 @@ const styles = theme => ({
 
 
 class RunningServices extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      error: null,
+      running: null,
+      loaded: false,
+    };
+  }
+
   componentDidMount() {
-    const { actions } = this.props;
-    actions.loadCapacity();
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+    const { jobListUrl } = settings;
+    // load the running services.
+    const runningServices = `${jobListUrl}?service-state=RUNNING`;
+    fetch(runningServices, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+        'Application-Id': 'v2-dashboard',
+        Accept: 'application/json',
+      },
+      timeout: 5000,
+    }).then(res => res.json())
+      .then((json) => {
+        this.setState({ running: json, loaded: true });
+      }).catch(error => this.setState({ error }));
   }
 
 
   render() {
-    const { classes, stats } = this.props;
+    const { classes } = this.props;
 
-    if (stats.get('error')) {
+    if (this.state.error) {
       return <MessageSnack messages="There was a problem contacting the server." />;
     }
 
-    if (!stats.get('cap_loaded')) {
+    if (!this.state.loaded) {
       return (<Typography>Loading...</Typography>);
     }
 
-    const services = stats.get('capacity').runningServices;
-
+    const services = this.state.running.resultList;
 
     return (
       <Grid container spacing={8}>
