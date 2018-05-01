@@ -3,8 +3,39 @@
 
 ### Deployment
 
-### Dev
+Deployment is done using flightplan
 
+NOTE: make sure you have your ssh public key loaded into the target users authorized keys file
+on the production server.
+
+```bash
+# check out the repo
+> git clone git@github.com:JaneliaSciComp/jacs-dashboard.git
+# cd to the cloned directory
+> cd jacs-dashboard
+# install dependencies
+> npm install
+# deploy to production
+> fly deploy:production
+```
+
+
+
+### Development
+
+To make changes to the site you will need a copy of the repo and node / npm installed.
+
+```bash
+# check out the repo
+> git clone git@github.com:JaneliaSciComp/jacs-dashboard.git
+# cd to the cloned directory
+> cd jacs-dashboard
+# install dependencies
+> npm install
+# start the dev server
+> npm start
+# hack on code, which will then hot reload as changes are made.
+```
 
 
 ------------
