@@ -141,6 +141,7 @@ class Home extends Component {
         <Typ>Available Slots: {capacity.availableSlots}</Typ>
         <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
         <Typ><Link href="/running" to="/running">Running Services</Link>: {capacity.runningServicesCount}</Typ>
+        <Typ><Link href="/queued" to="/queued">Queued Services</Link>: {capacity.waitingServicesCount}</Typ>
         <Typ className={classes.fixed}><Link href="/admin" to="/admin">Edit</Link></Typ>
       </Paper>
     );
