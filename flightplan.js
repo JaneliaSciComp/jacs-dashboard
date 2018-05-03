@@ -63,7 +63,7 @@ plan.local('deploy', function (local) {
 
 plan.remote('deploy', function(remote) {
   remote.log('Setup necessary symbolic links');
-  remote.exec('ln -s ' + config.projectDir + '/settings.json ' + config.deployTo + '/settings.json');
+  remote.exec('ln -s ' + config.projectDir + '/settings.json ' + config.deployTo + '/src/settings.json');
 });
 
 plan.remote('deploy', function(remote) {
