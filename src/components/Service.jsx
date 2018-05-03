@@ -55,7 +55,7 @@ class Service extends Component {
               component={Link}
               to={startUrl}
             >
-              Start
+              Enter Parameters
             </Button>
           </Grid>
           <Grid item xs={12}>
