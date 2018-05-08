@@ -18,6 +18,7 @@ import JobStatusList from '../containers/JobStatusList';
 import ScheduledJobs from '../containers/ScheduledJobs';
 import ScheduledJobDetails from '../containers/ScheduledJobDetails';
 import PrivateRoute from '../containers/auth/PrivateRoute';
+import AdminOnlyRoute from '../containers/auth/AdminOnlyRoute';
 import RunningServices from './RunningServices';
 import QueuedServices from './QueuedServices';
 import Admin from '../containers/Admin';
@@ -68,14 +69,14 @@ class App extends Component {
               <PrivateRoute path="/profile" component={Profile} />
               <Route path="/about" component={About} />
               <Route path="/login" component={Login} />
-              <Route path="/services/scheduled" component={ScheduledJobs} />
-              <Route path="/services" component={ServiceList} />
-              <Route path="/running" component={RunningServices} />
-              <Route path="/queued" component={QueuedServices} />
-              <Route path="/admin" component={Admin} />
+              <PrivateRoute path="/services/scheduled" component={ScheduledJobs} />
+              <PrivateRoute path="/services" component={ServiceList} />
+              <PrivateRoute path="/running" component={RunningServices} />
+              <PrivateRoute path="/queued" component={QueuedServices} />
+              <AdminOnlyRoute path="/admin" component={Admin} />
               <PrivateRoute path="/service/:serviceName/start" component={ServiceStart} />
-              <Route path="/service/scheduled/:id" component={ScheduledJobDetails} />
-              <Route path="/service/:serviceName" component={Service} />
+              <PrivateRoute path="/service/scheduled/:id" component={ScheduledJobDetails} />
+              <PrivateRoute path="/service/:serviceName" component={Service} />
               <PrivateRoute exact path="/jobs" component={JobStatusList} />
               <PrivateRoute path="/job/:jobId" component={Job} />
               <Route component={NoMatch} />
