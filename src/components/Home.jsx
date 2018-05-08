@@ -11,6 +11,9 @@ import { withStyles } from 'material-ui/styles';
 import parse from 'date-fns/parse';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import './Home.css';
+import settings from '../settings.json';
+
+const VERSION = process.env.REACT_APP_VERSION;
 
 const styles = theme => ({
   root: {
@@ -30,13 +33,25 @@ const styles = theme => ({
 
 
 class Home extends Component {
+  constructor(...args) {
+    super(...args);
+    this.state = {
+      apiVersion: 'x.x.x',
+    };
+  }
+
   componentDidMount() {
     const user = this.props.login.get('user');
+    const { apiVersionUrl } = settings;
     if (user) {
       this.props.actions.loadJobList(user.key);
       this.props.actions.quotaReport(user.name);
       this.props.actions.loadCapacity(user.key);
     }
+    fetch(apiVersionUrl, {
+      method: 'GET',
+    }).then(res => res.text())
+      .then(text => this.setState({ apiVersion: text }));
   }
 
   buildTable() {
@@ -53,6 +68,16 @@ class Home extends Component {
         </TableRow>
       );
     });
+  }
+
+  apiVersion() {
+    const { classes } = this.props;
+    return (
+      <Paper className={classes.paper}>
+        <Typ>Dashboard Version: {VERSION}</Typ>
+        <Typ>JACS API Version: {this.state.apiVersion}</Typ>
+      </Paper>
+    );
   }
 
   jobsList() {
@@ -170,6 +195,9 @@ class Home extends Component {
             </Grid>
             <Grid item sm={12}>
               {this.storageUsage()}
+            </Grid>
+            <Grid item sm={12}>
+              {this.apiVersion()}
             </Grid>
           </Grid>
         </Grid>
