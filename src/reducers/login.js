@@ -1,4 +1,5 @@
 import Immutable from 'immutable';
+import { isAdminUser } from '../lib/user-utility';
 
 const initialState = Immutable.Map({
   username: null,
@@ -8,6 +9,7 @@ const initialState = Immutable.Map({
   user: null,
   redirectUrl: null,
   token: null,
+  isAdmin: false,
 });
 
 export default function loginReducer(state = initialState, action) {
@@ -24,7 +26,9 @@ export default function loginReducer(state = initialState, action) {
       return state.set('loading', 0)
         .set('error', action.error);
     case 'LOGIN_USER_LOAD':
-      return state.set('user', action.json).set('username', action.json.name);
+      return state.set('user', action.json)
+        .set('username', action.json.name)
+        .set('isAdmin', isAdminUser(action.json));
     case 'LOGIN_RESTORE':
       return state.set('token', action.token).set('loggedIn', 1);
     case 'LOGIN_SET_REDIRECT_URL':

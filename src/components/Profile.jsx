@@ -6,7 +6,6 @@ import Grid from 'material-ui/Grid';
 import Avatar from 'material-ui/Avatar';
 import Icon from 'material-ui/Icon';
 import { withStyles } from 'material-ui/styles';
-import { isAdminUser } from '../lib/user-utility';
 import './Home.css';
 
 const styles = theme => ({
@@ -40,7 +39,7 @@ class Profile extends Component {
               <Avatar className={classes.avatar}>{initials}</Avatar>
               <Typ>Name: {user.fullName}</Typ>
               <Typ>Email: {user.email}</Typ>
-              <Typ>Admin: {isAdminUser(user) ? <Icon className={classes.icon}>check_circle</Icon> : '' }</Typ>
+              <Typ>Admin: {login.get('isAdmin') ? <Icon className={classes.icon}>check_circle</Icon> : '' }</Typ>
             </Paper>
           </Grid>
         </Grid>

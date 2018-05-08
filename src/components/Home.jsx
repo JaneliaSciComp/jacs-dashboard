@@ -151,7 +151,7 @@ class Home extends Component {
     );
   }
 
-  currentCapcity() {
+  currentCapacity() {
     const { stats, classes } = this.props;
 
     if (!stats.get('cap_loaded')) {
@@ -191,7 +191,7 @@ class Home extends Component {
               <Button variant="raised" color="secondary" component={Link} to="/services">Start A Service</Button>
             </Grid>
             <Grid item sm={12}>
-              {this.currentCapcity()}
+              {this.currentCapacity()}
             </Grid>
             <Grid item sm={12}>
               {this.storageUsage()}

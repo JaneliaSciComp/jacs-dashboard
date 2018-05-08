@@ -1,13 +1,13 @@
 export function isAdminUser(userObject) {
   return userObject.userGroupRoles.filter(
     e => e.groupKey.match(/^group:admin$/),
-  ).length;
+  ).length >= 1;
 }
 
 export function isInGroup(userObject, group) {
   return userObject.userGroupRoles.filter(
     e => e.groupKey.match(`^${group}$`),
-  ).length;
+  ).length >= 1;
 }
 
 export function hasPermission(userObject, domainObject) {
