@@ -31,7 +31,7 @@ class Admin extends React.Component {
             <Typography>Admin Page</Typography>
             <CapacityForm
               currentMaxWaiting={capacity.waitingCapacity}
-              currentMaxAvailable={capacity.availableSlots}
+              currentMaxAvailable={capacity.availableSlots + capacity.runningServicesCount}
               updateCapacity={this.props.actions.updateCapacity}
             />
           </Paper>
