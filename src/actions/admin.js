@@ -127,7 +127,7 @@ export function updateWaitingCapacity(slotCount) {
       if (error.message === 'Not Authorized') {
         dispatch(notAuthorized(error));
       } else {
-        dispatch({ type: 'WAITING_COUNT_UPDATE_ERROR', error });
+        dispatch({ type: 'WAITING_COUNT_UPDATE_ERROR', error, message: error.message });
       }
     });
   };
