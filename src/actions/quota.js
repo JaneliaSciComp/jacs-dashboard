@@ -43,7 +43,7 @@ export function quotaReport(username) {
     return fetch(quotaUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'webstation',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -100,7 +100,7 @@ export function loadStorageQuotas() {
     return fetch(quotaUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'webstation',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,

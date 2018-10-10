@@ -49,7 +49,7 @@ class RunningServices extends Component {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'v2-dashboard',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,

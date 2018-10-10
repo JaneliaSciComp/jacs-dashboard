@@ -38,7 +38,7 @@ export function loadCapacity(username) {
     return fetch(capacityStatsUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'webstation',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -75,7 +75,7 @@ export function updateProcessingCapacity(slotCount) {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'webstation',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -110,7 +110,7 @@ export function updateWaitingCapacity(slotCount) {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': 'webstation',
+        'Application-Id': settings.appId,
         Accept: 'application/json',
       },
       timeout: 5000,
