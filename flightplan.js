@@ -1,8 +1,12 @@
 var plan = require('flightplan');
 
+var projectDir = '/opt/www/jacs-dashboard';
+var deployDir = projectDir + '/releases/' + (new Date().getTime());
+
 var config = {
-  projectDir: '/opt/www/jacs-dashboard', // location on the remote server
-  keepReleases: 3,
+    projectDir: projectDir, // location on the remote server
+    deployTo: deployDir,
+    keepReleases: 3,
 };
 
 plan.target(
@@ -49,7 +53,6 @@ plan.local('deploy', function (local) {
 
 
 plan.remote('deploy', function (remote) {
-  config.deployTo = config.projectDir + '/releases/' + (new Date().getTime());
   remote.log('Creating webroot ' + config.deployTo);
   remote.exec('mkdir -p ' + config.deployTo);
 });
@@ -57,13 +60,13 @@ plan.remote('deploy', function (remote) {
 // Gets a list of files that git knows about and sends them to the
 // target.
 plan.local('deploy', function (local) {
-  local.log('Transferring website files to ' + config.deployTo);
+  local.log('Transferring website files to local directory' + config.deployTo);
   var files = local.git('ls-files', {silent: true});
   local.transfer(files, config.deployTo + '/');
 });
 
 plan.remote('deploy', function(remote) {
-  remote.log('Setup necessary symbolic links');
+  remote.log('Setup necessary symbolic links ');
   remote.exec('ln -s ' + config.projectDir + '/settings.json ' + config.deployTo + '/src/settings.json');
 });
 
@@ -80,7 +83,7 @@ plan.remote('deploy', function(remote) {
 plan.remote('deploy',function (remote) {
   remote.log('Linking to new release');
   remote.exec('ln -nfs ' + config.deployTo + ' ' +
-    config.projectDir + '/current');
+  config.projectDir + '/current');
 
   remote.log('Checking for stale releases');
   var releases = getReleases(remote);
@@ -92,13 +95,13 @@ plan.remote('deploy',function (remote) {
     releases = releases.slice(0, removeCount);
     releases = releases.map(function (item) {
       return config.projectDir + '/releases/' + item;
-      });
+    });
 
     remote.exec('rm -rf ' + releases.join(' '));
   }
 });
 
-// The below code is not needed for this site as we generate a stitc bundle, which can be served
+// The below code is not needed for this site as we generate a static bundle, which can be served
 // via an nginx server. Therefore, we don't need to restart the server, just change the content.
 /*
 plan.remote(['deploy', 'restart', 'stop'], function(remote) {
