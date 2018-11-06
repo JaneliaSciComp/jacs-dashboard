@@ -50,14 +50,14 @@ plan.local('deploy', function (local) {
 
 plan.remote('deploy', function (remote) {
   config.deployTo = config.projectDir + '/releases/' + (new Date().getTime());
-  remote.log('Creating webroot');
+  remote.log('Creating webroot ' + config.deployTo);
   remote.exec('mkdir -p ' + config.deployTo);
 });
 
 // Gets a list of files that git knows about and sends them to the
 // target.
 plan.local('deploy', function (local) {
-  local.log('Transferring website files');
+  local.log('Transferring website files to ' + config.deployTo);
   var files = local.git('ls-files', {silent: true});
   local.transfer(files, config.deployTo + '/');
 });
