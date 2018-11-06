@@ -8,7 +8,9 @@ var config = {
 plan.target(
   'development', {
     host: '10.36.13.17', // jacs-dev
-    username: 'jacs'
+    username: 'jacs',
+    agent: process.env.SSH_AUTH_SOCK,
+    failsafe: true  
   },
   {
     gitCheck: true,
