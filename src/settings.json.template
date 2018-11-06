@@ -1,5 +1,5 @@
 {
-  "userDataUrl": "http://jacs:8180/rest-v2/data/user/subject",
+  "userDataUrl": "http://jacs.int.janelia.org:8180/rest-v2/data/user/subject",
   "capacityStatsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/stats",
   "authApiUrl": "http://localhost:3000/authenticate",
   "serviceListUrl": "http://jacs-dev.int.janelia.org:9000/api/rest-v2/services/metadata",
