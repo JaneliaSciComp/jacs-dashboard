@@ -1,13 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import Snackbar from 'material-ui/Snackbar';
-import { withStyles } from 'material-ui/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import Snackbar from '@material-ui/core/Snackbar';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   root: {
@@ -49,7 +49,7 @@ class LoginView extends React.Component {
       return <Redirect to="/" />;
     }
 
-    let button = <Button variant="raised" color="primary" type="submit">Submit</Button>;
+    let button = <Button variant="contained" color="primary" type="submit">Submit</Button>;
 
     if (state.get('loading') === 1) {
       button = <Typography>Loading...</Typography>;
@@ -77,7 +77,7 @@ class LoginView extends React.Component {
         <Grid item xs={12}>
           <Grid container justify="center">
             <Paper elevation={1} className={classes.paper}>
-              <Typography variant="display2">Login</Typography>
+              <Typography variant="h3">Login</Typography>
               <form name="login-form" method="post" action="login" onSubmit={this.handleSubmit}>
                 <TextField
                   id="username"

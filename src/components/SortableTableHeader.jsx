@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TableCell, TableHead, TableRow, TableSortLabel } from 'material-ui/Table';
-import Tooltip from 'material-ui/Tooltip';
+import { TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core/Table';
+import Tooltip from '@material-ui/core/Tooltip';
 import queryString from 'query-string';
 
 

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import { withStyles } from 'material-ui/styles';
-import CloseIcon from 'material-ui-icons/Close';
-import Tooltip from 'material-ui/Tooltip';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import CloseIcon from '@material-ui/icons/Close';
+import Tooltip from '@material-ui/core/Tooltip';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Cron from 'cron-converter';
@@ -155,12 +155,12 @@ class ScheduledJob extends Component {
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
-              <Button variant="raised" size="small">Terminate</Button>
+              <Button variant="contained" size="small">Terminate</Button>
               {(data.get('disabled')) ?
-                (<Button variant="raised" size="small" onClick={this.handleRestart}>Restart</Button>) :
-                (<Button variant="raised" size="small" onClick={this.handlePause}>Pause</Button>)}
-              <Button variant="raised" size="small" onClick={this.handleDelete}>Delete</Button>
-              <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+                (<Button variant="contained" size="small" onClick={this.handleRestart}>Restart</Button>) :
+                (<Button variant="contained" size="small" onClick={this.handlePause}>Pause</Button>)}
+              <Button variant="contained" size="small" onClick={this.handleDelete}>Delete</Button>
+              <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
         </Grid>

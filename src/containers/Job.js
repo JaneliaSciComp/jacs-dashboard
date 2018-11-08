@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Job from '../components/Job';
-import { loadJobData } from '../actions/services';
+import { loadJobData, updateJobState } from '../actions/services';
 import { setShortDate } from '../actions/settings';
 
 const mapStateToProps = state => ({
@@ -18,6 +18,15 @@ const mapDispatchToProps = dispatch => ({
     setShortDate: (format) => {
       dispatch(setShortDate(format));
     },
+    pauseJob: (jobId) => {
+      dispatch(updateJobState(jobId, 'SUSPENDED'));
+    },
+    resumeJob: (jobId) => {
+      dispatch(updateJobState(jobId, 'RESUMED'));
+    },
+    cancelJob: (jobId) => {
+      dispatch(updateJobState(jobId, 'CANCELED'));
+    }
   },
 });
 

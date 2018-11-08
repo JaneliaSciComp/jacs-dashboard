@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   input: {
@@ -47,7 +47,7 @@ class CapacityForm extends React.Component {
             <TextField id="available" value={this.state.available} label="Max Available Slots" onChange={this.handleChange} />
           </Grid>
           <Grid item xs={12} className={classes.input}>
-            <Button variant="raised" color="primary" onClick={this.handleSubmit} >Save</Button>
+            <Button variant="contained" color="primary" onClick={this.handleSubmit} >Save</Button>
           </Grid>
         </form>
       </Grid>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
-import Reboot from 'material-ui/Reboot';
-import { withStyles, MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
+import Admin from '../containers/Admin';
 import Navigation from '../containers/Navigation';
 import Home from '../containers/Home';
 import About from '../components/About';
@@ -21,7 +22,6 @@ import PrivateRoute from '../containers/auth/PrivateRoute';
 import AdminOnlyRoute from '../containers/auth/AdminOnlyRoute';
 import RunningServices from './RunningServices';
 import QueuedServices from './QueuedServices';
-import Admin from '../containers/Admin';
 import './App.css';
 
 const styles = {
@@ -52,6 +52,9 @@ const theme = createMuiTheme({
   status: {
     danger: 'orange',
   },
+  typography: {
+    useNextVariants: true,
+  },
 });
 
 class App extends Component {
@@ -61,7 +64,7 @@ class App extends Component {
     return (
       <div className={classes.root}>
         <MuiThemeProvider theme={theme}>
-          <Reboot />
+          <CssBaseline />
           <Navigation />
           <div className={classes.content}>
             <Switch>

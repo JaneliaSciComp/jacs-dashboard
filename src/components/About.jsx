@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Avatar from 'material-ui/Avatar';
-import Typography from 'material-ui/Typography';
-import Zoom from 'material-ui/transitions/Zoom';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import Zoom from '@material-ui/core/Zoom';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 
 const clements = require('../assets/clements.jpg');
 

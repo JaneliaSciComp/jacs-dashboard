@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import Avatar from 'material-ui/Avatar';
-import Chip from 'material-ui/Chip';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import { withStyles } from 'material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
 import MessageSnack from './MessageSnack';
 import settings from '../settings.json';
@@ -76,7 +76,7 @@ class RunningServices extends Component {
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <Typography align="left" variant="display2">Running Services</Typography>
+          <Typography align="left" variant="h3">Running Services</Typography>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.root}>

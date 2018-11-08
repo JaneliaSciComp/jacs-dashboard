@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Prompt } from 'react-router';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Icon from 'material-ui/Icon';
-import Button from 'material-ui/Button';
-import Switch from 'material-ui/Switch';
-import Tabs, { Tab } from 'material-ui/Tabs';
-import TextField from 'material-ui/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Icon from '@material-ui/core/Icon';
+import Button from '@material-ui/core/Button';
+import Switch from '@material-ui/core/Switch';
+import Tabs, { Tab } from '@material-ui/core/Tabs';
+import TextField from '@material-ui/core/TextField';
 import cronstrue from 'cronstrue';
 import ParameterForm from '../containers/ParameterForm';
 
@@ -83,7 +83,7 @@ class Service extends Component {
     const serviceDetails = services.get(name);
 
     return [
-      <Typography key="title" variant="title">Parameter List</Typography>,
+      <Typography key="title" variant="h6">Parameter List</Typography>,
       <ParameterForm key="form" data={serviceDetails.serviceArgDescriptors} name={serviceDetails.serviceName} />,
     ];
   }
@@ -93,7 +93,7 @@ class Service extends Component {
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <Typography key="title" variant="title">Advanced Paramters</Typography>
+          <Typography key="title" variant="h6">Advanced Paramters</Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
@@ -133,7 +133,7 @@ class Service extends Component {
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <Typography key="title" variant="title">Scheduled Settings</Typography>
+          <Typography key="title" variant="h6">Scheduled Settings</Typography>
         </Grid>
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
@@ -205,7 +205,7 @@ class Service extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Typography variant="display2">Start: {name}</Typography>
+            <Typography variant="h3">Start: {name}</Typography>
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.main}>

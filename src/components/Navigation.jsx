@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import Avatar from 'material-ui/Avatar';
-import Menu, { MenuItem } from 'material-ui/Menu';
-import { withStyles } from 'material-ui/styles';
-import Drawer from 'material-ui/Drawer';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
-import Icon from 'material-ui/Icon';
-import Chip from 'material-ui/Chip';
+import AppBar from '@material-ui/core/AppBar';
+import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Avatar from '@material-ui/core/Avatar';
+import { Menu, MenuItem } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Icon from '@material-ui/core/Icon';
+import Chip from '@material-ui/core/Chip';
 import MessageSnack from './MessageSnack';
 import settings from '../settings.json';
 
@@ -168,7 +168,7 @@ class Navigation extends Component {
 
           <div className={classes.flex}>
             <Button color="inherit" component={Link} to="/">
-              <Typography variant="title" color="inherit" >
+              <Typography variant="h6" color="inherit" >
                 JACS v2
               </Typography>
             </Button>

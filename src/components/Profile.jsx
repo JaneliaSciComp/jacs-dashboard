@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typ from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Grid from 'material-ui/Grid';
-import Avatar from 'material-ui/Avatar';
-import Icon from 'material-ui/Icon';
-import { withStyles } from 'material-ui/styles';
+import Typ from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import Icon from '@material-ui/core/Icon';
+import { withStyles } from '@material-ui/core/styles';
 import './Home.css';
 
 const styles = theme => ({

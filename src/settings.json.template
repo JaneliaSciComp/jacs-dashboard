@@ -3,7 +3,7 @@
   "capacityStatsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/stats",
   "authApiUrl": "http://localhost:3000/authenticate",
   "serviceListUrl": "http://jacs-dev.int.janelia.org:9000/api/rest-v2/services/metadata",
-  "asyncServiceUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/<service_name>",
+  "asyncServicesUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services",
   "scheduledServicesUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/scheduled-services",
   "scheduledServiceUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/scheduled-services/<id>",
   "jobDataUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services/<job_id>",
@@ -12,5 +12,6 @@
   "apiKey": "ea0c3c4b-85f7-4e9d-b30f-444461eb4bf7",
   "avatarUrl": "http://wiki.int.janelia.org/wiki/plugins/servlet/ldappicture?name=<username>&width=100&height=100",
   "processingSlotsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/processing-slots-count/<newCount>",
-  "waitingSlotsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/waiting-slots-count/<newCount>"
+  "waitingSlotsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/waiting-slots-count/<newCount>",
+  "apiVersionUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/version"
 }

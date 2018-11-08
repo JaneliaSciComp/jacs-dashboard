@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
-import Icon from 'material-ui/Icon';
-import Switch from 'material-ui/Switch';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import { withStyles } from 'material-ui/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Icon from '@material-ui/core/Icon';
+import Switch from '@material-ui/core/Switch';
+import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import { withStyles } from '@material-ui/core/styles';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Duration from 'duration';
@@ -53,9 +53,20 @@ class Job extends Component {
     }
   }
 
-
   handleChange = () => {
     this.props.actions.setShortDate(!this.props.shortDate);
+  }
+
+  handlePause = () => {
+    this.props.actions.pauseJob(this.props.job.id);
+  }
+
+  handleResume = () => {
+    this.props.actions.resumeJob(this.props.job.id);
+  }
+
+  handleCancel = () => {
+    this.props.actions.cancelJob(this.props.job.id);
   }
 
   eventsTable() {
@@ -143,7 +154,7 @@ class Job extends Component {
 
         <Grid item md={8}>
           <div className={classes.row} key="1">
-            <Typography align="center" variant="display1">{ data.state === 'ERROR' && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
+            <Typography align="center" variant="h4">{ data.state === 'ERROR' && (<Icon className={classes.error}>error</Icon>) }Job Status ({data.serviceId}) </Typography>
           </div>
           <div className={classes.row} key="type">
             <Typography>{data.name}</Typography>
@@ -164,10 +175,10 @@ class Job extends Component {
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
-              <Button variant="raised" size="small">Terminate</Button>
-              <Button variant="raised" size="small">Pause</Button>
-              <Button variant="raised" size="small">Restart</Button>
-              <Button variant="raised" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+              <Button variant="contained" size="small" onClick={this.handleCancel}>Terminate</Button>
+              <Button variant="contained" size="small" onClick={this.handlePause}>Pause</Button>
+              <Button variant="contained" size="small" onClick={this.handleResume}>Restart</Button>
+              <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
         </Grid>
@@ -187,7 +198,7 @@ class Job extends Component {
           <Grid item xs={12}>
             <Grid container key="title" className={classes.row}>
               <Grid item sm={12}>
-                <Typography variant="title">Children</Typography>
+                <Typography variant="h6">Children</Typography>
               </Grid>
             </Grid>
             <Grid container key="content" className={classes.row}>
@@ -199,7 +210,7 @@ class Job extends Component {
             </Grid>
           </Grid>
           <Grid item sm={8}>
-            <Typography variant="title">Events</Typography>
+            <Typography variant="h6">Events</Typography>
           </Grid>
           <Grid item sm={4} align="right">
             Human Dates
@@ -216,10 +227,10 @@ class Job extends Component {
             </Paper>
           </Grid>
           <Grid item sm={8}>
-            <Typography variant="title">Output</Typography>
+            <Typography variant="h6">Output</Typography>
           </Grid>
           <Grid item sm={4} className={classes.download}>
-            <Button variant="raised" size="small">Download</Button>
+            <Button variant="contained" size="small">Download</Button>
           </Grid>
           <Grid item sm={12}>
             <Paper className={classes.paper}>

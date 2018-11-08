@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableRow, TableFooter, TablePagination } from 'material-ui/Table';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Table, { TableBody, TableCell, TableRow, TableFooter, TablePagination } from '@material-ui/core/Table';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
-import Chip from 'material-ui/Chip';
-import Grid from 'material-ui/Grid';
-import Avatar from 'material-ui/Avatar';
+import Chip from '@material-ui/core/Chip';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
 import queryString from 'query-string';
 import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
@@ -142,7 +142,7 @@ class JobStatusList extends Component {
       return [
         <Grid container key="title" className={classes.row}>
           <Grid item xs={8}>
-            <Typography variant="display2">Service History</Typography>
+            <Typography variant="h3">Service History</Typography>
           </Grid>
         </Grid>,
         <Grid key="table" className={classes.row}>
@@ -172,7 +172,7 @@ class JobStatusList extends Component {
 
     return (
       <div className={classes.row}>
-        <Typography align="center" variant="display2">Service History</Typography>
+        <Typography align="center" variant="h3">Service History</Typography>
       </div>
     );
   }

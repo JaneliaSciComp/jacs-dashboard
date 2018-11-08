@@ -38,6 +38,10 @@ export const TOGGLE_SERVICE_ERROR = 'TOGGLE_SERVICE_ERROR';
 export const TOGGLED_SERVICE = 'TOGGLED_SERVICE';
 export const TOGGLING_SERVICE = 'TOGGLING_SERVICE';
 
+export const UPDATE_JOB_STATE = "UPDATE_JOB_STATE";
+export const UPDATE_JOB_STATE_ERROR = "UPDATE_JOB_STATE_ERROR";
+export const UPDATE_JOB_STATE_SUCCESS = "UPDATE_JOB_STATE_SUCCESS";
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -186,12 +190,14 @@ export function startService(args) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    // TODO: need different urls if cron enabled.
-    const { asyncServiceUrl, scheduledServicesUrl } = settings;
-    let requestUrl = asyncServiceUrl.replace('<service_name>', args.get('serviceName'));
+    const { asyncServicesUrl, scheduledServicesUrl } = settings;
+
+    let requestUrl;
 
     if (args.getIn(['cron', 'enabled'])) {
       requestUrl = scheduledServicesUrl;
+    } else {
+      requestUrl = `${asyncServicesUrl}/${args.serviceName}`;
     }
 
     const body = constructBodyFromForm(args);
@@ -247,7 +253,6 @@ function loadedJobData(json) {
     json,
   };
 }
-
 
 export function loadJobData(jobId) {
   return function loadJobDataAsync(dispatch) {
@@ -563,5 +568,56 @@ export function deleteScheduled(id) {
     }).catch((error) => {
       dispatch(deleteScheduledError(error, id));
     });
+  };
+}
+
+export function updateJobState(jobId, jobState) {
+  return (dispatch) => {
+    dispatch(updatingJobState(jobId, jobState));
+
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    const { asyncServicesUrl } = settings;
+
+    const requestUrl = `${asyncServicesUrl}/${jobId}/state/${jobState}`;
+
+    return fetch(requestUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error("bad login");
+      }
+      return res.json();
+    }).then((json) => {
+      dispatch(updateJobStateSuccess(json));
+    }).catch(error => dispatch(updateJobStateError(error)))
+  };
+}
+
+function updatingJobState(jobId, jobState) {
+  return {
+    type: UPDATE_JOB_STATE,
+    jobId: jobId,
+    jobState: jobState
+  };
+}
+
+function updateJobStateError(error) {
+  return {
+    type: UPDATE_JOB_STATE_ERROR,
+    error
+  };
+}
+
+function updateJobStateSuccess(json) {
+  return {
+    type: UPDATE_JOB_STATE_SUCCESS,
+    json
   };
 }

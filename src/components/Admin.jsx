@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import { withStyles } from 'material-ui/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
 import CapacityForm from './CapacityForm';
 import MessageSnack from './MessageSnack';
 
@@ -33,11 +33,11 @@ class Admin extends React.Component {
     return (
       <Grid container spacing={8}>
         <Grid item xs={12}>
-          <Typography variant="display2">Admin Page</Typography>
+          <Typography variant="h3">Admin Page</Typography>
         </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paper}>
-            <Typography variant="title">Modify Processing Capacity</Typography>
+            <Typography variant="h6">Modify Processing Capacity</Typography>
             <CapacityForm
               currentMaxWaiting={capacity.waitingCapacity}
               currentMaxAvailable={capacity.availableSlots + capacity.runningServicesCount}

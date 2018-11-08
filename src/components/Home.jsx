@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { PieChart, Pie, Cell, LabelList, ResponsiveContainer } from 'recharts';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Typ from 'material-ui/Typography';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import { withStyles } from 'material-ui/styles';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Typ from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 import parse from 'date-fns/parse';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import './Home.css';
@@ -137,7 +137,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
-        <Typ variant="title">Lab Storage Usage</Typ>
+        <Typ variant="h6">Lab Storage Usage</Typ>
         <Typ>{percentage}% of alloted storage used.</Typ>
         <ResponsiveContainer width="100%" height={300}>
           <PieChart width={300} height={300}>
@@ -162,7 +162,7 @@ class Home extends Component {
 
     return (
       <Paper className={classes.paper}>
-        <Typ variant="title">Current Service Capacity</Typ>
+        <Typ variant="h6">Current Service Capacity</Typ>
         <Typ>Available Slots: {capacity.availableSlots}</Typ>
         <Typ>Wait Capacity: {capacity.waitingCapacity}</Typ>
         <Typ><Link href="/running" to="/running">Running Services</Link>: {capacity.runningServicesCount}</Typ>
@@ -190,7 +190,7 @@ class Home extends Component {
         <Grid item sm={4}>
           <Grid container spacing={24}>
             <Grid item sm={12}>
-              <Button variant="raised" color="secondary" component={Link} to="/services">Start A Service</Button>
+              <Button variant="contained" color="secondary" component={Link} to="/services">Start A Service</Button>
             </Grid>
             <Grid item sm={12}>
               {this.currentCapacity()}

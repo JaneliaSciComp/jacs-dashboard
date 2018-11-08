@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { withStyles } from 'material-ui/styles';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Paper from 'material-ui/Paper';
-import Icon from 'material-ui/Icon';
-import Tooltip from 'material-ui/Tooltip';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import Paper from '@material-ui/core/Paper';
+import Icon from '@material-ui/core/Icon';
+import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Cron from 'cron-converter';

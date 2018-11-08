@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
 import ParameterTable from './ParameterTable';
@@ -44,11 +44,11 @@ class Service extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={10}>
-            <Typography variant="display2">{name}</Typography>
+            <Typography variant="h3">{name}</Typography>
           </Grid>
           <Grid item xs={2}>
             <Button
-              variant="raised"
+              variant="contained"
               color="primary"
               aria-label="add"
               className={classes.button}
@@ -60,15 +60,15 @@ class Service extends Component {
           </Grid>
           <Grid item xs={12}>
             <Paper className={classes.main}>
-              <Typography variant="title">Parameter List</Typography>
+              <Typography variant="h6">Parameter List</Typography>
               <ParameterTable data={serviceDetails.serviceArgDescriptors} />
             </Paper>
             <Paper className={classes.main}>
-              <Typography variant="title">Meta Information</Typography>
+              <Typography variant="h6">Meta Information</Typography>
               <Typography>File sizes, Run Time, version numbers, dependencies?</Typography>
             </Paper>
             <Paper className={classes.main}>
-              <Typography variant="title">Output</Typography>
+              <Typography variant="h6">Output</Typography>
               <Typography>Typical result files, error files, processing artifacts.</Typography>
             </Paper>
           </Grid>

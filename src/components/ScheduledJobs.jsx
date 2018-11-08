@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typography from 'material-ui/Typography';
-import { withStyles } from 'material-ui/styles';
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
+import Typography from '@material-ui/core/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import ScheduledTable from './ScheduledTable';
 
 const styles = {
@@ -33,7 +33,7 @@ class ScheduledJobs extends Component {
       <div className={classes.root}>
         <Grid container spacing={8}>
           <Grid item xs={12}>
-            <Typography align="left" variant="display2">Scheduled List</Typography>
+            <Typography align="left" variant="h3">Scheduled List</Typography>
           </Grid>
           <Grid item xs={12}>
             <TextField
