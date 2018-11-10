@@ -1,7 +1,7 @@
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Job from '../components/Job';
-import { loadJobData, updateJobState } from '../actions/services';
+import { downloadURL, loadJobData, updateJobState } from '../actions/services';
 import { setShortDate } from '../actions/settings';
 
 const mapStateToProps = state => ({
@@ -26,6 +26,9 @@ const mapDispatchToProps = dispatch => ({
     },
     cancelJob: (jobId) => {
       dispatch(updateJobState(jobId, 'CANCELED'));
+    },
+    download: (url, filename) => {
+      dispatch(downloadURL(url, filename));
     }
   },
 });

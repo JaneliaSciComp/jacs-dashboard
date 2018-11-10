@@ -7,12 +7,13 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
 import Switch from '@material-ui/core/Switch';
-import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Duration from 'duration';
 import JobChildren from '../components/JobChildren';
+import settings from '../settings.json';
 
 const styles = theme => ({
   row: {
@@ -58,15 +59,15 @@ class Job extends Component {
   }
 
   handlePause = () => {
-    this.props.actions.pauseJob(this.props.job.id);
+    this.props.actions.pauseJob(this.props.job.get('data').serviceId);
   }
 
   handleResume = () => {
-    this.props.actions.resumeJob(this.props.job.id);
+    this.props.actions.resumeJob(this.props.job.get('data').serviceId);
   }
 
   handleCancel = () => {
-    this.props.actions.cancelJob(this.props.job.id);
+    this.props.actions.cancelJob(this.props.job.get('data').serviceId);
   }
 
   eventsTable() {
@@ -107,7 +108,22 @@ class Job extends Component {
 
   outputTable() {
     const { classes, job } = this.props;
-    const { outputPath, errorPath } = job.get('data');
+    const { serviceId, outputPath, errorPath } = job.get('data');
+    const { jobDataUrl } = settings;
+    const requestUrl = jobDataUrl.replace('<job_id>', serviceId);
+    const downloadJobOutputUrl = `${requestUrl}/job-output`
+    const downloadJobErrorsUrl = `${requestUrl}/job-errors`
+
+    let downloadOutput = () => {
+      this.props.actions.download(downloadJobOutputUrl, serviceId + '-output.txt');
+      return false;
+    };
+
+    let downloadErrors = () => {
+      this.props.actions.download(downloadJobErrorsUrl, serviceId + '-errors.txt');
+      return false;
+    };
+
     return (
       <Table className={classes.table}>
         <TableHead>
@@ -123,13 +139,13 @@ class Job extends Component {
             <TableCell>Output Path</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell>{outputPath}</TableCell>
+            <TableCell><a href="#" onClick={downloadOutput} download>{outputPath}</a></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Error Path</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell>{errorPath}</TableCell>
+            <TableCell><a href="#" onClick={downloadErrors} download>{errorPath}</a></TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -175,9 +191,9 @@ class Job extends Component {
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
-              <Button variant="contained" size="small" onClick={this.handleCancel}>Terminate</Button>
-              <Button variant="contained" size="small" onClick={this.handlePause}>Pause</Button>
-              <Button variant="contained" size="small" onClick={this.handleResume}>Restart</Button>
+              <Button variant="contained" size="small" onClick={this.handleCancel.bind(this)}>Terminate</Button>
+              <Button variant="contained" size="small" onClick={this.handlePause.bind(this)}>Pause</Button>
+              <Button variant="contained" size="small" onClick={this.handleResume.bind(this)}>Restart</Button>
               <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>

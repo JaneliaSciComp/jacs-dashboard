@@ -4,7 +4,7 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-import Table, { TableBody, TableCell, TableRow, TableFooter, TablePagination } from '@material-ui/core/Table';
+import { Table, TableBody, TableCell, TableRow, TableFooter, TablePagination } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import qs from 'qs';
 import Chip from '@material-ui/core/Chip';
@@ -161,7 +161,7 @@ class JobStatusList extends Component {
                   page={page}
                   onChangePage={this.handleChangePage}
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  Actions={TablePaginationActions}
+                  actions={TablePaginationActions}
                 />
               </TableRow>
             </TableFooter>

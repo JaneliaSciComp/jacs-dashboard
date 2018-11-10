@@ -8,6 +8,7 @@
   "scheduledServiceUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/scheduled-services/<id>",
   "jobDataUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services/<job_id>",
   "jobListUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/services",
+  "jobActionsUrl": "http://goinac-ws1.int.janelia.org:8080/api/rest-v2/services",
   "quotaBaseUrl": "https://api.int.janelia.org/SCSW/JaneliaFileServices/v1/api/quota/filestore/report",
   "apiKey": "ea0c3c4b-85f7-4e9d-b30f-444461eb4bf7",
   "avatarUrl": "http://wiki.int.janelia.org/wiki/plugins/servlet/ldappicture?name=<username>&width=100&height=100",

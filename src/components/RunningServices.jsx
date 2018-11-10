@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Chip from '@material-ui/core/Chip';
-import Table, { TableBody, TableCell, TableHead, TableRow } from '@material-ui/core/Table';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
 import MessageSnack from './MessageSnack';

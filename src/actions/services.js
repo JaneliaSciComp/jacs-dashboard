@@ -42,6 +42,8 @@ export const UPDATE_JOB_STATE = "UPDATE_JOB_STATE";
 export const UPDATE_JOB_STATE_ERROR = "UPDATE_JOB_STATE_ERROR";
 export const UPDATE_JOB_STATE_SUCCESS = "UPDATE_JOB_STATE_SUCCESS";
 
+export const DOWNLOAD_URL_ERROR = "DOWNLOAD_URL_ERROR";
+
 export function loadingServiceData(args) {
   return {
     type: SERVICE_DATA_LOADING,
@@ -578,9 +580,9 @@ export function updateJobState(jobId, jobState) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { asyncServicesUrl } = settings;
+    const { jobActionsUrl } = settings;
 
-    const requestUrl = `${asyncServicesUrl}/${jobId}/state/${jobState}`;
+    const requestUrl = `${jobActionsUrl}/${jobId}/state/${jobState}`;
 
     return fetch(requestUrl, {
       method: 'PUT',
@@ -619,5 +621,43 @@ function updateJobStateSuccess(json) {
   return {
     type: UPDATE_JOB_STATE_SUCCESS,
     json
+  };
+}
+
+export function downloadURL(url, filename) {
+  return function downloadURLAsync(dispatch) {
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        Authorization: `Bearer ${jwt}`,
+      },
+      timeout: 4000
+    }).then((res) => {
+      if (res.status === 401) {
+        throw new Error('bad login');
+      } else if (res.status >= 400) {
+        throw new Error('server error');
+      }
+      return res.blob();
+    }).then((res) => {
+      let anchor = document.createElement("a");
+      let file = new Blob([res], { type: 'application/octet-stream' });
+      anchor.href = URL.createObjectURL(file);
+      anchor.download = filename;
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+    }).catch(error => dispatch(downloadURLError(error)));
+  };
+}
+
+function downloadURLError(error) {
+  return {
+    type: DOWNLOAD_URL_ERROR,
+    error
   };
 }
