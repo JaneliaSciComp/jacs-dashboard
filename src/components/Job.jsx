@@ -61,25 +61,23 @@ class TerminateConfirmationDialog extends Component {
     return (
       <Dialog
         disableBackdropClick
-        disableEscapeKeyDown
         maxWidth="xs"
         aria-labelledby="confirmation-dialog-title"
         {...this.props}
       >
-        <DialogTitle id="confirmation-dialog-title">Confirm Job Termination</DialogTitle>
+        <DialogTitle id="confirmation-dialog-title">Terminate Job</DialogTitle>
         <DialogContent>
-          <Typography>Are you sure you want to terminate this job</Typography>
+          <Typography variant="subtitle1">Do you want to terminate this job?</Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.handleCancel} color="primary">
-            Cancel
+          <Button onClick={this.handleCancel} color="secondary">
+            No
           </Button>
           <Button onClick={this.handleOk} color="primary">
-            Ok
+            Yes
           </Button>
         </DialogActions>
       </Dialog>
-
     );
   }  
 }
@@ -121,7 +119,7 @@ class Job extends Component {
 
   handleCloseConfirmTerminate = (value) => {
     this.setState({ confirmationOpen: false });
-    if (value) {
+    if (value === true) {
       this.props.actions.cancelJob(this.props.job.get('data').serviceId);      
     }
   }
