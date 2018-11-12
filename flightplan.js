@@ -2,7 +2,7 @@ var plan = require('flightplan');
 
 var projectDir = '/opt/www/jacs-dashboard';
 var deployDir = projectDir + '/releases/' + (new Date().getTime());
-var nodeDir = '/opt/www/node-v8.11.1-linux-x64'
+var nodeDir = '/opt/www/bin/node-v8.11.1-linux-x64'
 
 var config = {
     projectDir: projectDir, // location on the remote server
