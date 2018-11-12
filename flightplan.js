@@ -2,7 +2,6 @@ var plan = require('flightplan');
 
 var projectDir = '/opt/www/jacs-dashboard';
 var deployDir = projectDir + '/releases/' + (new Date().getTime());
-var nodeDir = '/opt/www/bin/node-v8.11.1-linux-x64'
 
 var config = {
     projectDir: projectDir, // location on the remote server
@@ -73,12 +72,12 @@ plan.remote('deploy', function(remote) {
 
 plan.remote('deploy', function(remote) {
   remote.log('Run npm install');
-  remote.exec('cd ' + config.deployTo + `; export PATH=${nodeDir}/bin:$PATH; ${nodeDir}/bin/npm install`);
+  remote.exec('cd ' + config.deployTo + `; /usr/bin/npm install`);
 });
 
 plan.remote('deploy', function(remote) {
   remote.log('Run npm run build');
-  remote.exec('cd ' + config.deployTo + `; export PATH=${nodeDir}/bin:$PATH; ${nodeDir}/bin/npm run build`);
+  remote.exec('cd ' + config.deployTo + `; /usr/bin/npm run build`);
 });
 
 plan.remote('deploy',function (remote) {
@@ -101,24 +100,6 @@ plan.remote('deploy',function (remote) {
     remote.exec('rm -rf ' + releases.join(' '));
   }
 });
-
-// The below code is not needed for this site as we generate a static bundle, which can be served
-// via an nginx server. Therefore, we don't need to restart the server, just change the content.
-/*
-plan.remote(['deploy', 'restart', 'stop'], function(remote) {
-  remote.log('Stop pm2');
-  remote.exec('cd ' + config.projectDir + '; export PATH=/opt/www/bin:$PATH; pm2 stop webstation');
-});
-
-plan.remote(['deploy', 'restart', 'start'], function(remote) {
-  remote.log('Start pm2');
-  remote.exec('cd ' + config.projectDir + '; export PATH=/opt/www/bin:$PATH; pm2 start ecosystem.json --env production');
-});
-
-plan.remote(['deploy', 'status'], function(remote) {
-  remote.exec('cd ' + config.projectDir + '; export PATH=/opt/www/bin:$PATH; pm2 status');
-});
-*/
 
 plan.remote('rollback', function(remote) {
   remote.log('Rolling back release');
