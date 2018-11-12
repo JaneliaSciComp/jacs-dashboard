@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 import Paper from '@material-ui/core/Paper';
 import Icon from '@material-ui/core/Icon';
 import Switch from '@material-ui/core/Switch';
@@ -43,7 +47,52 @@ function parentLink(id) {
   );
 }
 
+class TerminateConfirmationDialog extends Component {
+
+  handleCancel = () => {
+    this.props.onClose(false);
+  };
+
+  handleOk = () => {
+    this.props.onClose(true);
+  };
+
+  render() {
+    return (
+      <Dialog
+        disableBackdropClick
+        disableEscapeKeyDown
+        maxWidth="xs"
+        aria-labelledby="confirmation-dialog-title"
+        {...this.props}
+      >
+        <DialogTitle id="confirmation-dialog-title">Confirm Job Termination</DialogTitle>
+        <DialogContent>
+          <Typography>Are you sure you want to terminate this job</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={this.handleCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={this.handleOk} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+    );
+  }  
+}
+
+TerminateConfirmationDialog.propTypes = {
+  onClose: PropTypes.func,
+}
+
 class Job extends Component {
+  state = {
+    confirmationOpen: false,
+  }
+
   componentDidMount() {
     this.props.actions.loadJobData(this.props.match.params.jobId);
   }
@@ -66,8 +115,15 @@ class Job extends Component {
     this.props.actions.resumeJob(this.props.job.get('data').serviceId);
   }
 
-  handleCancel = () => {
-    this.props.actions.cancelJob(this.props.job.get('data').serviceId);
+  handleConfirmTerminate = () => {
+    this.setState({ confirmationOpen: true });
+  }
+
+  handleCloseConfirmTerminate = (value) => {
+    this.setState({ confirmationOpen: false });
+    if (value) {
+      this.props.actions.cancelJob(this.props.job.get('data').serviceId);      
+    }
   }
 
   eventsTable() {
@@ -175,15 +231,17 @@ class Job extends Component {
           <div className={classes.row} key="type">
             <Typography>{data.name}</Typography>
           </div>
-
           <div className={classes.row} key="2">
-            <Typography>{data.state}</Typography>
+            <Typography>{data.description}</Typography>
           </div>
           <div className={classes.row} key="3">
+            <Typography>{data.state}</Typography>
+          </div>
+          <div className={classes.row} key="4">
             <Typography>{format(parse(data.creationDate), 'YYYY/MM/DD, h:mmA')}</Typography>
           </div>
-          <div className={classes.row}>
-            <Typography>Owner: {data.ownerKey}</Typography>
+          <div className={classes.row} key="5">
+            <Typography>Owner: {data.ownerKey }</Typography>
           </div>
 
           { (data.rootServiceId) && (<Typography>Root: {parentLink(data.rootServiceId)}</Typography>)}
@@ -191,13 +249,21 @@ class Job extends Component {
 
           <Grid container className={classes.row}>
             <Grid item xs={12}>
-              <Button variant="contained" size="small" onClick={this.handleCancel.bind(this)}>Terminate</Button>
+              <Button variant="contained" size="small" onClick={this.handleConfirmTerminate.bind(this)}>Terminate</Button>
               <Button variant="contained" size="small" onClick={this.handlePause.bind(this)}>Pause</Button>
               <Button variant="contained" size="small" onClick={this.handleResume.bind(this)}>Restart</Button>
               <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
             </Grid>
           </Grid>
         </Grid>
+        <TerminateConfirmationDialog
+            classes={{
+              paper: classes.paper,
+            }}
+            open={this.state.confirmationOpen}
+            onClose={this.handleCloseConfirmTerminate.bind(this)}
+          />
+
         <Grid item md={4}>
           <Grid container>
             <Typography>Progress Bar</Typography>
