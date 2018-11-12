@@ -1,4 +1,5 @@
 {
+  "appId": "v2-dashboard",
   "userDataUrl": "http://jacs.int.janelia.org:8180/rest-v2/data/user/subject",
   "capacityStatsUrl": "https://jacs-dev.int.janelia.org/SCSW/JACS2AsyncServices/v2/async-services/stats",
   "authApiUrl": "http://localhost:3000/authenticate",
