@@ -245,9 +245,6 @@ class Job extends Component {
           <Grid item sm={8}>
             <Typography variant="h6">Output</Typography>
           </Grid>
-          <Grid item sm={4} className={classes.download}>
-            <Button variant="contained" size="small">Download</Button>
-          </Grid>
           <Grid item sm={12}>
             <Paper className={classes.paper}>
               {this.outputTable()}
