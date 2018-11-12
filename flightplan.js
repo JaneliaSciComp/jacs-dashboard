@@ -23,7 +23,7 @@ plan.target(
 
 plan.target(
   'production', {
-    host: '10.36.13.2', // jacs2
+    host: '10.36.13.11', // jacs2
     username: 'jacs',
     agent: process.env.SSH_AUTH_SOCK,
   },
