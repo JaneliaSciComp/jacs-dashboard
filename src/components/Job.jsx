@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogActions from '@material-ui/core/DialogActions';
-import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Icon from '@material-ui/core/Icon';
+import Paper from '@material-ui/core/Paper';
 import Switch from '@material-ui/core/Switch';
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Duration from 'duration';
-import JobChildren from '../components/JobChildren';
+import JobChildren from './JobChildren';
+import ConfirmCancelJob from './ConfirmCancelJob';
 import settings from '../settings.json';
 
 const styles = theme => ({
@@ -25,6 +22,11 @@ const styles = theme => ({
   },
   table: {
     minWidth: 700,
+  },
+  link: {
+    fontSize: '0.6125rem',
+    fontWeight: '400',
+    textAlign: 'left',
   },
   download: {
     textAlign: 'right',
@@ -47,44 +49,6 @@ function parentLink(id) {
   );
 }
 
-class TerminateConfirmationDialog extends Component {
-
-  handleCancel = () => {
-    this.props.onClose(false);
-  };
-
-  handleOk = () => {
-    this.props.onClose(true);
-  };
-
-  render() {
-    return (
-      <Dialog
-        disableBackdropClick
-        maxWidth="xs"
-        aria-labelledby="confirmation-dialog-title"
-        {...this.props}
-      >
-        <DialogTitle id="confirmation-dialog-title">Terminate Job</DialogTitle>
-        <DialogContent>
-          <Typography variant="subtitle1">Do you want to terminate this job?</Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleCancel} color="secondary">
-            No
-          </Button>
-          <Button onClick={this.handleOk} color="primary">
-            Yes
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }  
-}
-
-TerminateConfirmationDialog.propTypes = {
-  onClose: PropTypes.func,
-}
 
 class Job extends Component {
   state = {
@@ -193,13 +157,13 @@ class Job extends Component {
             <TableCell>Output Path</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell><a href="#" onClick={downloadOutput} download>{outputPath}</a></TableCell>
+            <TableCell><Button color="primary" className={classes.link} onClick={downloadOutput}>{outputPath}</Button></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Error Path</TableCell>
             <TableCell>Created</TableCell>
             <TableCell>Size</TableCell>
-            <TableCell><a href="#" onClick={downloadErrors} download>{errorPath}</a></TableCell>
+            <TableCell><Button color="primary" className={classes.link} onClick={downloadErrors}>{errorPath}</Button></TableCell>
           </TableRow>
         </TableBody>
       </Table>
@@ -254,7 +218,7 @@ class Job extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <TerminateConfirmationDialog
+        <ConfirmCancelJob
             classes={{
               paper: classes.paper,
             }}
