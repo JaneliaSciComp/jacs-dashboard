@@ -219,9 +219,6 @@ class Job extends Component {
           </Grid>
         </Grid>
         <ConfirmCancelJob
-            classes={{
-              paper: classes.paper,
-            }}
             open={this.state.confirmationOpen}
             onClose={this.handleCloseConfirmTerminate.bind(this)}
           />
