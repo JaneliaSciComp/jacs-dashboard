@@ -77,6 +77,10 @@ class Job extends Component {
     this.props.actions.resumeJob(this.props.job.get('data').serviceId);
   }
 
+  handleRetry = () => {
+    this.props.actions.retryJob(this.props.job.get('data').serviceId);
+  }
+
   handleConfirmTerminate = () => {
     this.setState({ confirmationOpen: true });
   }
@@ -210,12 +214,9 @@ class Job extends Component {
           { (data.parentServiceId) && (<Typography>Parent: {parentLink(data.parentServiceId)}</Typography>)}
 
           <Grid container className={classes.row}>
-            <Grid item xs={12}>
-              <Button variant="contained" size="small" onClick={this.handleConfirmTerminate.bind(this)}>Terminate</Button>
-              <Button variant="contained" size="small" onClick={this.handlePause.bind(this)}>Pause</Button>
-              <Button variant="contained" size="small" onClick={this.handleResume.bind(this)}>Restart</Button>
-              <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
-            </Grid>
+            {
+              this.renderJobControlButtons(data.state, rerunUrl)
+            }
           </Grid>
         </Grid>
         <ConfirmCancelJob
@@ -279,6 +280,48 @@ class Job extends Component {
       </Grid>
     );
   }
+
+  renderJobControlButtons(state, rerunUrl) {
+    switch(state) {
+      case 'CREATED':
+      case 'QUEUED':
+      case 'RESUMED':
+      case 'RETRY':
+      case 'RUNNING':
+      case 'DISPATCHED':
+      case 'WAITING_FOR_DEPENDENCIES':
+            return (
+              <Grid item xs={12}>
+                <Button variant="contained" size="small" onClick={this.handleConfirmTerminate.bind(this)}>Terminate</Button>
+                <Button variant="contained" size="small" onClick={this.handlePause.bind(this)}>Pause</Button>
+                <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+              </Grid>
+            );
+      case 'SUSPENDED':
+            return (
+              <Grid item xs={12}>
+                <Button variant="contained" size="small" onClick={this.handleResume.bind(this)}>Restart</Button>
+                <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+              </Grid>
+            );
+      case 'CANCELED':
+      case 'TIMEOUT':
+      case 'ERROR':
+            return (
+              <Grid item xs={12}>
+                <Button variant="contained" size="small" onClick={this.handleRetry.bind(this)}>Retry</Button>
+                <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+              </Grid>
+            );
+      default:
+            return (
+              <Grid item xs={12}>
+                <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+              </Grid>
+            );
+    }
+  }
+
 }
 
 Job.propTypes = {

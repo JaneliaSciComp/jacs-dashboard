@@ -187,7 +187,9 @@ function constructBodyFromForm(formArgs) {
 
 export function startService(args) {
   return function startServiceAsync(dispatch) {
-    dispatch(startingJob(args.get('serviceName')));
+    const serviceName = args.get('serviceName');
+
+    dispatch(startingJob(serviceName));
 
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
@@ -199,7 +201,7 @@ export function startService(args) {
     if (args.getIn(['cron', 'enabled'])) {
       requestUrl = scheduledServicesUrl;
     } else {
-      requestUrl = `${asyncServicesUrl}/${args.serviceName}`;
+      requestUrl = `${asyncServicesUrl}/${serviceName}`;
     }
 
     const body = constructBodyFromForm(args);

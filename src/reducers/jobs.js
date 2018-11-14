@@ -26,7 +26,6 @@ export default function jobsReducer(state = initialState, action) {
         .set('error', action.error);
     case 'JOB_DATA_LOADED':
       return state.set('data', action.json).set('loaded', 1);
-
     case 'JOB_LIST_LOADING':
       return state.set('list_loading', 1).set('list_loaded', 0);
     case 'JOB_LIST_LOAD_ERROR':
@@ -34,6 +33,10 @@ export default function jobsReducer(state = initialState, action) {
         .set('error', action.error);
     case 'JOB_LIST_LOADED':
       return state.set('list', action.json).set('list_loaded', 1);
+    case 'UPDATE_JOB_STATE':
+      return state.set('loading', 1).set('loaded', 0);    
+    case 'UPDATE_JOB_STATE_SUCCESS':
+      return state.set('data', action.json).set('loaded', 1);
     case 'LOGOUT':
       return initialState;
     default:

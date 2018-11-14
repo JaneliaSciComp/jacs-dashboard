@@ -27,6 +27,9 @@ const mapDispatchToProps = dispatch => ({
     cancelJob: (jobId) => {
       dispatch(updateJobState(jobId, 'CANCELED'));
     },
+    retryJob: (jobId) => {
+      dispatch(updateJobState(jobId, 'RETRY'));
+    },
     download: (url, filename) => {
       dispatch(downloadURL(url, filename));
     }
