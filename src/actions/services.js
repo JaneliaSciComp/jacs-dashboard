@@ -230,7 +230,7 @@ export function startService(args) {
       // dopey if block to handle the response from creating scheduled services
       // as they don't contain a serviceId attribute.
       if (Object.prototype.hasOwnProperty.call(json, 'cronScheduleDescriptor')) {
-        serviceUrl = `/service/scheduled/${json._id}`;
+        serviceUrl = `/service/scheduled/${json.id}`;
       }
       history.push(serviceUrl);
     }).catch(error => dispatch(startServiceError(error)));

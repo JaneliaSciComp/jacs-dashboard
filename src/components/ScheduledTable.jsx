@@ -40,10 +40,10 @@ class ScheduledTable extends Component {
           </TableHead>
           <TableBody>
             {data.map((n) => {
-              const url = `/service/scheduled/${n._id}`;
+              const url = `/service/scheduled/${n.id}`;
               const schedule = cronInstance.fromString(n.cronScheduleDescriptor).schedule();
               return (
-                <TableRow key={n._id}>
+                <TableRow key={n.id}>
                   <TableCell>
                     <Link to={url}>{n.name}</Link>
                   </TableCell>
