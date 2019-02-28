@@ -5,7 +5,7 @@
 import Promise from 'yaku';
 import { loginRestore } from '../actions/login';
 
-export default function loadUserData(dispatch, jwt) {
+export default function reloadUserData(dispatch, jwt) {
   if (jwt) {
     return dispatch(loginRestore(jwt));
   }

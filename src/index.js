@@ -9,7 +9,7 @@ import registerServiceWorker from './registerServiceWorker';
 import reducers from './reducers';
 import './index.css';
 import history from './history';
-import loadUserData from './lib/loadUserData';
+import reloadUserData from './lib/reloadUserData';
 import App from './containers/App';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,7 +20,7 @@ const cookies = new Cookies();
 
 const jwt = cookies.get('userId');
 
-loadUserData(store.dispatch, jwt).then(() => {
+reloadUserData(store.dispatch, jwt).then(() => {
   ReactDOM.render(
     <Provider store={store}>
       { /* ConnectedRouter will use the store from Provider automatically */ }
