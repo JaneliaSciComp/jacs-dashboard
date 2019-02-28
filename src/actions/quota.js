@@ -33,8 +33,8 @@ function loadQuotaReportError(error) {
 }
 
 export function quotaReport(username) {
-  const { quotaBaseUrl, apiKey } = settings;
-  const quotaUrl = `${quotaBaseUrl}/${username}?apikey=${apiKey}`;
+  const { quotaBaseUrl } = settings;
+  const quotaUrl = `${quotaBaseUrl}?subjectName=${username}`;
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
 
