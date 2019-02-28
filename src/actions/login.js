@@ -57,11 +57,12 @@ function loginUserLoadComplete(json) {
   };
 }
 
-function loadUserData(username, callback) {
+function loadUserData(username, jwt, callback) {
   const url = `${settings.userDataUrl}?subjectKey=user%3A${username}`;
   return fetch(url, {
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`,
     },
     method: 'GET',
   }).then((res) => {
@@ -101,7 +102,7 @@ export function loginValidate(username, password) {
     }).then((json) => {
       // Now decode the token and load in the user data.
       const decoded = jwtDecode(json.token);
-      loadUserData(decoded.user_name, (userData) => {
+      loadUserData(decoded.user_name, json.token, (userData) => {
         if (userData instanceof Error) {
           dispatch(loginValidationError(userData));
         } else {
