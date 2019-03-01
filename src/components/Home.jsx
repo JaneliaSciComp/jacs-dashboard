@@ -110,17 +110,22 @@ class Home extends Component {
   }
 
   storageUsage() {
-    const report = this.props.quota.get('report');
+    const reportsList = this.props.quota.get('reports');
     const { classes } = this.props;
 
-    if (!report) {
+    if (!reportsList) {
       return (
         <Typ>Loading</Typ>
       );
     }
 
     const user = this.props.login.get('user');
-    const userReport = report[user.name];
+    if (reportsList.errorMessage) {
+      return (
+        <Typ>{reportsList.errorMessage}</Typ>
+      );
+    }
+    const userReport = reportsList[0];
 
     const data = [
       {
