@@ -48,7 +48,6 @@ class ScheduledJob extends Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-
   componentDidMount() {
     this.props.actions.loadScheduledServiceData(this.props.match.params.id);
   }

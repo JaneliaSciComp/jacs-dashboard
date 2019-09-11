@@ -59,7 +59,6 @@ class RunningServices extends Component {
       }).catch(error => this.setState({ error }));
   }
 
-
   render() {
     const { classes } = this.props;
 
