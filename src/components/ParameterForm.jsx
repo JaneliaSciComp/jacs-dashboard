@@ -56,7 +56,7 @@ class ParameterForm extends Component {
         input = <TextField {...params} onChange={this.handleChange(data.argName)} />;
         break;
       case 'boolean':
-        input = <Switch value={this.state.foo} />;
+        input = <Switch value={data.argName} checked={data.defaultValue} />;
         break;
       default:
         params.type = 'text';

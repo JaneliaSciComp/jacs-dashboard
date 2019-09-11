@@ -55,7 +55,7 @@ class JobStatusList extends Component {
     this.props.actions.loadJobList(username, page, sortBy);
   }
 
-  componentWillReceiveProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, state) {
     const nextPage = pageNumber(nextProps.location);
     const currentPage = pageNumber(this.props.location);
     const nextSortBy = getSort(nextProps.location);

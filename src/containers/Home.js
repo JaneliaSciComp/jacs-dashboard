@@ -4,12 +4,14 @@ import Home from '../components/Home';
 import { loadJobList } from '../actions/services';
 import { quotaReport } from '../actions/quota';
 import { loadCapacity } from '../actions/admin';
+import { getVersion } from '../actions/version';
 
 const mapStateToProps = state => ({
   login: state.login,
   jobs: state.jobs,
   quota: state.quota,
   stats: state.admin,
+  apiVersion: state.app.get('apiVersion')
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -23,6 +25,9 @@ const mapDispatchToProps = dispatch => ({
     loadCapacity: (username) => {
       dispatch(loadCapacity(username));
     },
+    getVersion: () => {
+      dispatch(getVersion());
+    }
   },
 });
 
