@@ -90,8 +90,8 @@ function loadStorageQuotaError(error) {
 }
 
 export function loadStorageQuotas() {
-  const { quotaBaseUrl, apiKey } = settings;
-  const quotaUrl = `${quotaBaseUrl}/?apikey=${apiKey}`;
+  const { quotaBaseUrl} = settings;
+  const quotaUrl = `${quotaBaseUrl}`;
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
 

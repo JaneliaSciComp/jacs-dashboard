@@ -83,5 +83,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# don't store the settings file in the repo
-/src/settings.json
+# local files
+local
+
