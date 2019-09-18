@@ -14,7 +14,7 @@ import queryString from 'query-string';
 import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
 import SortableTableHeader from '../containers/SortableTableHeader';
-import settings from '../settings.json';
+import settings from '../settings';
 
 const styles = {
   row: {

@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings.json';
+import settings from '../settings';
 
 
 const styles = {

@@ -1,4 +1,4 @@
-import settings from '../settings.json';
+import settings from '../settings';
 
 export const GET_VERSION_SUCCESS = 'GET_VERSION_SUCCESS';
 export const GET_VERSION_ERROR = 'GET_VERSION_ERROR';

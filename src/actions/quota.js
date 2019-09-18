@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings.json';
+import settings from '../settings';
 import { logout, notAuthorized } from './login';
 
 export const QUOTA_REPORT_LOADING = 'QUOTA_REPORT_LOADING';

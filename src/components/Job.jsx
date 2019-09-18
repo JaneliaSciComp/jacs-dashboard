@@ -14,7 +14,7 @@ import format from 'date-fns/format';
 import Duration from 'duration';
 import JobChildren from './JobChildren';
 import ConfirmCancelJob from './ConfirmCancelJob';
-import settings from '../settings.json';
+import settings from '../settings';
 
 const styles = theme => ({
   row: {

@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
 import queryString from 'query-string';
 
-import settings from '../settings.json';
+import settings from '../settings';
 import history from '../history';
 
 export const SERVICE_DATA_LOADING = 'SERVICE_DATA_LOADING';

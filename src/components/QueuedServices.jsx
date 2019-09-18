@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/c
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
 import MessageSnack from './MessageSnack';
-import settings from '../settings.json';
+import settings from '../settings';
 
 const styles = theme => ({
   root: {

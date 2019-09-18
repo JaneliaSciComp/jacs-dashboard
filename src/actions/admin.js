@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings.json';
+import settings from '../settings';
 import { logout, notAuthorized } from './login';
 
 export const LOADING_CAPACITY_STATS = 'LOADING_CAPACITY_STATS';

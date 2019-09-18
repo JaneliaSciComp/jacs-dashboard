@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import Chip from '@material-ui/core/Chip';
 import MessageSnack from './MessageSnack';
-import settings from '../settings.json';
+import settings from '../settings';
 
 const styles = {
   root: {

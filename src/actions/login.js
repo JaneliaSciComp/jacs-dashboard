@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
 import jwtDecode from 'jwt-decode';
-import settings from '../settings.json';
+import settings from '../settings';
 import history from '../history';
 
 export const LOGIN_VAL_SUCCESS = 'LOGIN_VAL_SUCCESS';
