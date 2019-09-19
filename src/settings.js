@@ -14,7 +14,7 @@ const APP_SETTINGS = {
   "avatarUrl": process.env.REACT_APP_AVATAR_URL + "?name=<username>&width=100&height=100",
   "processingSlotsUrl": process.env.REACT_APP_JACS_ASYNC_URL + "/async-services/processing-slots-count/<newCount>",
   "waitingSlotsUrl": process.env.REACT_APP_JACS_ASYNC_URL + "/async-services/waiting-slots-count/<newCount>",
-  "apiVersionUrl": process.env.REACT_APP_JACS_ASYNC_URL + "/version"
+  "apiVersionUrl": process.env.REACT_APP_JACS_OPEN_ASYNC_URL + "/version"
 };
 
 export default APP_SETTINGS;
