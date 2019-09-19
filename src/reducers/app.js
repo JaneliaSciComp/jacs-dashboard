@@ -1,11 +1,13 @@
 import Immutable from 'immutable';
+import {GET_CONF_ERROR, GET_CONF_SUCCESS} from "../actions/settings";
+import {updateAppSettings} from "../settings";
 
 const initialState = Immutable.Map({
   messages: null,
   error: '',
   start: '',
   shortDate: true,
-  apiVersion: '',
+  apiVersion: ''
 });
 
 export default function appReducer(state = initialState, action) {
@@ -17,6 +19,11 @@ export default function appReducer(state = initialState, action) {
     case 'GET_VERSION_SUCCESS':
       return state.set('apiVersion', action.apiVersion);
     case 'GET_VERSION_ERROR':
+      return state.set('messages', action.message);
+    case 'GET_CONF_SUCCESS':
+      updateAppSettings(action.conf);
+      return state;
+    case 'GET_CONF_ERROR':
       return state.set('messages', action.message);
     default:
       return state;

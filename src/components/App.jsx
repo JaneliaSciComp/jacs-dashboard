@@ -58,6 +58,10 @@ const theme = createMuiTheme({
 });
 
 class App extends Component {
+  componentDidMount() {
+    this.props.actions.getConf();
+  }
+
   render() {
     const { classes } = this.props;
 
