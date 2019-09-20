@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
 import queryString from 'query-string';
 
-import settings from '../settings';
+import getSettings from '../settings';
 import history from '../history';
 
 export const SERVICE_DATA_LOADING = 'SERVICE_DATA_LOADING';
@@ -77,7 +77,7 @@ export function loadServiceData(args = {}) {
   return function loadServiceDataAsync(dispatch) {
     dispatch(loadingServiceData(args));
 
-    let { serviceListUrl } = settings;
+    let { serviceListUrl } = getSettings();
     if (Object.prototype.hasOwnProperty.call(args, 'name')) {
       serviceListUrl = `${serviceListUrl}/${args.name}`;
     }
@@ -194,7 +194,7 @@ export function startService(args) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { asyncServicesUrl, scheduledServicesUrl } = settings;
+    const { asyncServicesUrl, scheduledServicesUrl } = getSettings();
 
     let requestUrl;
 
@@ -265,7 +265,7 @@ export function loadJobData(jobId) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { jobDataUrl } = settings;
+    const { jobDataUrl } = getSettings();
     const requestUrl = jobDataUrl.replace('<job_id>', jobId);
     return fetch(requestUrl, {
       method: 'GET',
@@ -318,7 +318,7 @@ export function loadJobList(userId, page, sortBy = 'creationDate desc') {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { jobListUrl } = settings;
+    const { jobListUrl } = getSettings();
     const qString = queryString.stringify({
       'service-owner': userId,
       page,
@@ -376,7 +376,7 @@ export function loadScheduledList() {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { scheduledServicesUrl } = settings;
+    const { scheduledServicesUrl } = getSettings();
     return fetch(scheduledServicesUrl, {
       method: 'GET',
       headers: {
@@ -430,7 +430,7 @@ export function loadScheduledServiceData(id) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { scheduledServiceUrl } = settings;
+    const { scheduledServiceUrl } = getSettings();
     const requestUrl = scheduledServiceUrl.replace('<id>', id);
     return fetch(requestUrl, {
       method: 'GET',
@@ -486,7 +486,7 @@ export function toggleScheduled(id, body) {
     // change the disabled parameter here
     const toggled = body.set('disabled', !body.get('disabled'));
 
-    const { scheduledServiceUrl } = settings;
+    const { scheduledServiceUrl } = getSettings();
     const requestUrl = scheduledServiceUrl.replace('<id>', id);
     return fetch(requestUrl, {
       method: 'PUT',
@@ -546,7 +546,7 @@ export function deleteScheduled(id) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { scheduledServiceUrl } = settings;
+    const { scheduledServiceUrl } = getSettings();
     const requestUrl = scheduledServiceUrl.replace('<id>', id);
     return fetch(requestUrl, {
       method: 'DELETE',
@@ -582,7 +582,7 @@ export function updateJobState(jobId, jobState) {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
 
-    const { jobActionsUrl } = settings;
+    const { jobActionsUrl } = getSettings();
 
     const requestUrl = `${jobActionsUrl}/${jobId}/state/${jobState}`;
 

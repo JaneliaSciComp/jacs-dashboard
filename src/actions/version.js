@@ -1,11 +1,11 @@
-import settings from '../settings';
+import getSettings from '../settings';
 
 export const GET_VERSION_SUCCESS = 'GET_VERSION_SUCCESS';
 export const GET_VERSION_ERROR = 'GET_VERSION_ERROR';
 
 export function getVersion() {
   return function getVersionAsync(dispatch) {
-    const { apiVersionUrl } = settings;
+    const { apiVersionUrl } = getSettings();
     return fetch(apiVersionUrl, {
       method: 'GET',
     }).then(res => {

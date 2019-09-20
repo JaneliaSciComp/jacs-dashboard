@@ -16,7 +16,7 @@ import Divider from '@material-ui/core/Divider';
 import Icon from '@material-ui/core/Icon';
 import Chip from '@material-ui/core/Chip';
 import MessageSnack from './MessageSnack';
-import settings from '../settings';
+import getSettings from '../settings';
 
 const styles = {
   root: {
@@ -76,12 +76,12 @@ class Navigation extends Component {
     const { classes, login, app } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
+    const { avatarUrl } = getSettings();
 
     let auth = <Button color="inherit" component={Link} to="/login">Login</Button>;
 
     if (login.get('loggedIn')) {
-      const avatarSrc = settings.avatarUrl.replace('<username>', login.get('username'));
+      const avatarSrc = avatarUrl.replace('<username>', login.get('username'));
 
       auth = (
         <Chip

@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
 import jwtDecode from 'jwt-decode';
-import settings from '../settings';
+import getSettings from '../settings';
 import history from '../history';
 
 export const LOGIN_VAL_SUCCESS = 'LOGIN_VAL_SUCCESS';
@@ -58,7 +58,8 @@ function loginUserLoadComplete(json) {
 }
 
 function loadUserData(username, jwt, callback) {
-  const url = `${settings.userDataUrl}?subjectKey=user%3A${username}`;
+  const { userDataUrl } = getSettings();
+  const url = `${userDataUrl}?subjectKey=user%3A${username}`;
   return fetch(url, {
     headers: {
       'Content-Type': 'application/json',
@@ -84,8 +85,8 @@ export function loginValidate(username, password) {
     dispatch(loginValidationRequested(username));
     const form = { username, password };
     const serialized = JSON.stringify(form);
-    const apiUrl = settings.authApiUrl;
-    return fetch(apiUrl, {
+    const { authApiUrl } = getSettings();
+    return fetch(authApiUrl, {
       method: 'POST',
       body: serialized,
       headers: {
@@ -128,7 +129,8 @@ function loginRestored(token) {
 export function loginRestore(jwt) {
   const username = jwtDecode(jwt).user_name;
   return function loginRestoreAsync(dispatch) {
-    const url = `${settings.userDataUrl}?subjectKey=user%3A${username}`;
+    const { userDataUrl } = getSettings();
+    const url = `${userDataUrl}?subjectKey=user%3A${username}`;
     return fetch(url, {
       headers: {
         'Content-Type': 'application/json',

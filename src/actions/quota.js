@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings';
+import getSettings from '../settings';
 import { logout, notAuthorized } from './login';
 
 export const QUOTA_REPORT_LOADING = 'QUOTA_REPORT_LOADING';
@@ -33,7 +33,7 @@ function loadQuotaReportError(error) {
 }
 
 export function quotaReport(username) {
-  const { quotaBaseUrl } = settings;
+  const { appId, quotaBaseUrl } = getSettings();
   const quotaUrl = `${quotaBaseUrl}?subjectName=${username}`;
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
@@ -43,7 +43,7 @@ export function quotaReport(username) {
     return fetch(quotaUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -90,7 +90,7 @@ function loadStorageQuotaError(error) {
 }
 
 export function loadStorageQuotas() {
-  const { quotaBaseUrl} = settings;
+  const { appId, quotaBaseUrl} = getSettings();
   const quotaUrl = `${quotaBaseUrl}`;
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
@@ -100,7 +100,7 @@ export function loadStorageQuotas() {
     return fetch(quotaUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,

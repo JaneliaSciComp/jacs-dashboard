@@ -10,7 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/c
 import { withStyles } from '@material-ui/core/styles';
 import Cookies from 'universal-cookie';
 import MessageSnack from './MessageSnack';
-import settings from '../settings';
+import getSettings from '../settings';
 
 const styles = theme => ({
   root: {
@@ -28,7 +28,6 @@ const styles = theme => ({
   },
 });
 
-
 class QueuedServices extends Component {
   constructor(...args) {
     super(...args);
@@ -42,14 +41,14 @@ class QueuedServices extends Component {
   componentDidMount() {
     const cookies = new Cookies();
     const jwt = cookies.get('userId');
-    const { jobListUrl } = settings;
+    const { appId, jobListUrl } = getSettings();
     // load the running services.
     const runningServices = `${jobListUrl}?service-state=QUEUED`;
     fetch(runningServices, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -59,9 +58,9 @@ class QueuedServices extends Component {
       }).catch(error => this.setState({ error }));
   }
 
-
   render() {
     const { classes } = this.props;
+    const { avatarUrl } = getSettings();
 
     if (this.state.error) {
       return <MessageSnack messages="There was a problem contacting the server." />;
@@ -94,7 +93,7 @@ class QueuedServices extends Component {
 
 
                   const [, username] = n.ownerKey.split(':');
-                  const avatarSrc = settings.avatarUrl.replace('<username>', username);
+                  const avatarSrc = avatarUrl.replace('<username>', username);
 
                   const auth = (
                     <Chip

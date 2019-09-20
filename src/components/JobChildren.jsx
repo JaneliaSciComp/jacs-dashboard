@@ -8,8 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings';
-
+import getSettings from '../settings';
 
 const styles = {
   table: {
@@ -39,7 +38,7 @@ class JobChildren extends React.Component {
   }
 
   updateChildren(parentId) {
-    const { jobListUrl } = settings;
+    const { jobListUrl } = getSettings();
     const childrenUrl = `${jobListUrl}?parent-id=${parentId}`;
     const cookies = new Cookies();
     const jwt = cookies.get('userId');

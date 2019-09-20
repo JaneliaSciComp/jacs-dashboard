@@ -14,7 +14,7 @@ import queryString from 'query-string';
 import TablePaginationActions from './TablePaginationActions';
 import { isAdminUser } from '../lib/user-utility';
 import SortableTableHeader from '../containers/SortableTableHeader';
-import settings from '../settings';
+import getSettings from '../settings';
 
 const styles = {
   row: {
@@ -88,6 +88,7 @@ class JobStatusList extends Component {
     return list.resultList.map((item) => {
       const { name } = item;
       const detailsUrl = `/job/${item.serviceId}`;
+      const { avatarUrl } = getSettings();
 
       let username = 'unknown';
       if (Object.prototype.hasOwnProperty.call(item, 'ownerKey') && item.ownerKey) {
@@ -96,7 +97,7 @@ class JobStatusList extends Component {
         [, username] = item.authKey.split(':');
       }
 
-      const avatarSrc = settings.avatarUrl.replace('<username>', username);
+      const avatarSrc = avatarUrl.replace('<username>', username);
 
       const auth = (
         <Chip

@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch';
 import Cookies from 'universal-cookie';
-import settings from '../settings';
+import getSettings from '../settings';
 import { logout, notAuthorized } from './login';
 
 export const LOADING_CAPACITY_STATS = 'LOADING_CAPACITY_STATS';
@@ -29,7 +29,7 @@ function loadCapacityError(error) {
 }
 
 export function loadCapacity(username) {
-  const { capacityStatsUrl } = settings;
+  const { appId, capacityStatsUrl } = getSettings();
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
 
@@ -38,7 +38,7 @@ export function loadCapacity(username) {
     return fetch(capacityStatsUrl, {
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -68,14 +68,14 @@ export function updateProcessingCapacity(slotCount) {
   const jwt = cookies.get('userId');
 
   return (dispatch) => {
-    const { processingSlotsUrl } = settings;
+    const { appId, processingSlotsUrl } = getSettings();
     const updateProcessingUrl = processingSlotsUrl.replace('<newCount>', slotCount);
     dispatch({ type: 'PROCESSING_COUNT_UPDATING' });
     return fetch(updateProcessingUrl, {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,
@@ -101,7 +101,7 @@ export function updateProcessingCapacity(slotCount) {
 export function updateWaitingCapacity(slotCount) {
   const cookies = new Cookies();
   const jwt = cookies.get('userId');
-  const { waitingSlotsUrl } = settings;
+  const { appId, waitingSlotsUrl } = getSettings();
 
   return (dispatch) => {
     const updateWaitingUrl = waitingSlotsUrl.replace('<newCount>', slotCount);
@@ -110,7 +110,7 @@ export function updateWaitingCapacity(slotCount) {
       method: 'PUT',
       headers: {
         Authorization: `Bearer ${jwt}`,
-        'Application-Id': settings.appId,
+        'Application-Id': appId,
         Accept: 'application/json',
       },
       timeout: 5000,

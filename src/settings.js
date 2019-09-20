@@ -29,4 +29,6 @@ function getConfProperty(conf, property) {
   return conf[property] || process.env[property];
 }
 
-export default appSettings;
+export default function getSettings() {
+  return appSettings;
+}

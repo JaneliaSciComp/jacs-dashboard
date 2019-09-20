@@ -14,7 +14,7 @@ import format from 'date-fns/format';
 import Duration from 'duration';
 import JobChildren from './JobChildren';
 import ConfirmCancelJob from './ConfirmCancelJob';
-import settings from '../settings';
+import getSettings from '../settings';
 
 const styles = theme => ({
   row: {
@@ -131,7 +131,7 @@ class Job extends Component {
   outputTable() {
     const { classes, job } = this.props;
     const { serviceId, outputPath, errorPath } = job.get('data');
-    const { jobDataUrl } = settings;
+    const { jobDataUrl } = getSettings();
     const requestUrl = jobDataUrl.replace('<job_id>', serviceId);
     const downloadJobOutputUrl = `${requestUrl}/job-output`
     const downloadJobErrorsUrl = `${requestUrl}/job-errors`
