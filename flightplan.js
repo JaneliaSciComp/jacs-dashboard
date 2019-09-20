@@ -56,8 +56,7 @@ plan.remote('deploy', function (remote) {
   remote.exec('mkdir -p ' + config.deployTo);
 });
 
-// Gets a list of files that git knows about and sends them to the
-// target.
+// Gets a list of files that git knows about and sends them to the target.
 plan.local('deploy', function (local) {
   local.log('Transferring website files to local directory' + config.deployTo);
   var files = local.git('ls-files', {silent: true});
@@ -65,7 +64,8 @@ plan.local('deploy', function (local) {
 });
 
 plan.remote('deploy', function(remote) {
-  remote.log('Setup necessary symbolic links ');
+  remote.log('Create link for the configuration file');
+  remote.exec('ln -s ' + config.projectDir + '/conf.json ' + config.deployTo + '/build/conf.json');
 });
 
 plan.remote('deploy', function(remote) {
