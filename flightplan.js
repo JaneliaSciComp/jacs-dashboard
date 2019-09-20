@@ -51,7 +51,6 @@ plan.local('deploy', function (local) {
   }
 });
 
-
 plan.remote('deploy', function (remote) {
   remote.log('Creating webroot ' + config.deployTo);
   remote.exec('mkdir -p ' + config.deployTo);
