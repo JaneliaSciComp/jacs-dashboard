@@ -15,15 +15,19 @@ const initialState = Immutable.Map({
 
 export default function serviceFormReducer(state = initialState, action) {
   switch (action.type) {
-    case 'SERVICE_FORM_LOAD_DEFAULTS': {
-      const { params } = action;
-      return initialState
-        .set('args', Immutable.Map(params))
-        .set('serviceName', action.name);
-    }
     case 'SERVICE_FORM_UPDATE_ARGS':
       return state.setIn(['args', action.name], action.value)
         .set('modified', true);
+    case 'SERVICE_FORM_UPDATE_FLAG_ARGS':
+      if (action.value) {
+        // add the flag arg with a value of null - which should not be output in the list of arguments
+        return state.setIn(['args', action.name], null)
+            .set('modified', true);
+      } else {
+        // remove the flag arg
+        return state.removeIn(['args', action.name])
+            .set('modified', true);
+      }
     case 'SERVICE_FORM_UPDATE_META':
       return state.setIn(['meta', action.name], action.value)
         .set('modified', true);

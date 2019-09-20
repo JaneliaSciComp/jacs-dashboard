@@ -19,20 +19,6 @@ it('correctly sets initial settings', () => {
   expect(reducer(undefined, {})).toEqual(initialState);
 });
 
-it('correctly loads defaults', () => {
-  const action = {
-    type: 'SERVICE_FORM_LOAD_DEFAULTS',
-    params: {
-      seconds: 0,
-    },
-    name: 'sleepTest',
-  };
-  expect(reducer(undefined, action))
-    .toEqual(initialState
-      .set('args', Immutable.Map(action.params))
-      .set('serviceName', action.name));
-});
-
 it('correctly enables cron', () => {
   expect(reducer(undefined, {
     type: 'SERVICE_FORM_UPDATE_CRON',

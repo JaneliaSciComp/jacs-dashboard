@@ -16,7 +16,6 @@ const styles = {
 // Grab all the parameters and use the information provided to generate
 // a form which can be used to submit a job
 
-
 class ParameterForm extends Component {
   componentDidMount() {
     // now we need to loop over the parameters and set the initial state.
@@ -28,11 +27,25 @@ class ParameterForm extends Component {
     this.setState(updatedState);
   }
 
-  handleChange = name => (event) => {
+  handleChange = arg => (event) => {
     this.props.actions.setParams(
-      name,
+      arg.argName,
       event.target.value,
     );
+  }
+
+  handleFlag = arg => (event) => {
+    if (arg.arity == 0) {
+      this.props.actions.setFlagParams(
+          arg.argName,
+          event.target.checked,
+      );
+    } else {
+      this.props.actions.setParams(
+          arg.argName,
+          event.target.checked,
+      );
+    }
   }
 
   buildFormRow(data, classes) {
@@ -49,20 +62,21 @@ class ParameterForm extends Component {
     };
 
     switch (data.argType) {
-      case 'java.lang.Integer':
       case 'int':
+      case 'java.lang.Integer':
+      case 'long':
       case 'java.lang.Long':
         params.type = 'number';
-        input = <TextField {...params} onChange={this.handleChange(data.argName)} />;
+        input = <TextField {...params} onChange={this.handleChange(data)} />;
         break;
       case 'boolean':
-        input = <Switch value={data.argName} checked={data.defaultValue} />;
+      case 'java.lang.Boolean':
+        input = <Switch value={data.argName} checked={data.value} onChange={this.handleFlag(data)} />;
         break;
       default:
         params.type = 'text';
-        input = <TextField {...params} onChange={this.handleChange(data.argName)} />;
+        input = <TextField {...params} onChange={this.handleChange(data)} />;
     }
-
 
     return (
       <Grid item xs={12} lg={12} key={data.argName}>

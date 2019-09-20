@@ -55,23 +55,6 @@ class JobStatusList extends Component {
     this.props.actions.loadJobList(username, page, sortBy);
   }
 
-  static getDerivedStateFromProps(nextProps, state) {
-    const nextPage = pageNumber(nextProps.location);
-    const currentPage = pageNumber(this.props.location);
-    const nextSortBy = getSort(nextProps.location);
-    const currentSortBy = getSort(this.props.location);
-
-    if (nextPage !== currentPage || nextSortBy !== currentSortBy) {
-      const user = this.props.login.get('user');
-      let username = user.key;
-      if (isAdminUser(user)) {
-        username = null;
-      }
-
-      this.props.actions.loadJobList(username, nextPage, nextSortBy);
-    }
-  }
-
   handleChangePage = (event, page) => {
     // update the page number, but preserve the other query
     // string parameters.

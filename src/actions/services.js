@@ -82,10 +82,14 @@ export function loadServiceData(args = {}) {
       serviceListUrl = `${serviceListUrl}/${args.name}`;
     }
 
+    const cookies = new Cookies();
+    const jwt = cookies.get('userId');
+
     return fetch(serviceListUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`,
       },
       timeout: 4000,
     }).then((res) => {
@@ -175,7 +179,10 @@ function constructBodyFromForm(formArgs) {
   formArgs.get('args').entrySeq().forEach(([k, v]) => {
     // put a '-' at the beginning of the argument names.
     body.args.push(`-${k}`);
-    body.args.push(v);
+    if (v !== null) {
+      // flags with an arity 0 are put with a null value so only put the value if it's not null
+      body.args.push(v);
+    }
   });
 
   // convert meta args to top level input.

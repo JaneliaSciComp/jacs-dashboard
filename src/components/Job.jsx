@@ -128,6 +128,21 @@ class Job extends Component {
     );
   }
 
+  argsTable() {
+    const { classes, job } = this.props;
+    const { args } = job.get('data');
+
+    return (
+        <Table className={classes.table}>
+          <TableBody>
+            <TableRow>
+              <TableCell>{args.map(arg => '\'' + arg + '\'').join(',')}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+    );
+  }
+
   outputTable() {
     const { classes, job } = this.props;
     const { serviceId, outputPath, errorPath } = job.get('data');
@@ -251,6 +266,7 @@ class Job extends Component {
               </Grid>
             </Grid>
           </Grid>
+
           <Grid item sm={8}>
             <Typography variant="h6">Events</Typography>
           </Grid>
@@ -268,6 +284,16 @@ class Job extends Component {
               {this.eventsTable()}
             </Paper>
           </Grid>
+
+          <Grid item sm={8}>
+            <Typography variant="h6">Service Arguments</Typography>
+          </Grid>
+          <Grid item sm={12}>
+            <Paper className={classes.paper}>
+              {this.argsTable()}
+            </Paper>
+          </Grid>
+
           <Grid item sm={8}>
             <Typography variant="h6">Output</Typography>
           </Grid>
