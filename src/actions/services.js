@@ -149,7 +149,10 @@ function constructCronBody(formArgs) {
   formArgs.get('args').entrySeq().forEach(([k, v]) => {
     // put a '-' at the beginning of the argument names.
     body.serviceArgs.push(`-${k}`);
-    body.serviceArgs.push(v);
+    if (v !== null) {
+      // flags with an arity 0 are put with a null value so only put the value if it's not null
+      body.serviceArgs.push(v);
+    }
   });
 
   // Convert cron input into a cron string:
@@ -158,7 +161,6 @@ function constructCronBody(formArgs) {
 
   return body;
 }
-
 
 function constructBodyFromForm(formArgs) {
   // TODO: unpack the form data and convert it into a json structure that can

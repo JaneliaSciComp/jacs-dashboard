@@ -58,6 +58,11 @@ class Service extends Component {
     actions.setMeta(event.target.id, event.target.value);
   };
 
+  handleAdvancedList = (event) => {
+    const { actions } = this.props;
+    actions.setMeta(event.target.id, event.target.value.split(',').map(arg => arg.trim()).filter(arg => arg !== ''));
+  }
+
   handleSubmit = () => {
     const { actions, serviceForm, login } = this.props;
     // TODO: in order to allow an admin user to run processes as
@@ -96,6 +101,29 @@ class Service extends Component {
         <Grid item xs={12}>
           <Typography key="title" variant="h6">Advanced Paramters</Typography>
         </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">Success email notifications</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="successEmailNotifications" label="successEmailNotifications" fullWidth value={serviceForm.get('meta').get('successEmailNotifications')} onChange={this.handleAdvancedList} />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
+              <Typography align="right">Failure email notifications</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="failureEmailNotifications" label="failureEmailNotifications" fullWidth value={serviceForm.get('meta').get('failureEmailNotifications')} onChange={this.handleAdvancedList} />
+            </Grid>
+          </Grid>
+        </Grid>
+
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
             <Grid item xs={3}>
@@ -106,6 +134,7 @@ class Service extends Component {
             </Grid>
           </Grid>
         </Grid>
+
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
             <Grid item xs={3}>
