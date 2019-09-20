@@ -49,7 +49,6 @@ function parentLink(id) {
   );
 }
 
-
 class Job extends Component {
   state = {
     confirmationOpen: false,
@@ -223,6 +222,9 @@ class Job extends Component {
           </div>
           <div className={classes.row} key="5">
             <Typography>Owner: {data.ownerKey }</Typography>
+          </div>
+          <div className={classes.row} key="5">
+            <Typography>Tags: {data.tags.join(',')}</Typography>
           </div>
 
           { (data.rootServiceId) && (<Typography>Root: {parentLink(data.rootServiceId)}</Typography>)}

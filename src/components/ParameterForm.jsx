@@ -52,13 +52,20 @@ class ParameterForm extends Component {
     // use the argType attribute to determine which type of form input to use.
     let input = null;
 
+    let argValue;
+    if (data.arity > 0) {
+      argValue = this.props.args.get(data.argName) || '';
+    } else {
+      argValue = this.props.args.has(data.argName);
+    }
+
     const params = {
       id: data.argName,
       label: data.argName,
       fullWidth: true,
       margin: 'normal',
       required: data.required,
-      value: this.props.args.get(data.argName) || '',
+      value: argValue,
     };
 
     switch (data.argType) {
@@ -71,7 +78,7 @@ class ParameterForm extends Component {
         break;
       case 'boolean':
       case 'java.lang.Boolean':
-        input = <Switch value={data.argName} checked={data.value} onChange={this.handleFlag(data)} />;
+        input = <Switch value={data.argName} checked={argValue} onChange={this.handleFlag(data)} />;
         break;
       default:
         params.type = 'text';
