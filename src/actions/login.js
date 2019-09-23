@@ -134,6 +134,7 @@ export function loginRestore(jwt) {
     return fetch(url, {
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Bearer ${jwt}`
       },
       method: 'GET',
     }).then((res) => {
