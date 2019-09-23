@@ -96,7 +96,7 @@ export function loadServiceData(args = {}) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -230,7 +230,7 @@ export function startService(args) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -287,7 +287,7 @@ export function loadJobData(jobId) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -345,7 +345,7 @@ export function loadJobList(userId, page, sortBy = 'creationDate desc') {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -397,7 +397,7 @@ export function loadScheduledList() {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -452,7 +452,7 @@ export function loadScheduledServiceData(id) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -509,7 +509,7 @@ export function toggleScheduled(id, body) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -568,7 +568,7 @@ export function deleteScheduled(id) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       } else if (res.status === 204) {
         return { deleted: true };
       }
@@ -651,7 +651,7 @@ export function downloadURL(url, filename) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.blob();
     }).then((res) => {

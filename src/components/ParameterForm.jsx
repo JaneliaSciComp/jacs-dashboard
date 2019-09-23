@@ -35,7 +35,7 @@ class ParameterForm extends Component {
   }
 
   handleFlag = arg => (event) => {
-    if (arg.arity == 0) {
+    if (arg.arity === 0) {
       this.props.actions.setFlagParams(
           arg.argName,
           event.target.checked,

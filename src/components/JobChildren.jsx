@@ -53,7 +53,7 @@ class JobChildren extends React.Component {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {

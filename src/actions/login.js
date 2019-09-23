@@ -68,7 +68,7 @@ function loadUserData(username, jwt, callback) {
     method: 'GET',
   }).then((res) => {
     if (res.status >= 400) {
-      throw new Error('server error');
+      throw new Error('server error (' + res.status + ')');
     }
     if (res.status === 204) {
       throw new Error('no workstation account');
@@ -97,7 +97,7 @@ export function loginValidate(username, password) {
       if (res.status === 401) {
         throw new Error('bad login');
       } else if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
@@ -138,7 +138,7 @@ export function loginRestore(jwt) {
       method: 'GET',
     }).then((res) => {
       if (res.status >= 400) {
-        throw new Error('server error');
+        throw new Error('server error (' + res.status + ')');
       }
       return res.json();
     }).then((json) => {
