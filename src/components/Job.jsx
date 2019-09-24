@@ -129,13 +129,24 @@ class Job extends Component {
 
   argsTable() {
     const { classes, job } = this.props;
-    const { args } = job.get('data');
+    const { args, dictionaryArgs, resources  } = job.get('data');
+    const strDictArgs = JSON.stringify(dictionaryArgs, undefined, 2);
+    const strResources = JSON.stringify(resources,undefined, 2);
 
     return (
         <Table className={classes.table}>
           <TableBody>
             <TableRow>
-              <TableCell>{args.map(arg => '\'' + arg + '\'').join(',')}</TableCell>
+              <TableCell>Command Line:</TableCell>
+              <TableCell><Typography>{args.map(arg => '\'' + arg + '\'').join(',')}</Typography></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Dictionary Argumemts:</TableCell>
+              <TableCell><Typography><pre>{strDictArgs}</pre></Typography></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Resources:</TableCell>
+              <TableCell><Typography><pre>{strResources}</pre></Typography></TableCell>
             </TableRow>
           </TableBody>
         </Table>
