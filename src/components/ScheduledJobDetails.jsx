@@ -13,6 +13,8 @@ import parse from 'date-fns/parse';
 import format from 'date-fns/format';
 import Cron from 'cron-converter';
 import cronstrue from 'cronstrue';
+import Paper from "@material-ui/core/Paper";
+import {Table, TableBody, TableCell, TableRow} from "@material-ui/core";
 
 const styles = {
   row: {
@@ -125,6 +127,7 @@ class ScheduledJob extends Component {
     const cronInstance = new Cron();
 
     const schedule = cronInstance.fromString(data.get('cronScheduleDescriptor')).schedule();
+    const lastStartTime = data.get('lastStartTime');
 
     return (
       <Grid container className={classes.row}>
@@ -138,7 +141,7 @@ class ScheduledJob extends Component {
             <Typography>{data.get('state')}</Typography>
           </div>
           <div className={classes.row}>
-            <Typography>Last Run: {format(parse(data.get('lastStartTime')), 'MMMM Do YYYY, h:mm:ss a')}</Typography>
+            <Typography>Last Run: {lastStartTime ? format(parse(lastStartTime), 'MMMM Do YYYY, h:mm:ss a') : 'Never'}</Typography>
           </div>
           <div className={classes.row}>
             <Typography>Next Run: {(data.get('disabled')) ? 'Never' : schedule.next().format('MMMM Do YYYY, h:mm:ss a')}</Typography>
@@ -148,21 +151,17 @@ class ScheduledJob extends Component {
               <Typography>Cron Schedule: {cronstrue.toString(data.get('cronScheduleDescriptor'))}</Typography>
             </Tooltip>
           </div>
+          <div className={classes.row} key="5">
+            <Typography>Run service as: {data.get('runServiceAs') }</Typography>
+          </div>
           <div className={classes.row}>
             <Typography>Status: {(data.get('disabled')) ? 'disabled' : 'active'} </Typography>
           </div>
-
-          <Grid container className={classes.row}>
-            <Grid item xs={12}>
-              <Button variant="contained" size="small">Terminate</Button>
-              {(data.get('disabled')) ?
-                (<Button variant="contained" size="small" onClick={this.handleRestart}>Restart</Button>) :
-                (<Button variant="contained" size="small" onClick={this.handlePause}>Pause</Button>)}
-              <Button variant="contained" size="small" onClick={this.handleDelete}>Delete</Button>
-              <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
-            </Grid>
-          </Grid>
+          <div>
+            { this.renderJobControlButtons(classes, data.get('disabled'), rerunUrl) }
+          </div>
         </Grid>
+
         <Grid item md={4}>
           <Grid container>
             <Typography>Progress Bar</Typography>
@@ -171,9 +170,64 @@ class ScheduledJob extends Component {
             <Typography>Est. Running Time: </Typography>
           </Grid>
         </Grid>
+
+        <Grid item sm={8}>
+          <Typography variant="h6">Service Arguments</Typography>
+        </Grid>
+        <Grid item sm={12}>
+          <Paper className={classes.paper}>
+            { this.argsTable(classes, data) }
+          </Paper>
+        </Grid>
+
       </Grid>
     );
   }
+
+  renderJobControlButtons(classes, disabled, rerunUrl) {
+    return (
+        <Grid container className={classes.row}>
+          <Grid item xs={12}>
+            <Button variant="contained" size="small">Terminate</Button>
+            {(disabled) ?
+                (<Button variant="contained" size="small" onClick={this.handleRestart}>Restart</Button>) :
+                (<Button variant="contained" size="small" onClick={this.handlePause}>Pause</Button>)}
+            <Button variant="contained" size="small" onClick={this.handleDelete}>Delete</Button>
+            <Button variant="contained" size="small" component={Link} to={rerunUrl}>Run with new Parameters</Button>
+          </Grid>
+        </Grid>
+    );
+  }
+
+  argsTable(classes, data) {
+
+    console.log("test")
+    const serviceArgs = data.get('serviceArgs');
+    const serviceResources = data.get('serviceResources');
+    const serviceDictionaryArgs = data.get('serviceDictionaryArgs');
+    const strDictArgs = JSON.stringify(serviceDictionaryArgs, undefined, 2);
+    const strResources = JSON.stringify(serviceResources,undefined, 2);
+
+    return (
+        <Table className={classes.table}>
+          <TableBody>
+            <TableRow>
+              <TableCell>Command Line:</TableCell>
+              <TableCell><Typography>{serviceArgs.map(arg => '\'' + arg + '\'').join(',')}</Typography></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Dictionary Argumemts:</TableCell>
+              <TableCell><Typography><pre>{strDictArgs}</pre></Typography></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Resources:</TableCell>
+              <TableCell><Typography><pre>{strResources}</pre></Typography></TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+    );
+  }
+
 }
 
 ScheduledJob.propTypes = {

@@ -138,6 +138,7 @@ function constructCronBody(formArgs) {
   const body = {
     name: formArgs.get('cron').get('name', 'anonymous cron'),
     serviceName: formArgs.get('serviceName'),
+    ownerKey: formArgs.get('ownerKey'),
     runServiceAs: formArgs.get('runServiceAs'),
     serviceArgs: [],
   };

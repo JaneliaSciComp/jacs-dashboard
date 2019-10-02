@@ -69,7 +69,8 @@ class Service extends Component {
     // a different user, we need to check that the logged in user is
     // admin and then allow them to override this line with input of
     // their own.
-    const formWithLogin = serviceForm.set('runServiceAs', login.get('user').key);
+    const currentUserKey = login.get('user').key;
+    const formWithLogin = serviceForm.set('ownerKey', currentUserKey).set('runServiceAs', currentUserKey);
     actions.startService(formWithLogin);
   };
 
