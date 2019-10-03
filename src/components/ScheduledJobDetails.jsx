@@ -200,8 +200,6 @@ class ScheduledJob extends Component {
   }
 
   argsTable(classes, data) {
-
-    console.log("test")
     const serviceArgs = data.get('serviceArgs');
     const serviceResources = data.get('serviceResources');
     const serviceDictionaryArgs = data.get('serviceDictionaryArgs');

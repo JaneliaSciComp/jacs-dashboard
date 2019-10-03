@@ -148,11 +148,10 @@ function constructCronBody(formArgs) {
   });
 
   formArgs.get('args').entrySeq().forEach(([k, v]) => {
-    // put a '-' at the beginning of the argument names.
-    body.serviceArgs.push(`-${k}`);
-    if (v !== null) {
+    body.serviceArgs.push(v.flag);
+    if (v.value !== null) {
       // flags with an arity 0 are put with a null value so only put the value if it's not null
-      body.serviceArgs.push(v);
+      body.serviceArgs.push(v.value);
     }
   });
 
