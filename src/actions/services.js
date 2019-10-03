@@ -164,9 +164,6 @@ function constructCronBody(formArgs) {
 }
 
 function constructBodyFromForm(formArgs) {
-  // TODO: unpack the form data and convert it into a json structure that can
-  // be submitted to the api.
-
   // need different data structures if cron enabled.
   if (formArgs.getIn(['cron', 'enabled'])) {
     return constructCronBody(formArgs);
@@ -180,11 +177,10 @@ function constructBodyFromForm(formArgs) {
 
   // convert command args to an array for POSTING
   formArgs.get('args').entrySeq().forEach(([k, v]) => {
-    // put a '-' at the beginning of the argument names.
-    body.args.push(`-${k}`);
-    if (v !== null) {
+    body.args.push(v.flag);
+    if (v.value !== null) {
       // flags with an arity 0 are put with a null value so only put the value if it's not null
-      body.args.push(v);
+      body.args.push(v.value);
     }
   });
 

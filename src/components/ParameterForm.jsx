@@ -30,6 +30,7 @@ class ParameterForm extends Component {
   handleChange = arg => (event) => {
     this.props.actions.setParams(
       arg.argName,
+      arg.cmdFlags[0],
       event.target.value,
     );
   }
@@ -38,11 +39,13 @@ class ParameterForm extends Component {
     if (arg.arity === 0) {
       this.props.actions.setFlagParams(
           arg.argName,
+          arg.cmdFlags[0],
           event.target.checked,
       );
     } else {
       this.props.actions.setParams(
           arg.argName,
+          arg.cmdFlags[0],
           event.target.checked,
       );
     }
@@ -53,10 +56,11 @@ class ParameterForm extends Component {
     let input = null;
 
     let argValue;
-    if (data.arity > 0) {
-      argValue = this.props.args.get(data.argName) || '';
-    } else {
+    if (data.arity === 0) {
       argValue = this.props.args.has(data.argName);
+    } else {
+      let argFlagWithValue = this.props.args.get(data.argName);
+      argValue = argFlagWithValue && argFlagWithValue.value || '';
     }
 
     const params = {

@@ -5,18 +5,20 @@ export const SERVICE_FORM_UPDATE_CRON = 'SERVICE_FORM_UPDATE_CRON';
 export const SERVICE_FORM_RESET = 'SERVICE_FORM_RESET';
 export const SERVICE_FORM_SET_NAME = 'SERVICE_FORM_SET_NAME';
 
-export function setFlagParams(name, value) {
+export function setFlagParams(name, flag, value) {
   return {
     type: SERVICE_FORM_UPDATE_FLAG_ARGS,
     name,
+    flag,
     value,
   };
 }
 
-export function setParams(name, value) {
+export function setParams(name, flag, value) {
   return {
     type: SERVICE_FORM_UPDATE_ARGS,
     name,
+    flag,
     value,
   };
 }

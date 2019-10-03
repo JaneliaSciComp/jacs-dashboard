@@ -15,8 +15,8 @@ const mapDispatchToProps = dispatch => ({
     loadServiceData: (filter, order) => {
       dispatch(loadServiceData(filter, order));
     },
-    startService: (serviceName, args) => {
-      dispatch(startService(serviceName, args));
+    startService: (args) => {
+      dispatch(startService(args));
     },
     toggleScheduled: (status) => {
       dispatch(toggleScheduled(status));

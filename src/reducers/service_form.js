@@ -16,12 +16,12 @@ const initialState = Immutable.Map({
 export default function serviceFormReducer(state = initialState, action) {
   switch (action.type) {
     case 'SERVICE_FORM_UPDATE_ARGS':
-      return state.setIn(['args', action.name], action.value)
+      return state.setIn(['args', action.name], {flag: action.flag, value: action.value})
         .set('modified', true);
     case 'SERVICE_FORM_UPDATE_FLAG_ARGS':
       if (action.value) {
         // add the flag arg with a value of null - which should not be output in the list of arguments
-        return state.setIn(['args', action.name], null)
+        return state.setIn(['args', action.name], {flag: action.flag, value: null})
             .set('modified', true);
       } else {
         // remove the flag arg

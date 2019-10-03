@@ -11,11 +11,11 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    setFlagParams: (name, value) => {
-      dispatch(setFlagParams(name, value));
+    setFlagParams: (name, flag, value) => {
+      dispatch(setFlagParams(name, flag, value));
     },
-    setParams: (name, value) => {
-      dispatch(setParams(name, value));
+    setParams: (name, flag, value) => {
+      dispatch(setParams(name, flag, value));
     },
   },
 });
