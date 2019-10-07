@@ -139,6 +139,17 @@ class Service extends Component {
         <Grid item xs={12}>
           <Grid container spacing={16} alignItems="flex-end">
             <Grid item xs={3}>
+              <Typography align="right">Queue ID</Typography>
+            </Grid>
+            <Grid item xs={4}>
+              <TextField id="queueId" label="queueId" fullWidth value={serviceForm.get('meta').get('queueId', '')} onChange={this.handleAdvanced} />
+            </Grid>
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Grid container spacing={16} alignItems="flex-end">
+            <Grid item xs={3}>
               <Typography align="right">processingLocation</Typography>
             </Grid>
             <Grid item xs={4}>

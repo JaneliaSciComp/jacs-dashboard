@@ -98,6 +98,7 @@ class JobStatusList extends Component {
           <TableCell>{format(parse(item.modificationDate), 'YYYY/MM/DD, h:mmA')}</TableCell>
           <TableCell>{auth}</TableCell>
           <TableCell>{item.processingLocation}</TableCell>
+          <TableCell>{item.queueId}</TableCell>
         </TableRow>
       );
     });
