@@ -146,7 +146,7 @@ function constructCronBody(formArgs) {
 
   body['serviceQueueId'] = meta.get('queueId');
   body['serviceProcessingLocation'] = meta.get('processingLocation');
-  body['description'] = meta.get('processingLocation');
+  body['description'] = meta.get('description');
 
   formArgs.get('args').entrySeq().forEach(([k, v]) => {
     body.serviceArgs.push(v.flag);
