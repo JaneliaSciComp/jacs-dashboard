@@ -155,11 +155,12 @@ class Job extends Component {
 
   outputTable() {
     const { classes, job } = this.props;
-    const { serviceId, outputPath, errorPath } = job.get('data');
+    const { serviceId, outputPath, errorPath, serializableResult } = job.get('data');
     const { jobDataUrl } = getSettings();
     const requestUrl = jobDataUrl.replace('<job_id>', serviceId);
     const downloadJobOutputUrl = `${requestUrl}/job-output`
     const downloadJobErrorsUrl = `${requestUrl}/job-errors`
+    const serviceResult = serializableResult === null ? '' : JSON.stringify(serializableResult,undefined, 2);
 
     let downloadOutput = () => {
       this.props.actions.download(downloadJobOutputUrl, serviceId + '-output.txt');
@@ -173,26 +174,18 @@ class Job extends Component {
 
     return (
       <Table className={classes.table}>
-        <TableHead>
-          <TableRow>
-            <TableCell>File Name</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Size</TableCell>
-            <TableCell>Path</TableCell>
-          </TableRow>
-        </TableHead>
         <TableBody>
           <TableRow>
             <TableCell>Output Path</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Size</TableCell>
             <TableCell><Button color="primary" className={classes.link} onClick={downloadOutput}>{outputPath}</Button></TableCell>
           </TableRow>
           <TableRow>
             <TableCell>Error Path</TableCell>
-            <TableCell>Created</TableCell>
-            <TableCell>Size</TableCell>
             <TableCell><Button color="primary" className={classes.link} onClick={downloadErrors}>{errorPath}</Button></TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Service Result</TableCell>
+            <TableCell><Typography><pre>{serviceResult}</pre></Typography></TableCell>
           </TableRow>
         </TableBody>
       </Table>
