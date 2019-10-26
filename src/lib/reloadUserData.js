@@ -3,11 +3,15 @@
 // TODO: !!!! This is really insecure as the cookie could easily be set by anyone
 // without authentication. Must fix!!!
 import Promise from 'yaku';
+
 import { loginRestore } from '../actions/login';
+import { getConf } from "../actions/settings";
 
 export default function reloadUserData(dispatch, jwt) {
   if (jwt) {
-    return dispatch(loginRestore(jwt));
+    return dispatch(getConf()).then(
+        response => dispatch(loginRestore(jwt))
+    )
   }
   return Promise.resolve();
 }
